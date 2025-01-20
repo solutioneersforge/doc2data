@@ -1,0 +1,10 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs
+/DocToData/.vs/DocToData
+/DocToData/DocToData.API/obj
+/DocToData/DocToData.Application/obj
+/DocToData/DocToData.Domain/obj
+/DocToData/DocToDomain.Infrastructure/obj
