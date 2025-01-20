@@ -6,4 +6,19 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Command\" />
+    <Folder Include="CommandHandler\" />
+    <Folder Include="CustomMapper\" />
+    <Folder Include="Queries\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="12.4.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DocToData.Domain\DocToData.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
