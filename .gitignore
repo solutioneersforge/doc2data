@@ -8,3 +8,6 @@
 /DocToData/DocToData.Application/obj
 /DocToData/DocToData.Domain/obj
 /DocToData/DocToDomain.Infrastructure/obj
+/DocToData/DocToData.API/bin/Debug/net9.0
+/DocToData/DocToData.Application/bin/Debug/net9.0
+/DocToData/DocToDomain.Infrastructure/bin/Debug/net9.0
