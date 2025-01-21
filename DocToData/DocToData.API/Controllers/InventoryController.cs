@@ -1,7 +1,6 @@
 ﻿using DocToData.Application.Queries.Inventories;
 using DocToData.Domain.DTO;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DocToData.API.Controllers
@@ -22,6 +21,8 @@ namespace DocToData.API.Controllers
         [HttpGet]
         [Route("GetInventoryItems")]
         [ProducesResponseType(typeof(IEnumerable<InventoryItemDTO>), 200)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetInventoryItems(CancellationToken token)
         {
             var result = await _mediator.Send(new InventoryItemQuery(), token);
