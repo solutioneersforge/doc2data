@@ -1,4 +1,5 @@
-﻿using DocToData.Domain.Factories;
+﻿using DocToData.Domain.Enum;
+using DocToData.Domain.Factories;
 using DocToData.Domain.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,9 +11,9 @@ public class UnitOfWork(IDBContextFactory dbContextFactory) : IUnitOfWork
     private readonly List<DbContext> _dbContexts = new();
     private readonly IDBContextFactory _dbContextFactory = dbContextFactory;
 
-    public IRepository<T> Repository<T>(string contextType) where T : class
+    public IRepository<T> Repository<T>(DBContextEnum dBContextEnum) where T : class
     {
-        var dbContext = _dbContextFactory.GetDbContext(contextType);
+        var dbContext = _dbContextFactory.GetDbContext(dBContextEnum);
 
         if (!_dbContexts.Contains(dbContext))
         {

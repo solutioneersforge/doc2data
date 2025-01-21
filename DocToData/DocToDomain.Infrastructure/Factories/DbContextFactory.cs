@@ -1,4 +1,5 @@
-﻿using DocToData.Domain.Factories;
+﻿using DocToData.Domain.Enum;
+using DocToData.Domain.Factories;
 using DocToDomain.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -17,9 +18,9 @@ namespace DocToDomain.Infrastructure.Factories
         {
             this._docToDataDBContext = docToDataDBContext;
         }
-        public DbContext GetDbContext(string contentType)
+        public DbContext GetDbContext(DBContextEnum dBContextEnum)
         {
-            if(contentType.ToLower() == "DocToData".ToLower())
+            if(dBContextEnum == DBContextEnum.DocToData)
             {
                 return _docToDataDBContext;
             }

@@ -2,6 +2,7 @@
 using DocToData.Application.Queries.Inventories;
 using DocToData.Domain.DTO;
 using DocToData.Domain.Entities;
+using DocToData.Domain.Enum;
 using DocToData.Domain.Interfaces.Repositories;
 using MediatR;
 
@@ -17,7 +18,7 @@ namespace DocToData.Application.QueriesHandler.Inventories
         }
         public async Task<IEnumerable<InventoryItemDTO>> Handle(InventoryItemQuery request, CancellationToken cancellationToken)
         {
-            var result = _unitOfWork.Repository<Item>("DocToData");
+            var result = _unitOfWork.Repository<Item>(DBContextEnum.DocToData);
             return await Task.FromResult(result.GetAll().CreateInventoryItemMapper());
         }
     }
