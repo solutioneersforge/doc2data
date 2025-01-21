@@ -26,7 +26,7 @@ namespace DocToData.API.Controllers
         public async Task<IActionResult> GetInventoryItems(CancellationToken token)
         {
             var result = await _mediator.Send(new InventoryItemQuery(), token);
-            return Ok(result.Value);
+            return Ok(result);
         }
     }
 }
