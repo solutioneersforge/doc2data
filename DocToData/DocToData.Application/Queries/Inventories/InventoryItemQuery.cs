@@ -1,4 +1,5 @@
-﻿using DocToData.Domain.DTO;
+﻿using DocToData.Application.Results;
+using DocToData.Domain.DTO;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -8,5 +9,5 @@ using System.Threading.Tasks;
 
 namespace DocToData.Application.Queries.Inventories
 {
-    public record class InventoryItemQuery : IRequest<IEnumerable<InventoryItemDTO>>;
+    public record class InventoryItemQuery : IRequest<CustomResult<IEnumerable<InventoryItemDTO>>>;
 }
