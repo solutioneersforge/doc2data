@@ -8,6 +8,7 @@ using DocToDomain.Infrastructure.Repositories;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Scalar.AspNetCore;
 using System.Net.NetworkInformation;
 using System.Reflection;
 using System.Runtime.Loader;
@@ -30,9 +31,13 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
-    app.UseSwaggerUI(options =>
+    app.MapScalarApiReference(options =>
     {
-        options.SwaggerEndpoint("/openapi/v1.json", "Demo API");
+        options.Title = "Doc to Data";
+        options.Theme = ScalarTheme.BluePlanet;
+        options.DefaultHttpClient = new(ScalarTarget.CSharp, ScalarClient.HttpClient);
+        options.CustomCss = "";
+        options.ShowSidebar = true;
     });
 }
 
