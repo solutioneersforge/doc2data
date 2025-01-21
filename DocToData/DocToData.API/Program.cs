@@ -1,17 +1,11 @@
 using DocToData.Application;
-using DocToData.Application.QueriesHandler;
 using DocToData.Domain.Factories;
 using DocToData.Domain.Interfaces.Repositories;
 using DocToDomain.Infrastructure.Data;
 using DocToDomain.Infrastructure.Factories;
 using DocToDomain.Infrastructure.Repositories;
-using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using Scalar.AspNetCore;
-using System.Net.NetworkInformation;
-using System.Reflection;
-using System.Runtime.Loader;
 
 var builder = WebApplication.CreateBuilder(args);
 
