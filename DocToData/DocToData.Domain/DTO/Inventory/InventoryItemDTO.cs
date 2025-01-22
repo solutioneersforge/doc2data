@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DocToData.Domain.DTO
+namespace DocToData.Domain.DTO.Inventory
 {
-    public  class InventoryItemDTO
+    public class InventoryItemDTO
     {
         public int ItemId { get; set; }
         public string ItemName { get; set; }

@@ -1,7 +1,7 @@
 ﻿using DocToData.Application.CustomMapper;
 using DocToData.Application.Queries.Inventories;
 using DocToData.Application.Results;
-using DocToData.Domain.DTO;
+using DocToData.Domain.DTO.Inventory;
 using DocToData.Domain.Entities;
 using DocToData.Domain.Enum;
 using DocToData.Domain.Interfaces.Repositories;

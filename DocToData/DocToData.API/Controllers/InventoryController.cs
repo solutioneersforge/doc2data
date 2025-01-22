@@ -1,5 +1,5 @@
 ﻿using DocToData.Application.Queries.Inventories;
-using DocToData.Domain.DTO;
+using DocToData.Domain.DTO.Inventory;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

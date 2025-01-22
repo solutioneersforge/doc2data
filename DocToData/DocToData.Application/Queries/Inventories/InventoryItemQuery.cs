@@ -1,5 +1,5 @@
 ﻿using DocToData.Application.Results;
-using DocToData.Domain.DTO;
+using DocToData.Domain.DTO.Inventory;
 using MediatR;
 using System;
 using System.Collections.Generic;

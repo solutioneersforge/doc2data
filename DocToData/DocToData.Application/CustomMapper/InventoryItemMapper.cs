@@ -1,4 +1,4 @@
-﻿using DocToData.Domain.DTO;
+﻿using DocToData.Domain.DTO.Inventory;
 using DocToData.Domain.Entities;
 using System;
 using System.Collections.Generic;

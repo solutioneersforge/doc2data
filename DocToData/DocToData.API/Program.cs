@@ -1,9 +1,11 @@
 using DocToData.Application;
 using DocToData.Domain.Factories;
 using DocToData.Domain.Interfaces.Repositories;
+using DocToData.Domain.Interfaces.Services;
 using DocToDomain.Infrastructure.Data;
 using DocToDomain.Infrastructure.Factories;
 using DocToDomain.Infrastructure.Repositories;
+using DocToDomain.Infrastructure.Repositories.Receipt;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
 
@@ -19,6 +21,7 @@ builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<Re
 builder.Services.AddDbContext<DocToDataDBContext>(options => options.UseSqlServer(""));
 builder.Services.AddTransient<IDBContextFactory, DbContextFactory>();
 builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
+builder.Services.AddTransient<IReceiptProcessRepository, ReceiptProcessRepository>();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 var app = builder.Build();
 
