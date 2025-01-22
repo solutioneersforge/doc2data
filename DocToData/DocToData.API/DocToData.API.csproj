@@ -17,10 +17,4 @@
     <ProjectReference Include="..\DocToDomain.Infrastructure\DocToDomain.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Update="PHOTO-2025-01-21-14-26-19 %281%29.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-
 </Project>

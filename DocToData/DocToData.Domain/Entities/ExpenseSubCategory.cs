@@ -12,4 +12,6 @@ public partial class ExpenseSubCategory
     public string SubCategoryName { get; set; } = null!;
 
     public bool IsActive { get; set; }
+
+    public virtual ICollection<Receipt> Receipts { get; set; } = new List<Receipt>();
 }

@@ -20,4 +20,10 @@ public partial class Merchant
     public DateTime CreatedOn { get; set; }
 
     public bool IsActive { get; set; }
+
+    public string? Website { get; set; }
+
+    public string? CompanyRegNo { get; set; }
+
+    public string? TaxCompanyRegNo { get; set; }
 }
