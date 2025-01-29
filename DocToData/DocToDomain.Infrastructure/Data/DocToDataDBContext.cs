@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using DocToData.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace DocToData.Domain;
+namespace DocToDomain.Infrastructure.Data;
 
 public partial class DocToDataDBContext : DbContext
 {
@@ -66,14 +66,14 @@ public partial class DocToDataDBContext : DbContext
 
             entity.ToTable("Currencies", "Common");
 
-            entity.Property(e => e.CurrencyCode)
+            entity.Property(e => e.Code)
                 .HasMaxLength(50)
                 .IsUnicode(false);
-            entity.Property(e => e.CurrencyName)
-                .HasMaxLength(50)
-                .IsUnicode(false);
-            entity.Property(e => e.CurrencySymbol).HasMaxLength(50);
             entity.Property(e => e.IsActive).HasDefaultValue(true);
+            entity.Property(e => e.Name)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.Symbol).HasMaxLength(50);
         });
 
         modelBuilder.Entity<ExpenseCategory>(entity =>
