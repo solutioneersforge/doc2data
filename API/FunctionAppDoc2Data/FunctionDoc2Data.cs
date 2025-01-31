@@ -54,37 +54,51 @@ namespace FunctionAppDoc2Data
                             string responseBody = await response.Content.ReadAsStringAsync();
 
                             await Task.Delay(5000);
+
+                            int maxRetryCount = 3;
+                            int retryCount = 0;
+                            string statusMessage = string.Empty;
+
                             HttpClient httpClient = new HttpClient();
                             httpClient.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", "nZ3429AEVqS2ilqBniaYQEIVIiegv3JF6iCZe9OMDfNwOLoYUv1rJQQJ99BAACYeBjFXJ3w3AAALACOGUHKc");
 
-                            HttpResponseMessage responseGet = await httpClient.GetAsync($"https://doc2data.cognitiveservices.azure.com/documentintelligence/documentModels/doc2datav2/analyzeResults/{requestId}?api-version=2024-11-30");
-                            if (responseGet.IsSuccessStatusCode)
+                            while (retryCount < maxRetryCount && statusMessage.ToLower() != "succeeded")
                             {
-                                string responseBodyGet = await responseGet.Content.ReadAsStringAsync();
-                                var data = System.Text.Json.JsonSerializer.Deserialize<Rootobject>(responseBodyGet);
-                                return new OkObjectResult(new
+                                HttpResponseMessage responseGet = await httpClient.GetAsync($"https://doc2data.cognitiveservices.azure.com/documentintelligence/documentModels/doc2datav2/analyzeResults/{requestId}?api-version=2024-11-30");
+                                if (responseGet.IsSuccessStatusCode)
                                 {
-                                    data = ReceiptItemParseData.GetReceiptDetails(data)
-                                });
+                                    string responseBodyGet = await responseGet.Content.ReadAsStringAsync();
+                                    var data = System.Text.Json.JsonSerializer.Deserialize<Rootobject>(responseBodyGet);
+                                    statusMessage = data.status;
+                                    if (data.status.ToLower() == "succeeded")
+                                    {
+                                        return new OkObjectResult(new
+                                        {
+                                            ParseData = ReceiptItemParseData.GetReceiptDetails(data),
+                                            Message = "File uploaded successfully",
+                                            IsSuccess = true
+                                        });
+                                    }
+                                    await Task.Delay(2000);
+                                }
+                                retryCount++;
                             }
-                        }
-                        else
-                        {
-
                         }
                     }
                     catch (Exception ex)
                     {
-
+                        return new OkObjectResult(new
+                        {
+                            Message = ex.Message.ToString(),
+                            IsSuccess = false
+                        });
                     }
                 }
             }
             return new OkObjectResult(new
             {
-                //Message = "File uploaded successfully",
-                //FileName = file.FileName,
-                //Size = file.Length,
-                //Content = fileContent.Substring(0, Math.Min(100, fileContent.Length)) // Truncated preview
+                Message = "File uploaded failed",
+                IsSuccess = false
             });
         }
     }
