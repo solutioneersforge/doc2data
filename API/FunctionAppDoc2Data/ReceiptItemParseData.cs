@@ -14,26 +14,26 @@ public class ReceiptItemParseData
         var receiptItems = receipt.Items.valueArray;
         ReceiptDetails receiptDetails = new()
         {
-            AdditionalFree = receipt.AdditionalFree.valueNumber,
-            AmountDue = receipt.AmountDue.valueNumber,
-            AmountPaid = receipt.AmountPaid.valueNumber,
-            BalanceDue = receipt.BalanceDue.valueNumber,
+            AdditionalFree = DocDataHelper.GetNumberFromString(receipt.AdditionalFree.valueNumber, receipt.AdditionalFree.content),
+            AmountDue = DocDataHelper.GetNumberFromString(receipt.AmountDue.valueNumber, receipt.AmountDue.content),
+            AmountPaid = DocDataHelper.GetNumberFromString(receipt.AmountPaid.valueNumber, receipt.AmountPaid.content),
+            BalanceDue = DocDataHelper.GetNumberFromString(receipt.BalanceDue.valueNumber, receipt.BalanceDue.content) ,
             BarcodeQRCode = receipt.BarcodeQRCode.valueString,
-            Change = receipt.Change.valueNumber,
+            Change = DocDataHelper.GetNumberFromString(receipt.Change.valueNumber, receipt.Change.content),
             Currency = receipt.Currency.valueString,
             CustomerAddress = receipt.CustomerAddress.valueString,
             CustomerName = receipt.CustomerName.valueString,
             CustomerPhone = receipt.CustomerPhone.valueString,
             CustomerTIN = receipt.CustomerTIN.valueString,
             DeliveryInfo = receipt.DeliveryInfo.valueString,
-            Discount = receipt.Discount.valueNumber,
+            Discount = DocDataHelper.GetNumberFromString(receipt.Discount.valueNumber, receipt.Discount.content),
             DueDate = receipt.DueDate.valueDate,
             ExchangeRate = receipt.ExchangeRate.valueNumber,
             InvoiceDate = receipt.InvoiceDate.valueDate,
             InvoiceNumber = receipt.InvoiceNumber.valueString,
             IssueDate = receipt.IssueDate.valueDate,
             IssueTime= receipt.IssueTime.valueDate,
-            ItemsCount = receipt.ItemsCount.valueNumber,
+            ItemsCount = (int)DocDataHelper.GetNumberFromString(receipt.ItemsCount.valueNumber, receipt.ItemsCount.content),
             OrderNumber = receipt.OrderNumber.valueString,
             PaymentMethod = receipt.PaymentMethod.valueString,
             PaymentReferenceNumber = receipt.PaymentReferenceNumber.valueString,
@@ -46,11 +46,11 @@ public class ReceiptItemParseData
             ServiceStartDate = receipt.ServiceStartDate.valueDate,
             ShippingFee = receipt.ShippingFee.valueNumber,
             Station = receipt.Station.valueString,
-            Subtotal = receipt.Subtotal.valueNumber,
+            Subtotal = DocDataHelper.GetNumberFromString(receipt.Subtotal.valueNumber, receipt.Subtotal.content),
             Table = receipt.Table.valueString,
-            Tax = receipt.Tax.valueNumber,
-            TaxableAmount = receipt.TaxableAmount.valueNumber,
-            Tip = receipt.Tip.valueNumber,
+            Tax = DocDataHelper.GetNumberFromString(receipt.Tax.valueNumber, receipt.Tax.content),
+            TaxableAmount = DocDataHelper.GetNumberFromString(receipt.TaxableAmount.valueNumber, receipt.TaxableAmount.content),
+            Tip = DocDataHelper.GetNumberFromString(receipt.Tip.valueNumber, receipt.Tip.content),
             TransactionDate = receipt.TransactionDate.valueDate,
             TransactionTime = receipt.TransactionTime.valueDate,
             UnknownField = receipt.UnknownField.valueString,
@@ -59,7 +59,7 @@ public class ReceiptItemParseData
             VendorName = receipt.VendorName.valueString,
             VendorPhone = receipt.VendorPhone.valueString,
             VendorTIN = receipt.VendorTIN.valueString,
-            Total = receipt.Total.valueNumber,
+            Total = DocDataHelper.GetNumberFromString(receipt.Total.valueNumber, receipt.Total.content),
             ReceiptItems = GetReceiptItems(receipt.Items.valueArray)
         };
         return receiptDetails;
@@ -73,9 +73,9 @@ public class ReceiptItemParseData
             var receipt = new ReceiptItem()
             {
                 Description = item.valueObject.Description.valueString,
-                Quantity = item.valueObject.Quantity.valueNumber,
-                TotalPrice = item.valueObject.TotalPrice.valueNumber,
-                UnitPrice = item.valueObject.UnitPrice.valueNumber,
+                Quantity = DocDataHelper.GetNumberFromString(item.valueObject.Quantity.valueNumber, item.valueObject.Quantity.content),
+                TotalPrice = DocDataHelper.GetNumberFromString(item.valueObject.TotalPrice.valueNumber, item.valueObject.TotalPrice.content),
+                UnitPrice = DocDataHelper.GetNumberFromString(item.valueObject.UnitPrice.valueNumber, item.valueObject.UnitPrice.content),
                 Discount = 0.00M
             };
             listOfReceiptItems.Add(receipt);
