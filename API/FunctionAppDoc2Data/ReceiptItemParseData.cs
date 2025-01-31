@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace FunctionAppDoc2Data;
 public class ReceiptItemParseData
@@ -17,7 +16,7 @@ public class ReceiptItemParseData
             AdditionalFree = DocDataHelper.GetNumberFromString(receipt.AdditionalFree.valueNumber, receipt.AdditionalFree.content),
             AmountDue = DocDataHelper.GetNumberFromString(receipt.AmountDue.valueNumber, receipt.AmountDue.content),
             AmountPaid = DocDataHelper.GetNumberFromString(receipt.AmountPaid.valueNumber, receipt.AmountPaid.content),
-            BalanceDue = DocDataHelper.GetNumberFromString(receipt.BalanceDue.valueNumber, receipt.BalanceDue.content) ,
+            BalanceDue = DocDataHelper.GetNumberFromString(receipt.BalanceDue.valueNumber, receipt.BalanceDue.content),
             BarcodeQRCode = receipt.BarcodeQRCode.valueString,
             Change = DocDataHelper.GetNumberFromString(receipt.Change.valueNumber, receipt.Change.content),
             Currency = receipt.Currency.valueString,
@@ -32,7 +31,7 @@ public class ReceiptItemParseData
             InvoiceDate = receipt.InvoiceDate.valueDate,
             InvoiceNumber = receipt.InvoiceNumber.valueString,
             IssueDate = receipt.IssueDate.valueDate,
-            IssueTime= receipt.IssueTime.valueDate,
+            IssueTime = receipt.IssueTime.valueDate,
             ItemsCount = (int)DocDataHelper.GetNumberFromString(receipt.ItemsCount.valueNumber, receipt.ItemsCount.content),
             OrderNumber = receipt.OrderNumber.valueString,
             PaymentMethod = receipt.PaymentMethod.valueString,
