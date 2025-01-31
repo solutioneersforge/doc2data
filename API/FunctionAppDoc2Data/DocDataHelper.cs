@@ -8,20 +8,26 @@ public static class DocDataHelper
 {
     public static decimal GetNumberFromString(decimal value, string contentString)
     {
-        if(!String.IsNullOrEmpty(contentString))
+        try
         {
-            if (!String.IsNullOrEmpty(value.ToString()) && value != 0)
+            if (!String.IsNullOrEmpty(contentString))
             {
-                return value;
+                if (!String.IsNullOrEmpty(value.ToString()) && value != 0)
+                {
+                    return value;
+                }
+                else
+                {
+                    contentString = Regex.Replace(contentString, "^[^0-9]+|[^0-9]+$", "");
+                    contentString = Regex.Replace(contentString, "[^0-9]+", ".");
+                    return Convert.ToDecimal(contentString);
+                }
             }
-            else
-            {
-                contentString = Regex.Replace(contentString, "^[^0-9]+|[^0-9]+$", "");
-                contentString = Regex.Replace(contentString, "[^0-9]+", ".");
-                return Convert.ToDecimal(contentString);
-            }
+            return 0;
         }
-        return 0;
+        catch { 
+            return 0;
+        }
     }
 
     public static List<DateTime?> ListParseStringsToDateTime(params string[] dateStrings)
