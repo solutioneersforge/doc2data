@@ -9,18 +9,26 @@ using Microsoft.Extensions.Logging;
 using System.Net.Http;
 using System.Text;
 using System.Linq;
+using Microsoft.Extensions.Configuration;
 
 namespace FunctionAppDoc2Data
 {
-    public static class FunctionDoc2Data
+    public  class FunctionDoc2Data
     {
+        private readonly IConfiguration _configuration;
+
+        public FunctionDoc2Data(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
         [FunctionName("FunctionDoc2Data")]
-        public static async Task<IActionResult> Run(
+        public  async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req,
             ILogger log)
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
-
+            string name = _configuration.GetSection("OcpApimSubscriptionKey").Value;
             var formCollection = await req.ReadFormAsync();
             HttpClient _httpClient = new HttpClient();
             if (formCollection != null)
@@ -41,11 +49,11 @@ namespace FunctionAppDoc2Data
                     HttpContent content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
 
 
-                    _httpClient.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", "nZ3429AEVqS2ilqBniaYQEIVIiegv3JF6iCZe9OMDfNwOLoYUv1rJQQJ99BAACYeBjFXJ3w3AAALACOGUHKc");
+                    _httpClient.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", _configuration.GetSection("OcpApimSubscriptionKey").Value);
 
                     try
                     {
-                        HttpResponseMessage response = await _httpClient.PostAsync("https://doc2data.cognitiveservices.azure.com/documentintelligence/documentModels/doc2datav2:analyze?_overload=analyzeDocument&api-version=2024-11-30", content);
+                        HttpResponseMessage response = await _httpClient.PostAsync($"{_configuration.GetSection("PostCognitiveServices").Value}", content);
 
                         if (response.IsSuccessStatusCode)
                         {
@@ -60,11 +68,12 @@ namespace FunctionAppDoc2Data
                             string statusMessage = string.Empty;
 
                             HttpClient httpClient = new HttpClient();
-                            httpClient.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", "nZ3429AEVqS2ilqBniaYQEIVIiegv3JF6iCZe9OMDfNwOLoYUv1rJQQJ99BAACYeBjFXJ3w3AAALACOGUHKc");
+                            httpClient.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", _configuration.GetSection("OcpApimSubscriptionKey").Value);
 
                             while (retryCount < maxRetryCount && statusMessage.ToLower() != "succeeded")
                             {
-                                HttpResponseMessage responseGet = await httpClient.GetAsync($"https://doc2data.cognitiveservices.azure.com/documentintelligence/documentModels/doc2datav2/analyzeResults/{requestId}?api-version=2024-11-30");
+                                string getURL = String.Format(_configuration.GetSection("GetCognitiveServices").Value, requestId);
+                                HttpResponseMessage responseGet = await httpClient.GetAsync($"{getURL}");
                                 if (responseGet.IsSuccessStatusCode)
                                 {
                                     string responseBodyGet = await responseGet.Content.ReadAsStringAsync();
