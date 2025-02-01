@@ -30,7 +30,7 @@ public class ReceiptItemParseData
             DueDate = receipt.DueDate.valueDate,
             ExchangeRate = receipt.ExchangeRate.valueNumber,
             InvoiceDate = receipt.InvoiceDate.valueDate,
-            InvoiceNumber = receipt.InvoiceNumber.valueString,
+            InvoiceNumber = receipt.InvoiceNumber.content,
             IssueDate = receipt.IssueDate.valueDate,
             IssueTime= receipt.IssueTime.valueDate,
             ItemsCount = (int)DocDataHelper.GetNumberFromString(receipt.ItemsCount.valueNumber, receipt.ItemsCount.content),
@@ -74,12 +74,19 @@ public class ReceiptItemParseData
             {
                 Description = item.valueObject.Description.valueString,
                 Quantity = DocDataHelper.GetNumberFromString(item.valueObject.Quantity.valueNumber, item.valueObject.Quantity.content),
-                TotalPrice = DocDataHelper.GetNumberFromString(item.valueObject.TotalPrice.valueNumber, item.valueObject.TotalPrice.content),
+                //TotalPrice = DocDataHelper.GetNumberFromString(item.valueObject.TotalPrice.valueNumber, item.valueObject.TotalPrice.content),
                 UnitPrice = DocDataHelper.GetNumberFromString(item.valueObject.UnitPrice.valueNumber, item.valueObject.UnitPrice.content),
-                Discount = 0.00M
+                Discount = 0.00M,
+                TotalPrice = ValidateTotal(DocDataHelper.GetNumberFromString(item.valueObject.Quantity.valueNumber, item.valueObject.Quantity.content),
+                         DocDataHelper.GetNumberFromString(item.valueObject.UnitPrice.valueNumber, item.valueObject.UnitPrice.content), 0)
             };
             listOfReceiptItems.Add(receipt);
         }
         return listOfReceiptItems;
+    }
+
+    private static decimal ValidateTotal(decimal quantity, decimal unitPrice, decimal discount) 
+    {
+       return (quantity * unitPrice) - discount;        
     }
 }
