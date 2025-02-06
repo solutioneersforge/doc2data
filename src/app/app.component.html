@@ -1,0 +1,406 @@
+<!-- <div class="upload-container">
+  <input type="file" accept="image/*" (change)="onFileSelected($event)" #fileInput hidden>
+  <button mat-raised-button color="primary" (click)="fileInput.click()">
+    <mat-icon>upload</mat-icon> Upload Image
+  </button>
+  @if(selectedFile){
+    <span  class="ml-2">{{ selectedFile.name }}</span>
+  }
+  <button mat-raised-button color="accent" (click)="processReceipt()" [disabled]="isProcessing">
+    Process Receipt
+  </button>
+</div>
+<div>
+  <table>
+    <tr>
+      <td>
+        Vendor Name:
+      </td>
+      <td>
+        <b>{{receiptDetails.vendorName}}</b>
+      </td>
+      <td>
+        Vendor Address:
+      </td>
+      <td>
+        <b>{{receiptDetails.vendorAddress}}</b>
+      </td>
+      <td>
+        Vendor Email:
+      </td>
+      <td>
+        <b> {{receiptDetails.vendorEmailAddress}}</b>
+      </td>
+      <td>
+        Vendor Phone:
+      </td>
+      <td>
+        <b>{{receiptDetails.vendorPhone}}</b>
+      </td>
+      
+    </tr>
+    <tr>
+      <td>
+        Vendor TIN:
+      </td>
+      <td>
+        <b>{{receiptDetails.vendorTIN}}</b>
+      </td>
+      <td>
+        Customer Name
+      </td>
+      <td>
+        <b>{{receiptDetails.customerName}}</b>
+      </td>
+      <td>
+        Customer Address
+      </td>
+      <td>
+        <b>{{receiptDetails.customerAddress}}</b>
+      </td>
+      <td>
+        Customer Phone
+      </td>
+      <td>
+        <b>{{receiptDetails.customerPhone}}</b>
+      </td>
+     
+    </tr>
+    <tr>
+      <td>
+        Customer TIN
+      </td>
+      <td>
+        <b>{{receiptDetails.customerTIN}}</b>
+      </td>
+      <td>
+        Invoice Date
+      </td>
+      <td>
+        <b>{{receiptDetails.invoiceDate | date}}</b>
+      </td>
+      <td>
+        Invoice Number
+      </td>
+      <td>
+        <b>{{receiptDetails.invoiceNumber}}</b>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Subtotal
+      </td>
+      <td>
+        <b>{{receiptDetails.subtotal}}</b>
+      </td>
+      <td>
+        TAX
+      </td>
+      <td>
+        <b>{{receiptDetails.tax}}</b>
+      </td>
+      <td>
+        Total
+      </td>
+      <td>
+        <b>{{receiptDetails.total}}</b>
+      </td>
+      
+    </tr>
+  </table>
+  <br>
+  <br>
+  <br>
+
+  <table>
+     <tr>
+      <th>
+        Description
+      </th>
+      <th>
+        Quantity
+      </th>
+      <th>
+        Unit Price
+      </th>
+      <th>
+        Discount
+      </th>
+      <th>
+        Total
+      </th>
+     </tr>
+     @for (item of receiptDetails.receiptItems; track $index) {
+      <tr>
+        <td>
+           {{item.description}}
+        </td>
+        <td>
+          {{item.quantity}}
+       </td>
+       <td>
+        {{item.unitPrice}}
+     </td>
+     <td>
+      {{item.discount}}
+   </td>
+   <td>
+    {{item.totalPrice}}
+ </td>
+      </tr>
+     }
+  </table>
+</div> -->
+
+<div class="container">
+  <div class="top">Solutioneers Forge AI Scanner</div>
+  <div>
+    @if(isLoading == true){
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    }
+  </div>
+  <div class="content">
+    <div class="left">
+      <div class="upload-container">
+        <input
+          type="file"
+          accept="image/*"
+          capture="environment"
+          (change)="onFileSelected($event)"
+          #fileInput
+          hidden
+        />
+        
+        <button mat-flat-button color="primary" (click)="fileInput.click()">
+          <mat-icon>cloud_upload</mat-icon> Upload Image
+        </button>
+        @if(selectedFile){
+        <span class="file-name">
+          <mat-icon class="file-icon">insert_drive_file</mat-icon>
+          {{ selectedFile.name }}
+        </span>
+      }
+      
+        <button mat-flat-button color="accent" (click)="processReceipt()" [disabled]="!selectedFile">
+          <mat-icon>receipt_long</mat-icon> Process Receipt
+        </button>
+      </div>
+      <br />
+      <div class="image-preview">
+        <img [src]="selectedImage" alt="Selected Image" />
+      </div>
+    </div>
+    <div class="right">
+      <form [formGroup]="receiptFormGroup">
+        <mat-grid-list cols="3" rowHeight="90px">
+          <mat-grid-tile>
+            <mat-form-field appearance="outline">
+              <mat-label>Vendor Name</mat-label>
+              <input
+                matInput
+                placeholder="Placeholder"
+                formControlName="vendorName"
+              />
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <mat-form-field appearance="outline">
+              <mat-label>Vendor Address</mat-label>
+              <input
+                matInput
+                placeholder="Placeholder"
+                formControlName="vendorAddress"
+              />
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <mat-form-field appearance="outline">
+              <mat-label>Vendor Phone</mat-label>
+              <input
+                matInput
+                placeholder="Placeholder"
+                formControlName="vendorPhone"
+              />
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <mat-form-field appearance="outline">
+              <mat-label>Vendor Email</mat-label>
+              <input
+                matInput
+                placeholder="Placeholder"
+                formControlName="vendorEmail"
+              />
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <mat-form-field appearance="outline">
+              <mat-label>Customer Name</mat-label>
+              <input
+                matInput
+                placeholder="Placeholder"
+                formControlName="customerName"
+              />
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <mat-form-field appearance="outline">
+              <mat-label>Customer Address</mat-label>
+              <input
+                matInput
+                placeholder="Placeholder"
+                formControlName="customerAddress"
+              />
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <mat-form-field appearance="outline">
+              <mat-label>Customer Phone</mat-label>
+              <input
+                matInput
+                placeholder="Placeholder"
+                formControlName="customerPhoneNumber"
+              />
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <mat-form-field appearance="outline">
+              <mat-label>Invoice Number</mat-label>
+              <input
+                matInput
+                placeholder="Placeholder"
+                formControlName="invoiceNumber"
+              />
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <mat-form-field appearance="outline">
+              <mat-label>Invoice Date</mat-label>
+              <input
+                matInput
+                placeholder="Placeholder"
+                formControlName="invoiceDate"
+              />
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <mat-form-field appearance="outline">
+              <mat-label>Subtotal</mat-label>
+              <input
+                matInput
+                placeholder="Placeholder"
+                formControlName="subTotal"
+              />
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <mat-form-field appearance="outline">
+              <mat-label>Tax Amount</mat-label>
+              <input
+                matInput
+                placeholder="Placeholder"
+                formControlName="taxAmount"
+              />
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <mat-form-field appearance="outline">
+              <mat-label>Total</mat-label>
+              <input
+                matInput
+                placeholder="Placeholder"
+                formControlName="total"
+              />
+            </mat-form-field>
+          </mat-grid-tile>
+          
+        </mat-grid-list>
+      </form>
+      <div class="table-container">
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+          <ng-container matColumnDef="description">
+            <th mat-header-cell *matHeaderCellDef mat-header-sticky>
+              Description
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <div class="md-textbox">
+              <input
+                
+                placeholder="Placeholder"
+                value="{{element.description}}" 
+              />
+            </div>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="unitPrice">
+            <th mat-header-cell *matHeaderCellDef mat-header-sticky>
+              Unit Price
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <div class="md-textbox-small">
+                <input
+                  
+                  placeholder="Placeholder"
+                  value="{{element.unitPrice}}" 
+                />
+              </div>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="quantity">
+            <th mat-header-cell *matHeaderCellDef mat-header-sticky>
+              Quantity
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <div class="md-textbox-small">
+                <input
+                  
+                  placeholder="Placeholder"
+                  value="{{element.quantity}}" 
+                />
+           </div>
+
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="discount">
+            <th mat-header-cell *matHeaderCellDef mat-header-sticky>
+              Discount
+            </th>
+            <td mat-cell *matCellDef="let element">
+             <div class="md-textbox-small">
+              <input
+                
+                placeholder="Placeholder"
+                value="{{element.discount}}" 
+              /> </div>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="totalPrice">
+            <th mat-header-cell *matHeaderCellDef mat-header-sticky>
+              Total Price
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <div class="md-textbox-small">
+              <input
+                
+                placeholder="Placeholder"
+                value="{{element.totalPrice}}" 
+              /> </div>
+            </td>
+          </ng-container>
+
+          <tr
+            mat-header-row
+            *matHeaderRowDef="displayedColumns; sticky: true"
+          ></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+        <!-- <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 25]" aria-label="Table pagination">
+              </mat-paginator> -->
+      </div>
+    </div>
+  </div>
+</div>

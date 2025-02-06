@@ -1,14 +1,41 @@
-﻿################################################################################
-# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
-################################################################################
+# See https://docs.github.com/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
 
-/.vs
-/DocToData/.vs/DocToData
-/DocToData/DocToData.API/obj
-/DocToData/DocToData.Application/obj
-/DocToData/DocToData.Domain/obj
-/DocToData/DocToDomain.Infrastructure/obj
-/DocToData/DocToData.API/bin/Debug/net9.0
-/DocToData/DocToData.Application/bin/Debug/net9.0
-/DocToData/DocToDomain.Infrastructure/bin/Debug/net9.0
-/DocToData/.vs/ProjectEvaluation
+# Compiled output
+/tmp
+/out-tsc
+/bazel-out
+
+# Node
+/node_modules
+npm-debug.log
+yarn-error.log
+
+# IDEs and editors
+.idea/
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# Visual Studio Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/*
+
+# Miscellaneous
+/.angular/cache
+.sass-cache/
+/connect.lock
+/coverage
+/libpeerconnection.log
+testem.log
+/typings
+
+# System files
+.DS_Store
+Thumbs.db
