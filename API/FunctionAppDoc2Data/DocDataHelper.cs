@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text.RegularExpressions;
 
 namespace FunctionAppDoc2Data;
@@ -18,9 +19,19 @@ public static class DocDataHelper
                 }
                 else
                 {
-                    contentString = Regex.Replace(contentString, "^[^0-9]+|[^0-9]+$", "");
-                    contentString = Regex.Replace(contentString, "[^0-9]+", ".");
-                    return Convert.ToDecimal(contentString);
+                    contentString = Regex.Replace(contentString, @"[^\d.,-]", "");
+
+                    // Try parsing the number using invariant culture
+                    if (decimal.TryParse(contentString, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal result))
+                    {
+                        return result;
+                    }
+
+                    // Try parsing with the current culture in case of localized formats
+                    if (decimal.TryParse(contentString, NumberStyles.Any, CultureInfo.CurrentCulture, out result))
+                    {
+                        return result;
+                    }
                 }
             }
             return 0;

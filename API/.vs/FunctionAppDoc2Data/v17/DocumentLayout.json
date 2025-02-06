@@ -1,0 +1,75 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Projects\\doc2data\\API\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{000E6AB2-3646-4C3B-9BAE-9055C9384A8E}|FunctionAppDoc2Data\\FunctionAppDoc2Data.csproj|c:\\projects\\doc2data\\api\\functionappdoc2data\\receiptitemparsedata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{000E6AB2-3646-4C3B-9BAE-9055C9384A8E}|FunctionAppDoc2Data\\FunctionAppDoc2Data.csproj|solutionrelative:functionappdoc2data\\receiptitemparsedata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{000E6AB2-3646-4C3B-9BAE-9055C9384A8E}|FunctionAppDoc2Data\\FunctionAppDoc2Data.csproj|c:\\projects\\doc2data\\api\\functionappdoc2data\\functiondoc2data.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{000E6AB2-3646-4C3B-9BAE-9055C9384A8E}|FunctionAppDoc2Data\\FunctionAppDoc2Data.csproj|solutionrelative:functionappdoc2data\\functiondoc2data.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{000E6AB2-3646-4C3B-9BAE-9055C9384A8E}|FunctionAppDoc2Data\\FunctionAppDoc2Data.csproj|c:\\projects\\doc2data\\api\\functionappdoc2data\\docdatahelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{000E6AB2-3646-4C3B-9BAE-9055C9384A8E}|FunctionAppDoc2Data\\FunctionAppDoc2Data.csproj|solutionrelative:functionappdoc2data\\docdatahelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ReceiptItemParseData.cs",
+              "DocumentMoniker": "C:\\Projects\\doc2data\\API\\FunctionAppDoc2Data\\ReceiptItemParseData.cs",
+              "RelativeDocumentMoniker": "FunctionAppDoc2Data\\ReceiptItemParseData.cs",
+              "ToolTip": "C:\\Projects\\doc2data\\API\\FunctionAppDoc2Data\\ReceiptItemParseData.cs",
+              "RelativeToolTip": "FunctionAppDoc2Data\\ReceiptItemParseData.cs",
+              "ViewState": "AgIAADUAAAAAAAAAAAAmwEcAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-01T14:11:00.905Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "DocDataHelper.cs",
+              "DocumentMoniker": "C:\\Projects\\doc2data\\API\\FunctionAppDoc2Data\\DocDataHelper.cs",
+              "RelativeDocumentMoniker": "FunctionAppDoc2Data\\DocDataHelper.cs",
+              "ToolTip": "C:\\Projects\\doc2data\\API\\FunctionAppDoc2Data\\DocDataHelper.cs",
+              "RelativeToolTip": "FunctionAppDoc2Data\\DocDataHelper.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAABkAAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-01T14:10:45.791Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "FunctionDoc2Data.cs",
+              "DocumentMoniker": "C:\\Projects\\doc2data\\API\\FunctionAppDoc2Data\\FunctionDoc2Data.cs",
+              "RelativeDocumentMoniker": "FunctionAppDoc2Data\\FunctionDoc2Data.cs",
+              "ToolTip": "C:\\Projects\\doc2data\\API\\FunctionAppDoc2Data\\FunctionDoc2Data.cs",
+              "RelativeToolTip": "FunctionAppDoc2Data\\FunctionDoc2Data.cs",
+              "ViewState": "AgIAADQAAAAAAAAAAAA3wDgAAAAYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-01T06:01:06.322Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

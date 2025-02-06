@@ -28,7 +28,6 @@ namespace FunctionAppDoc2Data
             ILogger log)
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
-            string name = _configuration.GetSection("OcpApimSubscriptionKey").Value;
             var formCollection = await req.ReadFormAsync();
             HttpClient _httpClient = new HttpClient();
             if (formCollection != null)
@@ -60,8 +59,6 @@ namespace FunctionAppDoc2Data
                             string requestId = response.Headers.Contains("apim-request-id") ? response.Headers.GetValues("apim-request-id").FirstOrDefault() : "Not Found";
 
                             string responseBody = await response.Content.ReadAsStringAsync();
-
-                            await Task.Delay(5000);
 
                             int maxRetryCount = 3;
                             int retryCount = 0;
