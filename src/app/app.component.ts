@@ -127,8 +127,8 @@ export class AppComponent {
     this.isLoading = true;
     this.receiptDetailsService
           .getReceiptItemsDetails(this.selectedFile)
-          .pipe(exhaustMap((data) => data))
           .subscribe({next: (data : any) => {
+            console.log(data)
             if(data.isSuccess == true)
             {
               this._snackBar.open("File sucessfully processed.", "Success");
