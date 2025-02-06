@@ -15,12 +15,12 @@ namespace FunctionAppDoc2Data
 {
     public  class FunctionDoc2Data
     {
-        private readonly IConfiguration _configuration;
+        //private readonly IConfiguration _configuration;
 
-        public FunctionDoc2Data(IConfiguration configuration)
-        {
-            _configuration = configuration;
-        }
+        //public FunctionDoc2Data(IConfiguration configuration)
+        //{
+        //    _configuration = configuration;
+        //}
 
         [FunctionName("FunctionDoc2Data")]
         public  async Task<IActionResult> Run(
@@ -48,11 +48,11 @@ namespace FunctionAppDoc2Data
                     HttpContent content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
 
 
-                    _httpClient.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", _configuration.GetSection("OcpApimSubscriptionKey").Value);
+                    _httpClient.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key",Environment.GetEnvironmentVariable("OcpApimSubscriptionKey"));
 
                     try
                     {
-                        HttpResponseMessage response = await _httpClient.PostAsync($"{_configuration.GetSection("PostCognitiveServices").Value}", content);
+                        HttpResponseMessage response = await _httpClient.PostAsync($"{Environment.GetEnvironmentVariable("PostCognitiveServices")}", content);
 
                         if (response.IsSuccessStatusCode)
                         {
@@ -65,11 +65,11 @@ namespace FunctionAppDoc2Data
                             string statusMessage = string.Empty;
 
                             HttpClient httpClient = new HttpClient();
-                            httpClient.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", _configuration.GetSection("OcpApimSubscriptionKey").Value);
+                            httpClient.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", Environment.GetEnvironmentVariable("OcpApimSubscriptionKey"));
 
                             while (retryCount < maxRetryCount && statusMessage.ToLower() != "succeeded")
                             {
-                                string getURL = String.Format(_configuration.GetSection("GetCognitiveServices").Value, requestId);
+                                string getURL = String.Format(Environment.GetEnvironmentVariable("GetCognitiveServices"), requestId);
                                 HttpResponseMessage responseGet = await httpClient.GetAsync($"{getURL}");
                                 if (responseGet.IsSuccessStatusCode)
                                 {
