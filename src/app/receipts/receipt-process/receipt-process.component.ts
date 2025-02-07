@@ -2,19 +2,26 @@ import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ReceiptDetails } from '../../interfaces/receipt-details.model';
 import { ReceiptDetailsService } from '../../services/receipt-details.service';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-receipt-process',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule ],
   templateUrl: './receipt-process.component.html',
   styleUrl: './receipt-process.component.css'
 })
 export class ReceiptProcessComponent {
   imageUrl: string | ArrayBuffer | null = null;
+  previewImage: string | ArrayBuffer | null = null;
   isLoading: boolean = true;
   loaderStarted : boolean = false;
     receiptDetailsService = inject(ReceiptDetailsService);
+
+    domSanitizer = inject(DomSanitizer);
+    
+
     selectedFile: File | null = null;
+    previewPdf: SafeResourceUrl | null = null;
 receiptDetails : ReceiptDetails = {
     receiptItems: [],
     transactionTime: null,
@@ -68,17 +75,27 @@ receiptDetails : ReceiptDetails = {
   
   onFileChange(event: any): void {
     const file = event.target.files[0];
+
     this.selectedFile = event.target.files[0];
+    debugger;
     if (file) {
       this.receiptFormGroup.reset();
       this.receiptDetails.receiptItems = [];
       this.imageUrl = null;
       this.isLoading = false;
       const reader = new FileReader();
-      reader.onload = (e: any) => {
-        this.imageUrl = e.target.result;
-      };
-      reader.readAsDataURL(file);
+      if (file.type.startsWith('image/')) {
+        reader.onload = () => {
+          this.previewImage = reader.result;
+          this.previewPdf = null; 
+        };
+        reader.readAsDataURL(file);
+      } else if (file.type === 'application/pdf') {
+        // PDF Preview
+        const fileUrl = URL.createObjectURL(file);
+        this.previewPdf = this.domSanitizer.bypassSecurityTrustResourceUrl(fileUrl);
+        this.previewImage = null;  // Reset image preview
+      }
     }
   }
 
