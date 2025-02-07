@@ -5,7 +5,7 @@
           <div class="col-lg-6 col-12">
             <div class="form-group">
               <label for="imageUpload" class="form-label">Choose an Image</label>
-              <input capture="camera"
+              <input
               class="primary" type="file" class="form-control" (change)="onFileChange($event)" accept="image/*" />
               <button [disabled]="isLoading" (click)="processReceipt()" class="btn btn-primary m-2" style="float: right;">Process Image</button>
               @if(loaderStarted){
