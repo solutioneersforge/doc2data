@@ -70,6 +70,9 @@ receiptDetails : ReceiptDetails = {
     const file = event.target.files[0];
     this.selectedFile = event.target.files[0];
     if (file) {
+      this.receiptFormGroup.reset();
+      this.receiptDetails.receiptItems = [];
+      this.imageUrl = null;
       this.isLoading = false;
       const reader = new FileReader();
       reader.onload = (e: any) => {

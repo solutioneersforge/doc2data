@@ -15,13 +15,6 @@ namespace FunctionAppDoc2Data
 {
     public  class FunctionDoc2Data
     {
-        //private readonly IConfiguration _configuration;
-
-        //public FunctionDoc2Data(IConfiguration configuration)
-        //{
-        //    _configuration = configuration;
-        //}
-
         [FunctionName("FunctionDoc2Data")]
         public  async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req,
@@ -85,7 +78,7 @@ namespace FunctionAppDoc2Data
                                             IsSuccess = true
                                         });
                                     }
-                                    await Task.Delay(2000);
+                                    await Task.Delay(5000);
                                 }
                                 retryCount++;
                             }
