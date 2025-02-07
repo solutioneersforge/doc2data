@@ -6,5 +6,4 @@ export interface ReceiptItem {
   unitPrice: number;
   totalPrice: number;
   discount: number;
-  expenseSubCategoriesDTO: ExpenseSubCategoriesDTO[]
 }

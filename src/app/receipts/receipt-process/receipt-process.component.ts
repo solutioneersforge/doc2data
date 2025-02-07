@@ -4,6 +4,7 @@ import { ReceiptDetails } from '../../interfaces/receipt-details.model';
 import { ReceiptDetailsService } from '../../services/receipt-details.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ExpenseCategoriesDTO } from '../../interfaces/expense-categories-dto';
+import { ExpenseSubCategoriesDTO } from '../../interfaces/expense-sub-categories-dto';
 
 @Component({
   selector: 'app-receipt-process',
@@ -23,6 +24,7 @@ export class ReceiptProcessComponent implements OnInit {
 
     domSanitizer = inject(DomSanitizer);
     expenseCategoriesDTO: ExpenseCategoriesDTO[] = [];
+    expenseSubCategoriesDTO: ExpenseSubCategoriesDTO[] = [];
 
     selectedFile: File | null = null;
     previewPdf: SafeResourceUrl | null = null;
@@ -155,8 +157,15 @@ receiptDetails : ReceiptDetails = {
       getExpenseSubCategoriesDTO(){
         this.receiptDetailsService.getExpenseSubCategoriesDTO().subscribe(data => {
           this.expenseCategoriesDTO = data.data;
-          console.log("sdfsdf")
-          console.log(this.expenseCategoriesDTO)
         });
+      }
+
+      onCategoryChange(event: any) {
+       
+        let filteredCategories  = this.expenseCategoriesDTO.filter(m => m.categoryId == event.target.value)
+        this.expenseSubCategoriesDTO = filteredCategories.length > 0
+  ? filteredCategories[0].expenseSubCategoriesDTOs 
+  : [];
+               
       }
 }

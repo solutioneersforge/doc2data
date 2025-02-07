@@ -33,72 +33,85 @@
         </div>
       </div>
       
-      <div class="col-12 col-md-6 mt-5">
+      <div class="col-12 col-lg-6 mt-5">
         <form [formGroup]="receiptFormGroup">
         <div class="row">
-          <div class="col-12 col-md-6 mb-3">
+          <div class="col-6 col-lg-6 mb-3">
             <label for="vendorName" class="form-label">Vendor Name</label>
             <input type="text" class="form-control" formControlName="vendorName" id="vendorName" placeholder="">
           </div>
-          <div class="col-12 col-md-6 mb-3">
-            <label for="vendorAddress" class="form-label">Vendor Address</label>
-            <input type="text" formControlName="vendorAddress"
-            class="form-control" id="vendorAddress" placeholder="">
-          </div>
-          <div class="col-12 col-md-6 mb-3">
+          <div class="col-6 col-lg-6 mb-3">
             <label for="vendorPhone" class="form-label">Vendor Phone</label>
             <input type="text" class="form-control" formControlName="vendorPhone"
             id="vendorPhone" placeholder="">
           </div>
-          <div class="col-12 col-md-6 mb-3">
+          <div class="col-12 col-lg-6 mb-3">
+            <label for="vendorAddress" class="form-label">Vendor Address</label>
+            <input type="text" formControlName="vendorAddress"
+            class="form-control" id="vendorAddress" placeholder="">
+          </div>
+          
+          <div class="col-12 col-lg-6 mb-3">
             <label for="vendorEmail" class="form-label">Vendor Email</label>
             <input type="email" class="form-control" formControlName="vendorEmail"
             id="vendorEmail" placeholder="">
           </div>
-          <div class="col-12 col-md-6 mb-3">
+          <div class="col-6 col-lg-6 mb-3">
             <label for="customerName" class="form-label">Customer Name</label>
             <input type="text" class="form-control" formControlName="customerName"
             id="customerName" placeholder="">
           </div>
-          <div class="col-12 col-md-6 mb-3">
-            <label for="customerAddress" class="form-label">Customer Address</label>
-            <input type="email" class="form-control" formControlName="customerAddress" id="customerAddress" placeholder="">
-          </div>
-          <div class="col-12 col-md-6 mb-3">
+          <div class="col-6 col-lg-6 mb-3">
             <label for="customerPhone" class="form-label">Customer Phone</label>
             <input type="email" class="form-control" formControlName="customerPhoneNumber"
             id="customerPhone" placeholder="">
           </div>
-          <div class="col-12 col-md-6 mb-3">
+          <div class="col-12 col-lg-6 mb-3">
+            <label for="customerAddress" class="form-label">Customer Address</label>
+            <input type="email" class="form-control" formControlName="customerAddress" id="customerAddress" placeholder="">
+          </div>
+         
+          <div class="col-6 col-lg-6 mb-3">
             <label for="invoiceNumber" class="form-label">Invoice Number</label>
             <input type="email" class="form-control" formControlName="invoiceNumber"
             id="invoiceNumber" placeholder="">
           </div>
-          <div class="col-12 col-md-6 mb-3">
+          <div class="col-6 col-lg-6 mb-3">
             <label for="invoiceDate" class="form-label">Invoice Date</label>
             <input type="text" formControlName="invoiceDate"
             class="form-control" id="invoiceDate" placeholder="">
           </div>
-          <div class="col-12 col-md-6 mb-3">
+          <div class="col-6 col-lg-6 mb-3">
             <label for="subTotal" class="form-label">Subtotal</label>
             <input type="text" formControlName="subTotal" class="form-control" id="subTotal" placeholder="">
           </div>
-          <div class="col-12 col-md-6 mb-3">
+          <div class="col-6 col-lg-6 mb-3">
             <label for="taxAmount" class="form-label">Tax Amount</label>
             <input type="text" formControlName="taxAmount"
             class="form-control" id="taxAmount" placeholder="">
           </div>
-          <div class="col-12 col-md-6 mb-3">
+          <div class="col-6 col-lg-6 mb-3">
             <label for="total" class="form-label">Total</label>
             <input type="text" class="form-control" formControlName="total"
             id="total" placeholder="">
           </div>
-          <div class="col-12 col-md-6 mb-3">
+         
+         
+          <div class="col-6 col-lg-6 mb-3">
             <label for="total" class="form-label">Category</label>
-            <select class="form-select" aria-label="Default Select Category">
+            <select class="form-select" aria-label="Default Select Category" (change)="onCategoryChange($event)">
               <option selected>Select Category</option>
               @for (item of expenseCategoriesDTO; track $index) {
                 <option value="{{item.categoryId}}">{{item.categoryName}}</option>
+              }
+            </select>
+          </div>
+          <div class="col-6 col-lg-6 mb-3">
+            <label for="total" class="form-label">Sub Category</label>
+            <select class="form-select" aria-label="Default Select Category">
+              <option selected>Select Sub Category</option>
+              @for (item of expenseSubCategoriesDTO; track $index) {
+                <option value="{{item.subCategoryId}}">{{item.subCategoryName}}</option>
               }
             </select>
           </div>
