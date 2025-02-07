@@ -122,21 +122,21 @@
         <table class="table table-striped table-bordered table-hover shadow-lg">
           <thead class="table-primary">
             <tr>
-              <th>Description</th>
-              <th>Qty</th>
-              <th>Unit</th>
-              <th>Discount</th>
-              <th>Total</th>
+              <th class="text-center">Description</th>
+              <th class="text-center">Qty</th>
+              <th class="text-center">Unit</th>
+              <th class="text-center">Discount</th>
+              <th class="text-center">Total</th>
             </tr>
           </thead>
           <tbody>
             @for (item of receiptDetails.receiptItems; track $index) {
             <tr>
-              <td>{{item.description}}</td>
-              <td>{{item.quantity}}</td>
-              <td>{{item.unitPrice}}</td>
-              <td>{{item.discount}}</td>
-              <td>{{item.totalPrice}}</td>
+              <td><input type="text" value="{{item.description}}" class="form-control" /></td>
+              <td><input type="text" value="{{item.quantity}}" class="form-control" /></td>
+              <td><input type="text" value="{{item.unitPrice}}" class="form-control" /></td>
+              <td><input type="text" value="{{item.discount}}" class="form-control" /></td>
+              <td><input type="text" value="{{item.totalPrice}}" class="form-control" /></td>
             </tr>
         }
           </tbody>
