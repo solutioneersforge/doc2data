@@ -13,10 +13,12 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import { exhaustMap, forkJoin } from 'rxjs';
+import { HeaderComponent } from './shared/header/header.component';
+import { ReceiptProcessComponent } from './receipts/receipt-process/receipt-process.component';
 
 @Component({
   selector: 'app-root',
-  imports: [ MatTableModule,
+  imports: [ MatTableModule, HeaderComponent, ReceiptProcessComponent,
     MatCardModule,
       MatButtonModule,
       MatIconModule,

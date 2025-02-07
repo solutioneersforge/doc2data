@@ -19,4 +19,10 @@
 	<ItemGroup>
 	  <Folder Include="Properties\PublishProfiles\" />
 	</ItemGroup>
+	<ItemGroup>
+	  <EditorConfigFiles Remove="C:\Coding Practices\doc2data\doc2data\API\FunctionAppDoc2Data\.editorconfig" />
+	</ItemGroup>
+	<ItemGroup>
+	  <None Include="C:\Coding Practices\doc2data\doc2data\API\FunctionAppDoc2Data\.editorconfig" />
+	</ItemGroup>
 </Project>
