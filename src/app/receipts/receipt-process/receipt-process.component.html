@@ -93,7 +93,15 @@
             <input type="text" class="form-control" formControlName="total"
             id="total" placeholder="">
           </div>
-          
+          <div class="col-12 col-md-6 mb-3">
+            <label for="total" class="form-label">Category</label>
+            <select class="form-select" aria-label="Default Select Category">
+              <option selected>Select Category</option>
+              @for (item of expenseCategoriesDTO; track $index) {
+                <option value="{{item.categoryId}}">{{item.categoryName}}</option>
+              }
+            </select>
+          </div>
         </div>
     </form>
     </div>

@@ -28,7 +28,7 @@ namespace FunctionAppDoc2Data
             {
                 return new OkObjectResult(new
                 {
-                    ParseData = _expenseSubExpenseRepository.GetExpenseSubExpenseCategory(),
+                    Data = _expenseSubExpenseRepository.GetExpenseSubExpenseCategory(),
                     Message = "Success",
                     IsSuccess = true
                 });

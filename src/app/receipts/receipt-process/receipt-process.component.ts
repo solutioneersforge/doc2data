@@ -1,8 +1,9 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ReceiptDetails } from '../../interfaces/receipt-details.model';
 import { ReceiptDetailsService } from '../../services/receipt-details.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { ExpenseCategoriesDTO } from '../../interfaces/expense-categories-dto';
 
 @Component({
   selector: 'app-receipt-process',
@@ -10,7 +11,10 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
   templateUrl: './receipt-process.component.html',
   styleUrl: './receipt-process.component.css'
 })
-export class ReceiptProcessComponent {
+export class ReceiptProcessComponent implements OnInit {
+  ngOnInit(): void {
+    this.getExpenseSubCategoriesDTO();
+  }
   imageUrl: string | ArrayBuffer | null = null;
   previewImage: string | ArrayBuffer | null = null;
   isLoading: boolean = true;
@@ -18,7 +22,7 @@ export class ReceiptProcessComponent {
     receiptDetailsService = inject(ReceiptDetailsService);
 
     domSanitizer = inject(DomSanitizer);
-    
+    expenseCategoriesDTO: ExpenseCategoriesDTO[] = [];
 
     selectedFile: File | null = null;
     previewPdf: SafeResourceUrl | null = null;
@@ -75,7 +79,7 @@ receiptDetails : ReceiptDetails = {
   
   onFileChange(event: any): void {
     const file = event.target.files[0];
-
+    
     this.selectedFile = event.target.files[0];
     debugger;
     if (file) {
@@ -146,5 +150,13 @@ receiptDetails : ReceiptDetails = {
               }},
               error: (data) => console.log(data),
                complete: () => {this.isLoading = false; this.loaderStarted = false;}});
+      }
+
+      getExpenseSubCategoriesDTO(){
+        this.receiptDetailsService.getExpenseSubCategoriesDTO().subscribe(data => {
+          this.expenseCategoriesDTO = data.data;
+          console.log("sdfsdf")
+          console.log(this.expenseCategoriesDTO)
+        });
       }
 }

@@ -15,4 +15,8 @@ export class ReceiptDetailsService {
     formData.append('file', file);
     return this.httpClient.post<any>(`${this.baseAddress}api/FunctionDoc2Data`, formData);
   }
+
+  getExpenseSubCategoriesDTO() : Observable<any>{
+    return this.httpClient.get<any>(`${this.baseAddress}api/FunctionAppCategoryExpenseType`);
+  }
 }
