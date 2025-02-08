@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace FunctionAppDoc2Data.Mappers;
 public static class ReceiptWithItemsMapper
@@ -24,7 +25,7 @@ public static class ReceiptWithItemsMapper
             MerchantId = 100,
             OtherCharge = 0.00M,
             PaymentTypeId = 1,
-            ReceiptDate = receiptMaster.InvoiceDate,
+            ReceiptDate = ValidateDate(receiptMaster.InvoiceDate),
             ReceiptNumber = receiptMaster.InvoiceNumber,
             ServiceCharge = 0.00M,
             StatusId = 1,
@@ -39,6 +40,16 @@ public static class ReceiptWithItemsMapper
             CustomerPhone = receiptMaster.CustomerPhone,
             ReceiptItems = GetReceiptItems(receiptMaster.ReceiptItemDTOs)
         };
+    }
+
+    private static DateTime ValidateDate(DateTime validDate)
+    {
+        if (validDate < new DateTime(1753, 1, 1) || validDate > new DateTime(9999, 12, 31))
+        {
+            // Handle invalid date (e.g., set to a default value or throw an error)
+            return DateTime.UtcNow; // Set a default or throw a specific exception.
+        }
+        return validDate;
     }
 
     private static ICollection<DataContext.ReceiptItem> GetReceiptItems(List<ReceiptItemDTO> receiptItems)

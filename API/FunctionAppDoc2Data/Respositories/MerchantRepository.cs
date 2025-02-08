@@ -6,8 +6,11 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace FunctionAppDoc2Data.Respositories;
 public class MerchantRepository : IMerchantRepository
@@ -40,28 +43,33 @@ public class MerchantRepository : IMerchantRepository
                     if (existingMerchantId.GetValueOrDefault() == 0)
                     {
                         await _docToDataDBContext.AddAsync(merchant).ConfigureAwait(false);
+                        await _docToDataDBContext.SaveChangesAsync().ConfigureAwait(false);
+                        await transaction.CommitAsync().ConfigureAwait(false);
+
+                        _logger.LogInformation($"Merchant with ID {merchant.MerchantId} created/updated successfully.");
+                        return merchant.MerchantId;
                     }
-                    else
-                    {
-                        merchant.MerchantId = existingMerchantId.GetValueOrDefault();
-                        var existingEntity = await _docToDataDBContext.Merchants
-                       .AsTracking() 
-                       .FirstOrDefaultAsync(m => m.MerchantId == merchant.MerchantId);
+                    //else
+                    //{
+                    //    merchant.MerchantId = existingMerchantId.GetValueOrDefault();
+                    //    var existingEntity = await _docToDataDBContext.Merchants
+                    //   .FirstOrDefaultAsync(m => m.MerchantId == merchant.MerchantId);
 
-                        if (existingEntity != null)
-                        {
-                            _docToDataDBContext.Entry(existingEntity).State = EntityState.Detached;
-                        }
+                    //    existingEntity.Address = merchant.Address;
+                    //    existingEntity.CompanyRegNo = merchant.CompanyRegNo;
+                    //    existingEntity.CountryId = merchant.CountryId;
+                    //    existingEntity.CreatedOn = merchant.CreatedOn;
+                    //    existingEntity.Email = merchant.Email;
+                    //    existingEntity.IsActive = merchant.IsActive;
+                    //    existingEntity.Name = merchant.Name;
+                    //    existingEntity.Phone = merchant.Phone;
+                    //    existingEntity.TaxCompanyRegNo = merchant.TaxCompanyRegNo;
+                    //    existingEntity.Website = merchant.Website;
+                    //}
 
-                        _docToDataDBContext.Attach(merchant);
-                        _docToDataDBContext.Update(merchant);
-                    }
+                    return existingMerchantId.GetValueOrDefault();
 
-                    await _docToDataDBContext.SaveChangesAsync().ConfigureAwait(false);
-                    await transaction.CommitAsync().ConfigureAwait(false);
 
-                    _logger.LogInformation($"Merchant with ID {merchant.MerchantId} created/updated successfully.");
-                    return merchant.MerchantId;
                 }
                 catch (Exception ex)
                 {
