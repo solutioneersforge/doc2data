@@ -18,11 +18,11 @@ public static class ExpenseCategoriesMapper
         {
             CategoryId = expenseCategory.CategoryId,
             CategoryName = expenseCategory.CategoryName,
-            IsActive = expenseCategory.IsActive,
+            IsActive = expenseCategory.IsActive.GetValueOrDefault(),
             ExpenseSubCategoriesDTOs = expenseCategory.ExpenseSubCategories.Select(subCategory => new ExpenseSubCategoriesDTO
             {
                 CategoryId = subCategory.CategoryId,
-                IsActive = subCategory.IsActive,
+                IsActive = subCategory.IsActive.GetValueOrDefault(),
                 SubCategoryId = subCategory.SubCategoryId,
                 SubCategoryName = subCategory.SubCategoryName
             })

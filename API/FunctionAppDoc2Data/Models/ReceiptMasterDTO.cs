@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace FunctionAppDoc2Data.Models;
 public class ReceiptMasterDTO
 {
+    public Guid UserId { get; set; }
     public string ImagePath { get; set; }
     public string VendorName { get; set; }
     public string VendorAddress { get; set; }

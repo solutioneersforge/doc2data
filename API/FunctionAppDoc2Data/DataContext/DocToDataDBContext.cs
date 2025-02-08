@@ -11,11 +11,6 @@ namespace FunctionAppDoc2Data.DataContext
         {
         }
 
-        //public DocToDataDBContext(DbContextOptions<DocToDataDBContext> options)
-        //    : base(options)
-        //{
-        //}
-
         public virtual DbSet<Country> Countries { get; set; }
         public virtual DbSet<Currency> Currencies { get; set; }
         public virtual DbSet<ExpenseCategory> ExpenseCategories { get; set; }
@@ -217,12 +212,6 @@ namespace FunctionAppDoc2Data.DataContext
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Receipts_Status");
 
-                entity.HasOne(d => d.SubCategory)
-                    .WithMany(p => p.Receipts)
-                    .HasForeignKey(d => d.SubCategoryId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Receipts_ExpenseSubCategories");
-
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Receipts)
                     .HasForeignKey(d => d.UserId)
@@ -273,20 +262,20 @@ namespace FunctionAppDoc2Data.DataContext
                 entity.ToTable("ReceiptItems", "Receipt");
 
                 entity.Property(e => e.ReceiptItemId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("ReceiptItemID");
+                    .HasColumnName("ReceiptItemID")
+                    .HasDefaultValueSql("(newid())");
 
                 entity.Property(e => e.Discount).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.ItemDescription)
+                    .IsRequired()
+                    .HasMaxLength(250);
+
+                entity.Property(e => e.Quantity).HasColumnType("decimal(18, 2)");
 
                 entity.Property(e => e.SubTotal).HasColumnType("decimal(18, 2)");
 
                 entity.Property(e => e.UnitPrice).HasColumnType("decimal(18, 2)");
-
-                entity.HasOne(d => d.Item)
-                    .WithMany(p => p.ReceiptItems)
-                    .HasForeignKey(d => d.ItemId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_ReceiptItems_Items");
 
                 entity.HasOne(d => d.Receipt)
                     .WithMany(p => p.ReceiptItems)

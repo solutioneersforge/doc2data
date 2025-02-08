@@ -12,7 +12,7 @@ namespace FunctionAppDoc2Data.DataContext
 
         public int CategoryId { get; set; }
         public string CategoryName { get; set; }
-        public bool IsActive { get; set; }
+        public bool? IsActive { get; set; }
 
         public virtual ICollection<ExpenseSubCategory> ExpenseSubCategories { get; set; }
     }

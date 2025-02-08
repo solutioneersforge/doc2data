@@ -1,26 +1,54 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ReceiptDetails } from '../../interfaces/receipt-details.model';
 import { ReceiptDetailsService } from '../../services/receipt-details.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ExpenseCategoriesDTO } from '../../interfaces/expense-categories-dto';
 import { ExpenseSubCategoriesDTO } from '../../interfaces/expense-sub-categories-dto';
+import { ReceiptMasterDTO } from '../../interfaces/receipt-master-dto';
+import { ReceiptItemDTO } from '../../interfaces/receipt-item-dto';
+import { NotificationService } from '../../services/notification.service';
+import { NotificationComponent } from '../../shared/header/notification.component';
 
 @Component({
   selector: 'app-receipt-process',
-  imports: [ReactiveFormsModule ],
+  imports: [ReactiveFormsModule, NotificationComponent ],
   templateUrl: './receipt-process.component.html',
   styleUrl: './receipt-process.component.css'
 })
 export class ReceiptProcessComponent implements OnInit {
   ngOnInit(): void {
+    
     this.getExpenseSubCategoriesDTO();
   }
   imageUrl: string | ArrayBuffer | null = null;
   previewImage: string | ArrayBuffer | null = null;
+  receiptItemDTOs: ReceiptItemDTO[] = [];
+  isSaveButtonEnable : boolean = false;
+
+  receiptMasterDTO: ReceiptMasterDTO = {
+    userId: null,
+    imagePath: null,
+    vendorName: null,
+    vendorAddress: null,
+    vendorPhone: null,
+    vendorEmail: null,
+    customerName: null,
+    customerAddress: null,
+    customerPhone: null,
+    invoiceNumber: null,
+    invoiceDate: null,
+    subTotal: null,
+    taxAmount: null,
+    total: null,
+    ReceiptItemDTOs: null
+  };
+  @ViewChild('fileInput') fileInput!: ElementRef;
   isLoading: boolean = true;
   loaderStarted : boolean = false;
+  isSaveLoader: boolean = false;
     receiptDetailsService = inject(ReceiptDetailsService);
+    notificationService = inject(NotificationService)
 
     domSanitizer = inject(DomSanitizer);
     expenseCategoriesDTO: ExpenseCategoriesDTO[] = [];
@@ -28,7 +56,7 @@ export class ReceiptProcessComponent implements OnInit {
 
     selectedFile: File | null = null;
     previewPdf: SafeResourceUrl | null = null;
-receiptDetails : ReceiptDetails = {
+    receiptDetails : ReceiptDetails = {
     receiptItems: [],
     transactionTime: null,
     issueDate: null,
@@ -83,7 +111,6 @@ receiptDetails : ReceiptDetails = {
     const file = event.target.files[0];
     
     this.selectedFile = event.target.files[0];
-    debugger;
     if (file) {
       this.receiptFormGroup.reset();
       this.receiptDetails.receiptItems = [];
@@ -97,10 +124,9 @@ receiptDetails : ReceiptDetails = {
         };
         reader.readAsDataURL(file);
       } else if (file.type === 'application/pdf') {
-        // PDF Preview
         const fileUrl = URL.createObjectURL(file);
         this.previewPdf = this.domSanitizer.bypassSecurityTrustResourceUrl(fileUrl);
-        this.previewImage = null;  // Reset image preview
+        this.previewImage = null;  
       }
     }
   }
@@ -148,10 +174,11 @@ receiptDetails : ReceiptDetails = {
                     vendorName: this.receiptDetails.vendorName,
                     vendorPhone: this.receiptDetails.vendorPhone
                   });
+                  this.isSaveButtonEnable = true;
               } else{
               }},
-              error: (data) => console.log(data),
-               complete: () => {this.isLoading = false; this.loaderStarted = false;}});
+              error: (data) => {console.log(data); this.isSaveButtonEnable = false;},
+               complete: () => {this.isLoading = false; this.loaderStarted = false; }});
       }
 
       getExpenseSubCategoriesDTO(){
@@ -167,5 +194,64 @@ receiptDetails : ReceiptDetails = {
   ? filteredCategories[0].expenseSubCategoriesDTOs 
   : [];
                
+      }
+
+      saveReceipt(){
+        this.isSaveLoader = true;
+        this.receiptMasterDTO.customerAddress = this.receiptFormGroup.value.customerAddress ?? null;
+        this.receiptMasterDTO.customerName = this.receiptFormGroup.value.customerName ?? null;
+        this.receiptMasterDTO.customerPhone = this.receiptFormGroup.value.customerPhoneNumber ?? null;
+        this.receiptMasterDTO.invoiceDate = this.receiptFormGroup.value.invoiceDate ?? null;
+        this.receiptMasterDTO.invoiceNumber = this.receiptFormGroup.value.invoiceNumber ?? null;
+        this.receiptMasterDTO.subTotal = this.receiptFormGroup.value.subTotal ?? null;
+        this.receiptMasterDTO.taxAmount = this.receiptFormGroup.value.subTotal ?? null;
+        this.receiptMasterDTO.total = this.receiptFormGroup.value.subTotal ?? null;
+        this.receiptMasterDTO.userId = "87C1CD94-D103-4D2B-890F-047A59FCA68D";
+        this.receiptMasterDTO.vendorAddress = this.receiptFormGroup.value.vendorAddress ?? null;
+        this.receiptMasterDTO.vendorEmail = this.receiptFormGroup.value.vendorEmail ?? null;
+        this.receiptMasterDTO.vendorName = this.receiptFormGroup.value.vendorName ?? null;
+        this.receiptMasterDTO.vendorPhone = this.receiptFormGroup.value.vendorPhone ?? null;
+        console.log(this.receiptDetails.receiptItems)
+        this.receiptDetails.receiptItems.forEach(data => {
+            this.receiptItemDTOs?.push({
+              discount : data.discount,
+              itemDescription : data.description,
+              quantity : data.quantity,
+              total : data.totalPrice,
+              unitPrice : data.unitPrice
+            })
+        });
+        this.receiptMasterDTO.ReceiptItemDTOs = this.receiptItemDTOs ?? null;
+
+        this.receiptDetailsService
+              .postAppCreateReceipt(this.receiptMasterDTO)
+              .subscribe( {
+                    next: data => {
+                if(data.isSuccess == true){
+                  this.resetControl();this.notificationService.show(data.data);
+                        }
+                  },
+                error: (error) => console.error(error),
+                complete: () => this.isSaveLoader = false  
+                },
+                );
+          }
+
+      notification(){
+        this.notificationService.show('This is a success notification!');
+      }
+
+      resetControl(){
+        this.selectedFile = null;
+        this.isSaveButtonEnable = false;
+        this.receiptFormGroup.reset();
+        this.receiptDetails.receiptItems = [];
+        this.imageUrl = null;
+        this.previewPdf = this.domSanitizer.bypassSecurityTrustResourceUrl('');
+        this.previewImage = null;
+        this.isLoading = false;this.previewImage = null;this.previewPdf = null;
+        if (this.fileInput) {
+          this.fileInput.nativeElement.value = ''; // Clear the input
+        }
       }
 }

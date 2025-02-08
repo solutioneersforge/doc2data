@@ -1,4 +1,5 @@
 <div class="container-fluid">
+  <app-notification></app-notification>
     <div class="row">
       <div class="col-12 col-lg-6">
         <div class="p-5">
@@ -6,7 +7,7 @@
             <div class="form-group">
               <label for="imageUpload" class="form-label">Choose an Image</label>
               <input
-              class="primary" type="file" class="form-control" (change)="onFileChange($event)" accept="image/*, application/pdf" />
+              class="primary"#fileInput  type="file" class="form-control" (change)="onFileChange($event)" accept="image/*, application/pdf" />
               <button [disabled]="isLoading" (click)="processReceipt()" class="btn btn-primary m-2" style="float: right;">Process Image</button>
               @if(loaderStarted){
                 <div class="d-flex justify-content-center">
@@ -97,7 +98,7 @@
           </div>
          
          
-          <div class="col-6 col-lg-6 mb-3">
+          <!-- <div class="col-6 col-lg-6 mb-3">
             <label for="total" class="form-label">Category</label>
             <select class="form-select" aria-label="Default Select Category" (change)="onCategoryChange($event)">
               <option selected>Select Category</option>
@@ -114,16 +115,26 @@
                 <option value="{{item.subCategoryId}}">{{item.subCategoryName}}</option>
               }
             </select>
-          </div>
+          </div> -->
           
         </div>
     </form>
     <div class="row">
       <div class="col-6 col-lg-6 mb-3">
-        <button class="btn btn-danger" style="width: 100%;">Reset</button>
+        <button (click)="resetControl()" class="btn btn-danger" style="width: 100%;">Reset</button>
       </div>
       <div class="col-6 col-lg-6 mb-3">
-        <button class="btn btn-primary" style="width: 100%;">Save</button>
+        @if(isSaveLoader){
+          <div class="d-flex justify-content-center">
+              <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+            </div>
+        }
+        @else {
+          <button [disabled]="!isSaveButtonEnable" (click)="saveReceipt()" class="btn btn-primary" style="width: 100%;">Save</button>
+        }
+       
       </div>
     </div>
     </div>
@@ -154,4 +165,6 @@
       
     </div>
   </div>
+
+
   

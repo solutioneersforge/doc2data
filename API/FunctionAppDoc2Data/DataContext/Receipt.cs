@@ -17,7 +17,6 @@ namespace FunctionAppDoc2Data.DataContext
         public string ReceiptNumber { get; set; }
         public DateTime ReceiptDate { get; set; }
         public int? MerchantId { get; set; }
-        public int SubCategoryId { get; set; }
         public int CountryId { get; set; }
         public int PaymentTypeId { get; set; }
         public int CurrencyId { get; set; }
@@ -35,7 +34,6 @@ namespace FunctionAppDoc2Data.DataContext
         public virtual Currency Currency { get; set; }
         public virtual PaymentType PaymentType { get; set; }
         public virtual Status Status { get; set; }
-        public virtual ExpenseSubCategory SubCategory { get; set; }
         public virtual User User { get; set; }
         public virtual ICollection<ReceiptCategory> ReceiptCategories { get; set; }
         public virtual ICollection<ReceiptImage> ReceiptImages { get; set; }

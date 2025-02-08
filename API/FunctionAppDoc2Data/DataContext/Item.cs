@@ -7,7 +7,6 @@ namespace FunctionAppDoc2Data.DataContext
     {
         public Item()
         {
-            ReceiptItems = new HashSet<ReceiptItem>();
             StockTransactions = new HashSet<StockTransaction>();
         }
 
@@ -17,7 +16,6 @@ namespace FunctionAppDoc2Data.DataContext
         public bool IsActive { get; set; }
         public DateTime CreatedOn { get; set; }
 
-        public virtual ICollection<ReceiptItem> ReceiptItems { get; set; }
         public virtual ICollection<StockTransaction> StockTransactions { get; set; }
     }
 }

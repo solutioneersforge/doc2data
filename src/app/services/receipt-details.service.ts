@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { environment } from '../../environments/environments';
 import { ReceiptDetails } from '../interfaces/receipt-details.model';
 import { Observable } from 'rxjs';
+import { ReceiptMasterDTO } from '../interfaces/receipt-master-dto';
 
 @Injectable({
   providedIn: 'root'
@@ -18,5 +19,10 @@ export class ReceiptDetailsService {
 
   getExpenseSubCategoriesDTO() : Observable<any>{
     return this.httpClient.get<any>(`${this.baseAddress}api/FunctionAppCategoryExpenseType`);
+  }
+
+
+  postAppCreateReceipt(receiptMasterDTO: ReceiptMasterDTO) : Observable<any>{
+    return this.httpClient.post<any>(`${this.baseAddress}api/FunctionAppCreateReceipt`,receiptMasterDTO);
   }
 }

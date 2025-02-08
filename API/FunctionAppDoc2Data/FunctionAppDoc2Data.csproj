@@ -25,6 +25,7 @@
 		</None>
 	</ItemGroup>
 	<ItemGroup>
+	  <Folder Include="Services\" />
 	  <Folder Include="Properties\PublishProfiles\" />
 	</ItemGroup>
 	<ItemGroup>
