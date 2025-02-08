@@ -248,7 +248,7 @@ namespace FunctionAppDoc2Data.DataContext
                     .HasColumnName("ReceiptImageID")
                     .HasDefaultValueSql("(newid())");
 
-                entity.Property(e => e.FileName)
+                entity.Property(e => e.OriginalFileName)
                     .IsRequired()
                     .HasMaxLength(150);
 

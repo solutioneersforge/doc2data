@@ -42,12 +42,28 @@ public static class ReceiptWithItemsMapper
         };
     }
 
+    public static ReceiptImage MapToReceiptImage(this Models.ReceiptMasterDTO receiptMaster)
+    {
+        if (receiptMaster == null)
+        {
+            throw new ArgumentNullException(nameof(receiptMaster));
+        }
+
+        return new ReceiptImage()
+        {
+            OriginalFileName = receiptMaster.OriginalFileName,
+            ImagePath = receiptMaster.ImagePath,
+            IsDelete = false,
+            UploadedDateTime = DateTime.UtcNow
+        };
+
+    }
+
     private static DateTime ValidateDate(DateTime validDate)
     {
         if (validDate < new DateTime(1753, 1, 1) || validDate > new DateTime(9999, 12, 31))
         {
-            // Handle invalid date (e.g., set to a default value or throw an error)
-            return DateTime.UtcNow; // Set a default or throw a specific exception.
+            return DateTime.UtcNow;
         }
         return validDate;
     }

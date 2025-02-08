@@ -2,7 +2,6 @@ import { ReceiptItemDTO } from "./receipt-item-dto";
 
 export interface ReceiptMasterDTO {
     userId: string | null;
-    imagePath: string | null;
     vendorName: string | null;
     vendorAddress: string | null;
     vendorPhone: string | null;

@@ -1,12 +1,13 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Internal;
 using System;
+using System.Buffers.Text;
 using System.Collections.Generic;
 
 namespace FunctionAppDoc2Data.Models;
 public class ReceiptMasterDTO
 {
     public Guid UserId { get; set; }
-    public IFormFile ImagePath { get; set; }
     public string VendorName { get; set; }
     public string VendorAddress { get; set; }
     public string VendorPhone { get; set; }
@@ -19,5 +20,7 @@ public class ReceiptMasterDTO
     public decimal SubTotal { get; set; }
     public decimal TaxAmount { get; set; }
     public decimal Total { get; set; }
+    public string ImagePath { get; set; }
+    public string OriginalFileName { get; set; }
     public List<ReceiptItemDTO> ReceiptItemDTOs { get; set; }
 }

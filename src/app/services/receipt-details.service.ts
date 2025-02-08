@@ -10,6 +10,7 @@ import { ReceiptMasterDTO } from '../interfaces/receipt-master-dto';
 })
 export class ReceiptDetailsService {
   baseAddress : string = environment.apiUrl; 
+  formData = new FormData();
   constructor(private httpClient : HttpClient) { }
   getReceiptItemsDetails(file: any): Observable<any>{
     const formData = new FormData();
@@ -22,7 +23,10 @@ export class ReceiptDetailsService {
   }
 
 
-  postAppCreateReceipt(receiptMasterDTO: ReceiptMasterDTO) : Observable<any>{
-    return this.httpClient.post<any>(`${this.baseAddress}api/FunctionAppCreateReceipt`,receiptMasterDTO);
+  postAppCreateReceipt(receiptMasterDTO: ReceiptMasterDTO, file: any) : Observable<any>{
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('receiptMasterDTO', JSON.stringify(receiptMasterDTO));
+    return this.httpClient.post<any>(`${this.baseAddress}api/FunctionAppCreateReceipt`,formData);
   }
 }

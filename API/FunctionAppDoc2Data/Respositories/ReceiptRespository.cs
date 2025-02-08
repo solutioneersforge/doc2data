@@ -39,9 +39,15 @@ public class ReceiptRespository : IReceiptRespository
         var result = receiptMaster.MapToReceiptEntity();
         result.MerchantId = merchantId;
 
+        
         try
         {
             await _docToDataDBContext.AddAsync<Receipt>(result);
+
+            var receiptImages = receiptMaster.MapToReceiptImage();
+            receiptImages.ReceiptId = result.ReceiptId;
+            await _docToDataDBContext.AddAsync<ReceiptImage>(receiptImages);
+
             await _docToDataDBContext.SaveChangesAsync();
         }
         catch (Exception ex)

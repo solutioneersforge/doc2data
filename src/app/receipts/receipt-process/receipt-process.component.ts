@@ -28,7 +28,6 @@ export class ReceiptProcessComponent implements OnInit {
 
   receiptMasterDTO: ReceiptMasterDTO = {
     userId: null,
-    imagePath: null,
     vendorName: null,
     vendorAddress: null,
     vendorPhone: null,
@@ -154,7 +153,6 @@ export class ReceiptProcessComponent implements OnInit {
         this.receiptDetailsService
               .getReceiptItemsDetails(this.selectedFile)
               .subscribe({next: (data : any) => {
-                console.log(data)
                 if(data.isSuccess == true)
                 {
                   this.receiptDetails = data.parseData
@@ -224,7 +222,7 @@ export class ReceiptProcessComponent implements OnInit {
         this.receiptMasterDTO.ReceiptItemDTOs = this.receiptItemDTOs ?? null;
 
         this.receiptDetailsService
-              .postAppCreateReceipt(this.receiptMasterDTO)
+              .postAppCreateReceipt(this.receiptMasterDTO, this.selectedFile)
               .subscribe( {
                     next: data => {
                 if(data.isSuccess == true){
@@ -254,4 +252,6 @@ export class ReceiptProcessComponent implements OnInit {
           this.fileInput.nativeElement.value = ''; // Clear the input
         }
       }
+
+      
 }

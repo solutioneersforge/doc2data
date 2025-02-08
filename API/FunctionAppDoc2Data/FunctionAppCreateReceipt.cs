@@ -9,6 +9,8 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using FunctionAppDoc2Data.Models;
 using FunctionAppDoc2Data.Respositories;
+using System.Net.Http;
+using FunctionAppDoc2Data.Services;
 
 namespace FunctionAppDoc2Data
 {
@@ -28,10 +30,20 @@ namespace FunctionAppDoc2Data
         {
             try
             {
+                var file = req.Form.Files["file"];
+                string filePath = String.Empty;
+                if (file != null && file.Length > 0)
+                {
+                    filePath = await UploadImageToAzure.UploadImage(file);
+                }
+
                 using StreamReader reader = new(req.Body);
                 string bodyStr = await reader.ReadToEndAsync();
+                var receiptMasterStr = req.Form["receiptMasterDTO"];
 
-                var receiptMaster = JsonConvert.DeserializeObject<ReceiptMasterDTO>(bodyStr);
+                var receiptMaster = JsonConvert.DeserializeObject<ReceiptMasterDTO>(receiptMasterStr);
+                receiptMaster.ImagePath = filePath;
+                receiptMaster.OriginalFileName = file.FileName;
 
                 await _receiptRespository.CreateReceipt(receiptMaster);
 
