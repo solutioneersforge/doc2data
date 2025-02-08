@@ -29,6 +29,9 @@ namespace FunctionAppDoc2Data.DataContext
         public DateTime CreatedOn { get; set; }
         public DateTime? UpdatedOn { get; set; }
         public int StatusId { get; set; }
+        public string CustomerName { get; set; }
+        public string CustomerPhone { get; set; }
+        public string CustomerAddress { get; set; }
 
         public virtual Country Country { get; set; }
         public virtual Currency Currency { get; set; }

@@ -34,6 +34,9 @@ public static class ReceiptWithItemsMapper
             TotalAmount = receiptMaster.Total,
             UserId = receiptMaster.UserId,
             CurrencyId = 1,
+            CustomerAddress = receiptMaster.CustomerAddress,
+            CustomerName = receiptMaster.CustomerName,
+            CustomerPhone = receiptMaster.CustomerPhone,
             ReceiptItems = GetReceiptItems(receiptMaster.ReceiptItemDTOs)
         };
     }

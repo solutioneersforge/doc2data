@@ -170,6 +170,12 @@ namespace FunctionAppDoc2Data.DataContext
 
                 entity.Property(e => e.CreatedOn).HasColumnType("datetime");
 
+                entity.Property(e => e.CustomerAddress).HasMaxLength(500);
+
+                entity.Property(e => e.CustomerName).HasMaxLength(150);
+
+                entity.Property(e => e.CustomerPhone).HasMaxLength(20);
+
                 entity.Property(e => e.Discount).HasColumnType("decimal(18, 2)");
 
                 entity.Property(e => e.OtherCharge).HasColumnType("decimal(18, 2)");
