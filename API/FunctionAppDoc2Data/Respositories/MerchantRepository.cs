@@ -49,27 +49,7 @@ public class MerchantRepository : IMerchantRepository
                         _logger.LogInformation($"Merchant with ID {merchant.MerchantId} created/updated successfully.");
                         return merchant.MerchantId;
                     }
-                    //else
-                    //{
-                    //    merchant.MerchantId = existingMerchantId.GetValueOrDefault();
-                    //    var existingEntity = await _docToDataDBContext.Merchants
-                    //   .FirstOrDefaultAsync(m => m.MerchantId == merchant.MerchantId);
-
-                    //    existingEntity.Address = merchant.Address;
-                    //    existingEntity.CompanyRegNo = merchant.CompanyRegNo;
-                    //    existingEntity.CountryId = merchant.CountryId;
-                    //    existingEntity.CreatedOn = merchant.CreatedOn;
-                    //    existingEntity.Email = merchant.Email;
-                    //    existingEntity.IsActive = merchant.IsActive;
-                    //    existingEntity.Name = merchant.Name;
-                    //    existingEntity.Phone = merchant.Phone;
-                    //    existingEntity.TaxCompanyRegNo = merchant.TaxCompanyRegNo;
-                    //    existingEntity.Website = merchant.Website;
-                    //}
-
                     return existingMerchantId.GetValueOrDefault();
-
-
                 }
                 catch (Exception ex)
                 {

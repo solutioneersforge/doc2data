@@ -209,7 +209,7 @@ export class ReceiptProcessComponent implements OnInit {
         this.receiptMasterDTO.vendorEmail = this.receiptFormGroup.value.vendorEmail ?? null;
         this.receiptMasterDTO.vendorName = this.receiptFormGroup.value.vendorName ?? null;
         this.receiptMasterDTO.vendorPhone = this.receiptFormGroup.value.vendorPhone ?? null;
-        console.log(this.receiptDetails.receiptItems)
+        
         this.receiptDetails.receiptItems.forEach(data => {
             this.receiptItemDTOs?.push({
               discount : data.discount,
@@ -225,6 +225,7 @@ export class ReceiptProcessComponent implements OnInit {
               .postAppCreateReceipt(this.receiptMasterDTO, this.selectedFile)
               .subscribe( {
                     next: data => {
+                      console.log(data)
                 if(data.isSuccess == true){
                   this.resetControl();this.notificationService.show(data.data);
                         }

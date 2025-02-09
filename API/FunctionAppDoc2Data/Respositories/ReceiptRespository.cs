@@ -52,10 +52,9 @@ public class ReceiptRespository : IReceiptRespository
         }
         catch (Exception ex)
         {
-
+            _logger.LogError(ex, "An error occurred while creating or updating the merchant.");
+            throw new ApplicationException("An error occurred while creating or updating the merchant.", ex);
         }
-        
-
-        return 1;
+        return merchantId;
     }
 }
