@@ -152,11 +152,11 @@
           <tbody>
             @for (item of receiptDetails.receiptItems; track $index) {
             <tr>
-              <td><input type="text" value="{{item.description}}" class="form-control" /></td>
-              <td><input type="text" value="{{item.quantity}}" class="form-control" /></td>
-              <td><input type="text" value="{{item.unitPrice}}" class="form-control" /></td>
-              <td><input type="text" value="{{item.discount}}" class="form-control" /></td>
-              <td><input type="text" value="{{item.totalPrice}}" class="form-control" /></td>
+              <td><input type="text" [(ngModel)]="item.description" class="form-control" /></td>
+              <td><input type="text" [(ngModel)]="item.quantity" class="form-control" /></td>
+              <td><input type="text" [(ngModel)]="item.unitPrice" class="form-control" /></td>
+              <td><input type="text" [(ngModel)]="item.discount" class="form-control" /></td>
+              <td><input type="text" [(ngModel)]="item.totalPrice" class="form-control" /></td>
             </tr>
         }
           </tbody>

@@ -1,5 +1,5 @@
 import { Component, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ReceiptDetails } from '../../interfaces/receipt-details.model';
 import { ReceiptDetailsService } from '../../services/receipt-details.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
@@ -12,7 +12,7 @@ import { NotificationComponent } from '../../shared/header/notification.componen
 
 @Component({
   selector: 'app-receipt-process',
-  imports: [ReactiveFormsModule, NotificationComponent ],
+  imports: [ReactiveFormsModule, NotificationComponent, FormsModule   ],
   templateUrl: './receipt-process.component.html',
   styleUrl: './receipt-process.component.css'
 })
@@ -220,7 +220,7 @@ export class ReceiptProcessComponent implements OnInit {
             })
         });
         this.receiptMasterDTO.ReceiptItemDTOs = this.receiptItemDTOs ?? null;
-
+   
         this.receiptDetailsService
               .postAppCreateReceipt(this.receiptMasterDTO, this.selectedFile)
               .subscribe( {
