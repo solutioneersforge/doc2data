@@ -8,17 +8,17 @@ using System.Text.RegularExpressions;
 namespace FunctionAppDoc2Data;
 public static class DocDataHelper
 {
-    public static decimal GetNumberFromString(decimal value, string contentString)
+    public static decimal GetNumberFromString(decimal value, string contentString, string price = "")
     {
         try
         {
-            if (!String.IsNullOrEmpty(contentString))
+            if (!String.IsNullOrEmpty(contentString) || !String.IsNullOrEmpty(price))
             {
                 if (!String.IsNullOrEmpty(value.ToString()) && value != 0)
                 {
                     return value;
                 }
-                else
+                else if(!String.IsNullOrEmpty(contentString))
                 {
                     contentString = Regex.Replace(contentString, @"[^\d.,-]", "");
                     if (decimal.TryParse(contentString, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal result))
@@ -26,6 +26,18 @@ public static class DocDataHelper
                         return result;
                     }
                     if (decimal.TryParse(contentString, NumberStyles.Any, CultureInfo.CurrentCulture, out result))
+                    {
+                        return result;
+                    }
+                }
+                else
+                {
+                    price = Regex.Replace(price, @"[^\d.,-]", "");
+                    if (decimal.TryParse(price, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal result))
+                    {
+                        return result;
+                    }
+                    if (decimal.TryParse(price, NumberStyles.Any, CultureInfo.CurrentCulture, out result))
                     {
                         return result;
                     }
