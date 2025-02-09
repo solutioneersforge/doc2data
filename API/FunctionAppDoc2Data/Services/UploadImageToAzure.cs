@@ -12,7 +12,7 @@ public static class UploadImageToAzure
 {
     public async static Task<string> UploadImage(IFormFile formFile)
     {
-        string connectionString = Environment.GetEnvironmentVariable("AZURESTORAGE_CONNECTIONSTRING");
+        string connectionString = Environment.GetEnvironmentVariable("AZURESTORAGE_CONNECTION_STRING");
         string containerName = Environment.GetEnvironmentVariable("AZURESTORAGE_CONTAINER_NAME");
         string uniqueFileName = Guid.NewGuid().ToString() + Path.GetExtension(formFile.FileName);
 
