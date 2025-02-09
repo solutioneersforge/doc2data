@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace FunctionAppDoc2Data;
@@ -20,14 +21,10 @@ public static class DocDataHelper
                 else
                 {
                     contentString = Regex.Replace(contentString, @"[^\d.,-]", "");
-
-                    // Try parsing the number using invariant culture
                     if (decimal.TryParse(contentString, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal result))
                     {
                         return result;
                     }
-
-                    // Try parsing with the current culture in case of localized formats
                     if (decimal.TryParse(contentString, NumberStyles.Any, CultureInfo.CurrentCulture, out result))
                     {
                         return result;
@@ -43,7 +40,6 @@ public static class DocDataHelper
 
     public static List<DateTime?> ListParseStringsToDateTime(params string[] dateStrings)
     {
-        // Define the possible date formats you expect
         string[] dateFormats = new[]
         {
             "yyyy-MM-dd",
@@ -64,7 +60,6 @@ public static class DocDataHelper
 
         foreach (var dateString in dateStrings)
         {
-            // Remove extra characters (non-digits, non-letters, and non-separators)
             string cleanedString = Regex.Replace(dateString, @"[^0-9a-zA-Z\/\-\.\s,]", "");
 
             DateTime parsedDate;
@@ -79,13 +74,12 @@ public static class DocDataHelper
             }
             else
             {
-                parsedDates.Add(null); // Add null if parsing fails
+                parsedDates.Add(null);
             }
         }
 
         return parsedDates;
     }
-
 
     public static DateTime? ParseStringsToDateTime(string dateStrings)
     {
@@ -121,5 +115,36 @@ public static class DocDataHelper
         }
 
         return null;
+    }
+
+    public static string GetFirstNonEmptyValue(this string value, params string[] names)
+    {
+        if(!String.IsNullOrEmpty(value))
+        {
+            return value;
+        }
+        if (names == null || names.Length == 0)
+        {
+            return string.Empty;
+        }
+        return names.FirstOrDefault(name => !string.IsNullOrEmpty(name)) ?? string.Empty;
+    }
+
+    public static DateTime GetFirstNonEmptyDateTime(this DateTime value, params DateTime[] names)
+    {
+        if (value != DateTime.MinValue)
+        {
+            return value;
+        }
+
+        foreach (var name in names)
+        {
+            if (name != DateTime.MinValue)
+            {
+                return name;
+            }
+        }
+
+        return DateTime.UtcNow;
     }
 }
