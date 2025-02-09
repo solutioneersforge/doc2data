@@ -4,4 +4,5 @@ export interface ReceiptItemDTO {
     unitPrice: number | null;
     discount: number | null;
     total: number | null;
+    subcategoryId: number | null;
 }

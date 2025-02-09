@@ -12,4 +12,5 @@ public class ReceiptItemDTO
     public decimal UnitPrice { get; set; }
     public decimal Discount { get; set; }
     public decimal Total { get; set; }
+    public int SubCategoryId { get; set; }
 }

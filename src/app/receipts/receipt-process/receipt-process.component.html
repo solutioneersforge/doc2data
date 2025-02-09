@@ -143,6 +143,7 @@
           <thead class="table-primary">
             <tr>
               <th class="text-center">Description</th>
+              <th class="text-center">Expense</th>
               <th class="text-center">Qty</th>
               <th class="text-center">Unit</th>
               <th class="text-center">Discount</th>
@@ -153,6 +154,16 @@
             @for (item of receiptDetails.receiptItems; track $index) {
             <tr>
               <td><input type="text" [(ngModel)]="item.description" class="form-control" /></td>
+              <td>
+                <select class="form-select" aria-label="Default Select Category" [(ngModel)]="item.subcategoryId">
+                  <option selected>Select Sub Category</option>
+                  @for (item of expenseCategoriesDTO; track $index) {
+                    @for (itemSub of item.expenseSubCategoriesDTOs; track $index) {
+                      <option value="{{itemSub.subCategoryId}}">{{itemSub.subCategoryName}}</option>
+                    }
+                  }
+                </select>
+              </td>
               <td><input type="text" [(ngModel)]="item.quantity" class="form-control" /></td>
               <td><input type="text" [(ngModel)]="item.unitPrice" class="form-control" /></td>
               <td><input type="text" [(ngModel)]="item.discount" class="form-control" /></td>

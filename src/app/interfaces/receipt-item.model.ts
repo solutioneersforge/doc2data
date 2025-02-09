@@ -6,4 +6,5 @@ export interface ReceiptItem {
   unitPrice: number;
   totalPrice: number;
   discount: number;
+  subcategoryId: number ;
 }

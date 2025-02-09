@@ -77,7 +77,8 @@ public static class ReceiptWithItemsMapper
             Discount = m.Discount,
             Quantity = m.Quantity,
             SubTotal = m.Total,
-            UnitPrice = m.UnitPrice
+            UnitPrice = m.UnitPrice,
+            SubCategoryId = m.SubCategoryId
         }).ToList();
     }
 }

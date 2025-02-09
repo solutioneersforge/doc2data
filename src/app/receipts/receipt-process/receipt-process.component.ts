@@ -209,14 +209,15 @@ export class ReceiptProcessComponent implements OnInit {
         this.receiptMasterDTO.vendorEmail = this.receiptFormGroup.value.vendorEmail ?? null;
         this.receiptMasterDTO.vendorName = this.receiptFormGroup.value.vendorName ?? null;
         this.receiptMasterDTO.vendorPhone = this.receiptFormGroup.value.vendorPhone ?? null;
-        
+        this.receiptItemDTOs = [];
         this.receiptDetails.receiptItems.forEach(data => {
             this.receiptItemDTOs?.push({
               discount : data.discount,
               itemDescription : data.description,
               quantity : data.quantity,
               total : data.totalPrice,
-              unitPrice : data.unitPrice
+              unitPrice : data.unitPrice,
+              subcategoryId: data.subcategoryId
             })
         });
         this.receiptMasterDTO.ReceiptItemDTOs = this.receiptItemDTOs ?? null;
@@ -241,6 +242,7 @@ export class ReceiptProcessComponent implements OnInit {
       }
 
       resetControl(){
+        this.receiptItemDTOs = [];
         this.selectedFile = null;
         this.isSaveButtonEnable = false;
         this.receiptFormGroup.reset();
