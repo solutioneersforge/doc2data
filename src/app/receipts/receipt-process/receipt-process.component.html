@@ -81,6 +81,7 @@
             <label for="invoiceDate" class="form-label">Invoice Date</label>
             <input type="text" formControlName="invoiceDate"
             class="form-control" id="invoiceDate" placeholder="">
+            
           </div>
           <div class="col-6 col-lg-6 mb-3">
             <label for="subTotal" class="form-label">Subtotal</label>
@@ -146,7 +147,7 @@
               <th class="text-center">Expense</th>
               <th class="text-center">Qty</th>
               <th class="text-center">Unit</th>
-              <th class="text-center">Discount</th>
+              <!-- <th class="text-center">Discount</th> -->
               <th class="text-center">Total</th>
             </tr>
           </thead>
@@ -166,7 +167,7 @@
               </td>
               <td><input type="text" [(ngModel)]="item.quantity" class="form-control" /></td>
               <td><input type="text" [(ngModel)]="item.unitPrice" class="form-control" /></td>
-              <td><input type="text" [(ngModel)]="item.discount" class="form-control" /></td>
+              <!-- <td><input type="text" [(ngModel)]="item.discount" class="form-control" /></td> -->
               <td><input type="text" [(ngModel)]="item.totalPrice" class="form-control" /></td>
             </tr>
         }
