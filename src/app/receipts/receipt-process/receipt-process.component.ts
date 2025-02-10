@@ -202,8 +202,8 @@ export class ReceiptProcessComponent implements OnInit {
         this.receiptMasterDTO.invoiceDate = this.receiptFormGroup.value.invoiceDate ?? null;
         this.receiptMasterDTO.invoiceNumber = this.receiptFormGroup.value.invoiceNumber ?? null;
         this.receiptMasterDTO.subTotal = this.receiptFormGroup.value.subTotal ?? null;
-        this.receiptMasterDTO.taxAmount = this.receiptFormGroup.value.subTotal ?? null;
-        this.receiptMasterDTO.total = this.receiptFormGroup.value.subTotal ?? null;
+        this.receiptMasterDTO.taxAmount = this.receiptFormGroup.value.taxAmount ?? null;
+        this.receiptMasterDTO.total = this.receiptFormGroup.value.total ?? null;
         this.receiptMasterDTO.userId = "87C1CD94-D103-4D2B-890F-047A59FCA68D";
         this.receiptMasterDTO.vendorAddress = this.receiptFormGroup.value.vendorAddress ?? null;
         this.receiptMasterDTO.vendorEmail = this.receiptFormGroup.value.vendorEmail ?? null;
