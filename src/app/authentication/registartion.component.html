@@ -1,0 +1,50 @@
+<div class="container d-flex justify-content-center align-items-center vh-100">
+    <div class="card shadow-lg p-4 rounded-3" style="max-width: 500px; width: 100%;">
+      <h2 class="text-center mb-4">Register</h2>
+      
+      <form (ngSubmit)="onSubmit()">
+        <!-- First Name -->
+        <div class="mb-3">
+          <label for="firstName" class="form-label">First Name</label>
+          <input type="text" class="form-control" id="firstName" placeholder="Enter your first name" [(ngModel)]="firstName" name="firstName" required />
+        </div>
+  
+        <!-- Last Name -->
+        <div class="mb-3">
+          <label for="lastName" class="form-label">Last Name</label>
+          <input type="text" class="form-control" id="lastName" placeholder="Enter your last name" [(ngModel)]="lastName" name="lastName" required />
+        </div>
+  
+        <!-- Email -->
+        <div class="mb-3">
+          <label for="email" class="form-label">Email address</label>
+          <input type="email" class="form-control" id="email" placeholder="Enter email" [(ngModel)]="email" name="email" required />
+        </div>
+  
+        <!-- Password -->
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input type="password" class="form-control" id="password" placeholder="Enter password" [(ngModel)]="password" name="password" required />
+        </div>
+  
+        <!-- Confirm Password -->
+        <div class="mb-3">
+          <label for="confirmPassword" class="form-label">Confirm Password</label>
+          <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm your password" [(ngModel)]="confirmPassword" name="confirmPassword" required />
+        </div>
+  
+        <!-- Captcha -->
+        <div class="mb-3 d-flex justify-content-between align-items-center">
+          <label for="captcha" class="form-label mb-0">Captcha</label>
+          <div class="d-flex justify-content-between align-items-center w-100">
+            <input type="text" class="form-control me-2" id="captcha" placeholder="Enter Captcha" [(ngModel)]="captchaInput" name="captcha" required />
+            <span class="captcha-display">5 + 3</span> <!-- Simple Captcha Text -->
+          </div>
+        </div>
+  
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary w-100">Register</button>
+      </form>
+    </div>
+  </div>
+  
