@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using FunctionAppDoc2Data.Models;
+using System.Collections.Generic;
 using System.Linq;
 
-namespace FunctionAppDoc2Data;
+namespace FunctionAppDoc2Data.Helpers;
 public class ReceiptItemParseData
 {
     public static ReceiptDetails GetReceiptDetails(Rootobject rootobject)
@@ -29,7 +30,7 @@ public class ReceiptItemParseData
             DueDate = receipt.DueDate.valueDate,
             ExchangeRate = receipt.ExchangeRate.valueNumber,
             InvoiceDate = receipt.InvoiceDate.valueDate.
-                    GetFirstNonEmptyDateTime(receipt.TransactionDate.valueDate, receipt.InvoiceDate.valueDate), 
+                    GetFirstNonEmptyDateTime(receipt.TransactionDate.valueDate, receipt.InvoiceDate.valueDate),
             InvoiceNumber = receipt.InvoiceNumber.content.GetFirstNonEmptyValue(receipt.OrderNumber.content),
             IssueDate = receipt.IssueDate.valueDate,
             IssueTime = receipt.IssueTime.valueDate,
@@ -86,8 +87,8 @@ public class ReceiptItemParseData
         return listOfReceiptItems;
     }
 
-    private static decimal ValidateTotal(decimal quantity, decimal unitPrice, decimal discount) 
+    private static decimal ValidateTotal(decimal quantity, decimal unitPrice, decimal discount)
     {
-       return (quantity * unitPrice) - discount;        
+        return quantity * unitPrice - discount;
     }
 }

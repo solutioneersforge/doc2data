@@ -5,20 +5,20 @@ using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace FunctionAppDoc2Data;
+namespace FunctionAppDoc2Data.Helpers;
 public static class DocDataHelper
 {
     public static decimal GetNumberFromString(decimal value, string contentString, string price = "")
     {
         try
         {
-            if (!String.IsNullOrEmpty(contentString) || !String.IsNullOrEmpty(price))
+            if (!string.IsNullOrEmpty(contentString) || !string.IsNullOrEmpty(price))
             {
-                if (!String.IsNullOrEmpty(value.ToString()) && value != 0)
+                if (!string.IsNullOrEmpty(value.ToString()) && value != 0)
                 {
                     return value;
                 }
-                else if(!String.IsNullOrEmpty(contentString))
+                else if (!string.IsNullOrEmpty(contentString))
                 {
                     contentString = Regex.Replace(contentString, @"[^\d.,-]", "");
                     if (decimal.TryParse(contentString, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal result))
@@ -45,7 +45,8 @@ public static class DocDataHelper
             }
             return 0;
         }
-        catch { 
+        catch
+        {
             return 0;
         }
     }
@@ -76,8 +77,8 @@ public static class DocDataHelper
 
             DateTime parsedDate;
             bool success = DateTime.TryParseExact(cleanedString, dateFormats,
-                                                  System.Globalization.CultureInfo.InvariantCulture,
-                                                  System.Globalization.DateTimeStyles.None,
+                                                  CultureInfo.InvariantCulture,
+                                                  DateTimeStyles.None,
                                                   out parsedDate);
 
             if (success)
@@ -117,8 +118,8 @@ public static class DocDataHelper
 
         DateTime parsedDate;
         bool success = DateTime.TryParseExact(cleanedString, dateFormats,
-                                              System.Globalization.CultureInfo.InvariantCulture,
-                                              System.Globalization.DateTimeStyles.None,
+                                              CultureInfo.InvariantCulture,
+                                              DateTimeStyles.None,
                                               out parsedDate);
 
         if (success)
@@ -131,7 +132,7 @@ public static class DocDataHelper
 
     public static string GetFirstNonEmptyValue(this string value, params string[] names)
     {
-        if(!String.IsNullOrEmpty(value))
+        if (!string.IsNullOrEmpty(value))
         {
             return value;
         }

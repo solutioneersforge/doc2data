@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace FunctionAppDoc2Data;
+namespace FunctionAppDoc2Data.Models;
 public class ReceiptDetails
 {
     public DateTime TransactionDate { get; set; }

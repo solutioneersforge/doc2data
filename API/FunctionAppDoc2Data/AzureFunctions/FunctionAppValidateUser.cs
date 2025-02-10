@@ -8,11 +8,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
-namespace FunctionAppDoc2Data
+namespace FunctionAppDoc2Data.AzureFunctions
 {
-    public static class FunctionAppUserRegistration
+    public static class FunctionAppValidateUser
     {
-        [FunctionName("FunctionAppUserRegistration")]
+        [FunctionName("FunctionAppValidateUser")]
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req,
             ILogger log)

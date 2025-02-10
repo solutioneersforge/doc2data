@@ -5,6 +5,11 @@ namespace FunctionAppDoc2Data.DataContext
 {
     public partial class Merchant
     {
+        public Merchant()
+        {
+            Receipts = new HashSet<Receipt>();
+        }
+
         public int MerchantId { get; set; }
         public string Name { get; set; }
         public string Address { get; set; }
@@ -16,5 +21,7 @@ namespace FunctionAppDoc2Data.DataContext
         public string Website { get; set; }
         public string CompanyRegNo { get; set; }
         public string TaxCompanyRegNo { get; set; }
+
+        public virtual ICollection<Receipt> Receipts { get; set; }
     }
 }

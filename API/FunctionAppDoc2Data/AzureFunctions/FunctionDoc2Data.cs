@@ -10,13 +10,15 @@ using System.Net.Http;
 using System.Text;
 using System.Linq;
 using Microsoft.Extensions.Configuration;
+using FunctionAppDoc2Data.Models;
+using FunctionAppDoc2Data.Helpers;
 
-namespace FunctionAppDoc2Data
+namespace FunctionAppDoc2Data.AzureFunctions
 {
-    public  class FunctionDoc2Data
+    public class FunctionDoc2Data
     {
         [FunctionName("FunctionDoc2Data")]
-        public  async Task<IActionResult> Run(
+        public async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req,
             ILogger log)
         {
@@ -41,7 +43,7 @@ namespace FunctionAppDoc2Data
                     HttpContent content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
 
 
-                    _httpClient.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key",Environment.GetEnvironmentVariable("OcpApimSubscriptionKey"));
+                    _httpClient.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", Environment.GetEnvironmentVariable("OcpApimSubscriptionKey"));
 
                     try
                     {
@@ -62,7 +64,7 @@ namespace FunctionAppDoc2Data
 
                             while (retryCount < maxRetryCount && statusMessage.ToLower() != "succeeded")
                             {
-                                string getURL = String.Format(Environment.GetEnvironmentVariable("GetCognitiveServices"), requestId);
+                                string getURL = string.Format(Environment.GetEnvironmentVariable("GetCognitiveServices"), requestId);
                                 HttpResponseMessage responseGet = await httpClient.GetAsync($"{getURL}");
                                 if (responseGet.IsSuccessStatusCode)
                                 {

@@ -7,8 +7,9 @@ using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using FunctionAppDoc2Data.Respositories;
 
-namespace FunctionAppDoc2Data
+namespace FunctionAppDoc2Data.AzureFunctions
 {
     public class FunctionAppCategoryExpenseType
     {

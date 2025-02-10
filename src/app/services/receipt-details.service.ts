@@ -29,4 +29,8 @@ export class ReceiptDetailsService {
     formData.append('receiptMasterDTO', JSON.stringify(receiptMasterDTO));
     return this.httpClient.post<any>(`${this.baseAddress}api/FunctionAppCreateReceipt`,formData);
   }
+
+  getFunctionAppReceiptDashboard() : Observable<any>{
+    return this.httpClient.get<any>(`${this.baseAddress}api/FunctionAppReceiptDashboard`);
+  }
 }

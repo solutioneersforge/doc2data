@@ -12,7 +12,7 @@ using FunctionAppDoc2Data.Respositories;
 using System.Net.Http;
 using FunctionAppDoc2Data.Services;
 
-namespace FunctionAppDoc2Data
+namespace FunctionAppDoc2Data.AzureFunctions
 {
     public class FunctionAppCreateReceipt
     {
@@ -22,7 +22,7 @@ namespace FunctionAppDoc2Data
         {
             _receiptRespository = receiptRespository;
         }
-        
+
         [FunctionName("FunctionAppCreateReceipt")]
         public async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req,
@@ -31,7 +31,7 @@ namespace FunctionAppDoc2Data
             try
             {
                 var file = req.Form.Files["file"];
-                string filePath = String.Empty;
+                string filePath = string.Empty;
                 if (file != null && file.Length > 0)
                 {
                     filePath = await UploadImageToAzure.UploadImage(file);

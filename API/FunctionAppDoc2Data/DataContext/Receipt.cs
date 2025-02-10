@@ -35,6 +35,7 @@ namespace FunctionAppDoc2Data.DataContext
 
         public virtual Country Country { get; set; }
         public virtual Currency Currency { get; set; }
+        public virtual Merchant Merchant { get; set; }
         public virtual PaymentType PaymentType { get; set; }
         public virtual Status Status { get; set; }
         public virtual User User { get; set; }

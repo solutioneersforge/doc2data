@@ -1,7 +1,7 @@
 ﻿using System;
 
 
-namespace FunctionAppDoc2Data;
+namespace FunctionAppDoc2Data.Models;
 public class Rootobject
 {
     public string status { get; set; }

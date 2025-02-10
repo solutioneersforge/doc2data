@@ -11,6 +11,7 @@ namespace FunctionAppDoc2Data.DataContext
         }
 
         public int CategoryId { get; set; }
+        public int? ClientId { get; set; }
         public string CategoryName { get; set; }
         public bool? IsActive { get; set; }
 
