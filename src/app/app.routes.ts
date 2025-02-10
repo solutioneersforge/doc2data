@@ -13,8 +13,8 @@ export const routes: Routes = [
     {path: 'home', component: HomeComponent},
     {path: 'contact', component: ContactComponent},
     {path: 'about', component: AboutComponent},
-    {path: 'receiptprocess', component: ReceiptProcessComponent},
-    {path: 'receiptdashboard', component: ReceiptProcessDashboardComponent},
+    {path: 'scanner', component: ReceiptProcessComponent},
+    {path: 'dashboard', component: ReceiptProcessDashboardComponent},
     {path: 'login', component: LoginComponent},
     {path: 'register', component: RegistartionComponent},
     {path: '**', component:PagenotfoundComponent}
