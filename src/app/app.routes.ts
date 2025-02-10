@@ -7,6 +7,7 @@ import { PagenotfoundComponent } from './shared/header/pagenotfound/pagenotfound
 import { LoginComponent } from './authentication/login.component';
 import { RegistartionComponent } from './authentication/registartion.component';
 import { ReceiptProcessDashboardComponent } from './receipts/receipt-process-dashboard.component';
+import { ReceiptVerificationComponent } from './receipts/receipt-verification.component';
 
 export const routes: Routes = [
     {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -15,6 +16,7 @@ export const routes: Routes = [
     {path: 'about', component: AboutComponent},
     {path: 'scanner', component: ReceiptProcessComponent},
     {path: 'dashboard', component: ReceiptProcessDashboardComponent},
+    {path: 'receiptverification/:id', component: ReceiptVerificationComponent},
     {path: 'login', component: LoginComponent},
     {path: 'register', component: RegistartionComponent},
     {path: '**', component:PagenotfoundComponent}
