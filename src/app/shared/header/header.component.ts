@@ -8,5 +8,10 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   styleUrl: './header.component.css'
 })
 export class HeaderComponent {
-
+  collapseNavbar() {
+    const navbarCollapse = document.getElementById('navbarNav');
+    if (navbarCollapse) {
+      navbarCollapse.classList.remove('show');
+    }
+  }
 }
