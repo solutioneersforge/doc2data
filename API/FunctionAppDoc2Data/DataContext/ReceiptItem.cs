@@ -13,7 +13,5 @@ namespace FunctionAppDoc2Data.DataContext
         public decimal Discount { get; set; }
         public decimal SubTotal { get; set; }
         public int? SubCategoryId { get; set; }
-
-        public virtual Receipt Receipt { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FunctionAppDoc2Data.Models;
+using System;
 using System.Collections.Generic;
 
 namespace FunctionAppDoc2Data.DataContext
@@ -9,7 +10,6 @@ namespace FunctionAppDoc2Data.DataContext
         {
             ReceiptCategories = new HashSet<ReceiptCategory>();
             ReceiptImages = new HashSet<ReceiptImage>();
-            ReceiptItems = new HashSet<ReceiptItem>();
         }
 
         public Guid ReceiptId { get; set; }

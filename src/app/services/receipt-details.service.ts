@@ -33,4 +33,8 @@ export class ReceiptDetailsService {
   getFunctionAppReceiptDashboard() : Observable<any>{
     return this.httpClient.get<any>(`${this.baseAddress}api/FunctionAppReceiptDashboard`);
   }
+
+  getFunctionAppReceiptVerification(receiptId: string) : Observable<any>{
+    return this.httpClient.get<any>(`${this.baseAddress}api/FunctionAppReceiptVerification?receiptId=`+ receiptId);
+  }
 }
