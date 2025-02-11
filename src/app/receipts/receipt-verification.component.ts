@@ -15,6 +15,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class ReceiptVerificationComponent implements OnInit {
   imageBase64: string = '';
   isImage: boolean = true;
+  isLoading = true;
   constructor(private activatedRoute: ActivatedRoute, private router: Router){
 
   }
@@ -80,7 +81,8 @@ export class ReceiptVerificationComponent implements OnInit {
 
 
     getFunctionAppReceiptVerification(receiptId: string){
-      this.receiptDetailsService.getFunctionAppReceiptVerification(receiptId).subscribe(data => {
+      this.isLoading = true;
+      this.receiptDetailsService.getFunctionAppReceiptVerification(receiptId).subscribe({ next: data => {
         this.receiptVerificationMaster = data.data;
         this.isImage = this.receiptVerificationMaster.isImage;
         this.imageBase64 = this.receiptVerificationMaster.image;
@@ -99,7 +101,10 @@ export class ReceiptVerificationComponent implements OnInit {
           vendorPhone: this.receiptVerificationMaster.vendorPhone,
           imageBase64: this.receiptVerificationMaster.image
         });
-      });
+      },
+      error: (error) => console.error(error),
+      complete: () => this.isLoading = false 
+     });
     }
 
     displayDataToFormControl(){
