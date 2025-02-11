@@ -51,6 +51,8 @@ public static class DocDataHelper
         }
     }
 
+
+
     public static List<DateTime?> ListParseStringsToDateTime(params string[] dateStrings)
     {
         string[] dateFormats = new[]
