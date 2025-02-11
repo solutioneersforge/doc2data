@@ -4,7 +4,7 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angul
 import { ReceiptDetailsService } from '../services/receipt-details.service';
 import { ExpenseCategoriesDTO } from '../interfaces/expense-categories-dto';
 import { ReceiptVerificationMasterDTO } from '../interfaces/receipt-verification-master-dto';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-receipt-verification',
@@ -15,7 +15,7 @@ import { ActivatedRoute } from '@angular/router';
 export class ReceiptVerificationComponent implements OnInit {
   imageBase64: string = '';
   isImage: boolean = true;
-  constructor(private activatedRoute: ActivatedRoute){
+  constructor(private activatedRoute: ActivatedRoute, private router: Router){
 
   }
   ngOnInit() {
@@ -111,6 +111,6 @@ export class ReceiptVerificationComponent implements OnInit {
   }
 
   resetControl(){
-
+    this.router.navigate(['/dashboard']);
   }
 }
