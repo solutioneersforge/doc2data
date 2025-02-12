@@ -17,6 +17,7 @@ export class ReceiptVerificationComponent implements OnInit {
   imageBase64: string = '';
   isImageLoad: boolean = true;
   isLoading = true;
+  currentIndex: number = 0;
   constructor(private activatedRoute: ActivatedRoute, private router: Router){
 
   }
@@ -123,7 +124,24 @@ export class ReceiptVerificationComponent implements OnInit {
 
   }
 
-  resetControl(){
+  backToDashBoard(){
     this.router.navigate(['/dashboard']);
+  }
+
+  nextItem() {
+    if (this.currentIndex < this.receiptVerificationMaster.receiptVerificationItems.length - 1) {
+      this.currentIndex++;
+    }
+  }
+
+  previousItem(){
+    if (this.currentIndex >= this.receiptVerificationMaster.receiptVerificationItems.length - 1) {
+      this.currentIndex--;
+    }
+  }
+
+  get currentItem() {
+    console.warn(this.receiptVerificationMaster.receiptVerificationItems[this.currentIndex]);
+    return this.receiptVerificationMaster.receiptVerificationItems[this.currentIndex];
   }
 }
