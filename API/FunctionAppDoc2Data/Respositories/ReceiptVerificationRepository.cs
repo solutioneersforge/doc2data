@@ -26,6 +26,7 @@ public class ReceiptVerificationRepository : IReceiptVerificationRepository
     public ReceiptVerificationMasterDTO GetReceiptVerification(Guid receiptId)
     {
         var result = _docToDataDBContext.Receipts
+                                        .AsNoTracking()
                                         .Include(m => m.ReceiptItems)
                                         .Include(m => m.ReceiptImages)
                                         .Include(m => m.Merchant)

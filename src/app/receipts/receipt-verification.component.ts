@@ -5,21 +5,23 @@ import { ReceiptDetailsService } from '../services/receipt-details.service';
 import { ExpenseCategoriesDTO } from '../interfaces/expense-categories-dto';
 import { ReceiptVerificationMasterDTO } from '../interfaces/receipt-verification-master-dto';
 import { ActivatedRoute, Router } from '@angular/router';
+import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-receipt-verification',
-  imports: [ReactiveFormsModule, FormsModule],
+  imports: [ReactiveFormsModule, FormsModule, JsonPipe],
   templateUrl: './receipt-verification.component.html',
   styleUrl: './receipt-verification.component.css'
 })
 export class ReceiptVerificationComponent implements OnInit {
   imageBase64: string = '';
-  isImage: boolean = true;
+  isImageLoad: boolean = true;
   isLoading = true;
   constructor(private activatedRoute: ActivatedRoute, private router: Router){
 
   }
   ngOnInit() {
+     
     this.activatedRoute.params.subscribe(data => {
       this.getFunctionAppReceiptVerification(data["id"]);
     });
@@ -83,8 +85,9 @@ export class ReceiptVerificationComponent implements OnInit {
     getFunctionAppReceiptVerification(receiptId: string){
       this.isLoading = true;
       this.receiptDetailsService.getFunctionAppReceiptVerification(receiptId).subscribe({ next: data => {
+        console.log(data.data)
         this.receiptVerificationMaster = data.data;
-        this.isImage = this.receiptVerificationMaster.isImage;
+        this.isImageLoad = this.receiptVerificationMaster.isImage;
         this.imageBase64 = this.receiptVerificationMaster.image;
         this.receiptFormGroup.setValue({
           vendorAddress : this.receiptVerificationMaster.vendorAddress,
@@ -99,11 +102,16 @@ export class ReceiptVerificationComponent implements OnInit {
           vendorEmail: this.receiptVerificationMaster.vendorEmail,
           vendorName: this.receiptVerificationMaster.vendorName,
           vendorPhone: this.receiptVerificationMaster.vendorPhone,
-          imageBase64: this.receiptVerificationMaster.image
+          imageBase64: this.receiptVerificationMaster.image,
         });
+
+        this.receiptVerificationMaster.receiptVerificationItems = data.data.receiptVerificationItems;
+
+        console.warn(this.receiptVerificationMaster.receiptVerificationItems);
       },
       error: (error) => console.error(error),
-      complete: () => this.isLoading = false 
+      complete: () => {
+        this.isLoading = false; this.getExpenseSubCategoriesDTO(); }
      });
     }
 

@@ -22,8 +22,6 @@
                 <p class="card-text">Invoice#: {{ item.receiptNumber }}</p>
                 <p class="card-text">Date: {{ item.receiptDate | date }}</p>
                 <p class="card-text">Customer: {{ item.customerName }}</p>
-                <!-- <p class="card-text">Customer Phone: {{ item.customerPhone }}</p> -->
-                <!-- <p class="card-text">Customer Address: {{ item.customerAddress }}</p> -->
                 <a [routerLink]="['/receiptverification',item.receiptId]" class="btn btn-danger ms-auto">Details</a>
               </div>
             </div>

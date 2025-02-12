@@ -19,5 +19,5 @@ export interface ReceiptVerificationMasterDTO {
     image: string;
     originalFileName: string;
     isImage: boolean;
-    receiptVerificationItems: ReceiptVerificationItemsDTO[];
+    receiptVerificationItems: ReceiptVerificationItemsDTO[] ;
 }

@@ -34,7 +34,7 @@ namespace FunctionAppDoc2Data.DataContext
             {
                 optionsBuilder.UseLazyLoadingProxies(false);
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=tcp:dbs-solutioneersforge.database.windows.net,1433;Initial Catalog=db-doc2data;Persist Security Info=False;User ID=serveradmin;Password=9U[X!mDG2_n89Ep:;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30");
+                optionsBuilder.UseSqlServer("Server=tcp:dbs-solutioneersforge.database.windows.net,1433;Initial Catalog=db-doc2data;Persist Security Info=False;User ID=serveradmin;Password=9U[X!mDG2_n89Ep:;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30; Max Pool Size = 500");
             }
         }
 
