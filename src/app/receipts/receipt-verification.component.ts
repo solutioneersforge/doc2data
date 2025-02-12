@@ -5,11 +5,11 @@ import { ReceiptDetailsService } from '../services/receipt-details.service';
 import { ExpenseCategoriesDTO } from '../interfaces/expense-categories-dto';
 import { ReceiptVerificationMasterDTO } from '../interfaces/receipt-verification-master-dto';
 import { ActivatedRoute, Router } from '@angular/router';
-import { JsonPipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-receipt-verification',
-  imports: [ReactiveFormsModule, FormsModule, JsonPipe],
+  imports: [ReactiveFormsModule, FormsModule, CommonModule],
   templateUrl: './receipt-verification.component.html',
   styleUrl: './receipt-verification.component.css'
 })
@@ -19,14 +19,12 @@ export class ReceiptVerificationComponent implements OnInit {
   isLoading = true;
   currentIndex: number = 0;
   constructor(private activatedRoute: ActivatedRoute, private router: Router){
-
   }
+
   ngOnInit() {
-     
     this.activatedRoute.params.subscribe(data => {
       this.getFunctionAppReceiptVerification(data["id"]);
     });
-    
   }
 
   imageUrl: string | ArrayBuffer | null = null;
@@ -58,8 +56,6 @@ export class ReceiptVerificationComponent implements OnInit {
     receiptVerificationItems: []
   };
   
-
-
   receiptFormGroup = new FormGroup({
     vendorName : new FormControl(this.receiptVerificationMaster.vendorName,[]),
     vendorAddress : new FormControl(this.receiptVerificationMaster.vendorAddress, []),
@@ -76,49 +72,45 @@ export class ReceiptVerificationComponent implements OnInit {
     imageBase64 : new FormControl(this.receiptVerificationMaster.image,[])
   });
 
-    getExpenseSubCategoriesDTO(){
-      this.receiptDetailsService.getExpenseSubCategoriesDTO().subscribe(data => {
-        this.expenseCategoriesDTO = data.data;
-      });
-    }
+  getExpenseSubCategoriesDTO(){
+    this.receiptDetailsService.getExpenseSubCategoriesDTO().subscribe(data => {
+      this.expenseCategoriesDTO = data.data;
+    });
+  }
 
+  getFunctionAppReceiptVerification(receiptId: string){
+          this.isLoading = true;
+          this.receiptDetailsService.getFunctionAppReceiptVerification(receiptId).subscribe({ next: data => {
+            console.log(data.data)
+            this.receiptVerificationMaster = data.data;
+            this.isImageLoad = this.receiptVerificationMaster.isImage;
+            this.imageBase64 = this.receiptVerificationMaster.image;
+            this.receiptFormGroup.setValue({
+              vendorAddress : this.receiptVerificationMaster.vendorAddress,
+              customerAddress: this.receiptVerificationMaster.customerAddress,
+              customerName: this.receiptVerificationMaster.customerName,
+              customerPhoneNumber: this.receiptVerificationMaster.customerPhone,
+              invoiceDate: this.receiptVerificationMaster.invoiceDate,
+              invoiceNumber: this.receiptVerificationMaster.invoiceNumber,
+              subTotal: this.receiptVerificationMaster.subTotal,
+              taxAmount: this.receiptVerificationMaster.taxAmount,
+              total : this.receiptVerificationMaster.total,
+              vendorEmail: this.receiptVerificationMaster.vendorEmail,
+              vendorName: this.receiptVerificationMaster.vendorName,
+              vendorPhone: this.receiptVerificationMaster.vendorPhone,
+              imageBase64: this.receiptVerificationMaster.image,
+            });
+            this.receiptVerificationMaster.receiptVerificationItems = data.data.receiptVerificationItems;
+          },
+          error: (error) => console.error(error),
+          complete: () => {
+            this.isLoading = false; this.getExpenseSubCategoriesDTO(); }
+          });
+        }
 
-    getFunctionAppReceiptVerification(receiptId: string){
-      this.isLoading = true;
-      this.receiptDetailsService.getFunctionAppReceiptVerification(receiptId).subscribe({ next: data => {
-        console.log(data.data)
-        this.receiptVerificationMaster = data.data;
-        this.isImageLoad = this.receiptVerificationMaster.isImage;
-        this.imageBase64 = this.receiptVerificationMaster.image;
-        this.receiptFormGroup.setValue({
-          vendorAddress : this.receiptVerificationMaster.vendorAddress,
-          customerAddress: this.receiptVerificationMaster.customerAddress,
-          customerName: this.receiptVerificationMaster.customerName,
-          customerPhoneNumber: this.receiptVerificationMaster.customerPhone,
-          invoiceDate: this.receiptVerificationMaster.invoiceDate,
-          invoiceNumber: this.receiptVerificationMaster.invoiceNumber,
-          subTotal: this.receiptVerificationMaster.subTotal,
-          taxAmount: this.receiptVerificationMaster.taxAmount,
-          total : this.receiptVerificationMaster.total,
-          vendorEmail: this.receiptVerificationMaster.vendorEmail,
-          vendorName: this.receiptVerificationMaster.vendorName,
-          vendorPhone: this.receiptVerificationMaster.vendorPhone,
-          imageBase64: this.receiptVerificationMaster.image,
-        });
-
-        this.receiptVerificationMaster.receiptVerificationItems = data.data.receiptVerificationItems;
-
-        console.warn(this.receiptVerificationMaster.receiptVerificationItems);
-      },
-      error: (error) => console.error(error),
-      complete: () => {
-        this.isLoading = false; this.getExpenseSubCategoriesDTO(); }
-     });
-    }
-
-    displayDataToFormControl(){
-      
-    }
+  displayDataToFormControl(){
+    
+      }
       
   saveReceipt(){
 
@@ -129,19 +121,45 @@ export class ReceiptVerificationComponent implements OnInit {
   }
 
   nextItem() {
-    if (this.currentIndex < this.receiptVerificationMaster.receiptVerificationItems.length - 1) {
-      this.currentIndex++;
+    if (!(this.currentIndex < this.receiptVerificationMaster.receiptVerificationItems.length - 1)) {
+      this.receiptVerificationMaster.receiptVerificationItems.push({
+        discount: 0,
+        itemDescription : '',
+        quantity : 0,
+        receiptItemID: '',
+        subCategoryId : null,
+        subCategoryName: '',
+        total: 0,
+        unitPrice: 0
+      });
     }
+    this.currentIndex++;
+    this.updateItemTotal(this.currentIndex);
   }
 
   previousItem(){
-    if (this.currentIndex >= this.receiptVerificationMaster.receiptVerificationItems.length - 1) {
-      this.currentIndex--;
-    }
+    this.currentIndex--;
+    this.updateItemTotal(this.currentIndex);
   }
 
   get currentItem() {
-    console.warn(this.receiptVerificationMaster.receiptVerificationItems[this.currentIndex]);
-    return this.receiptVerificationMaster.receiptVerificationItems[this.currentIndex];
+    return this.receiptVerificationMaster.receiptVerificationItems[this.currentIndex] 
   }
+
+  updateItemTotal(index: number) {
+    const item = this.receiptVerificationMaster.receiptVerificationItems[index];
+    item.total = (item.quantity  * item.unitPrice ) - (item.discount );
+  }
+
+  adjustItemInfo(){
+    this.currentIndex = 0;
+  }
+
+  removeItem(){
+    this.receiptVerificationMaster.receiptVerificationItems.splice(this.currentIndex, 1);
+    this.nextItem();
+  }
+  
 }
+
+

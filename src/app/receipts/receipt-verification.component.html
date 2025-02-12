@@ -103,7 +103,7 @@
           <button (click)="backToDashBoard()" class="btn btn-danger" style="width: 100%;">Back</button>
         </div>
         <div class="col-4 col-lg-4 mb-3">
-          <button data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-outline-primary" style="width: 100%;">Adjust Item Info</button>
+          <button data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="adjustItemInfo()" class="btn btn-outline-primary" style="width: 100%;">Adjust Item Info</button>
         </div>
         <div class="col-4 col-lg-4 mb-3">
           @if(isSaveLoader){
@@ -166,34 +166,50 @@
 
 
 
+    
+  }
+
+  @if(currentItem){
+  <form #itemForm="ngForm">
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
           <div class="modal-header bg-primary text-white">
-            <h5 class="modal-title" id="exampleModalLabel">Add Item</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Adjust Item</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
             <div class="mb-4">
               <label for="itemDescription" class="form-label" >Item Description</label>
-              <input type="text" name="itemDescription" [(ngModel)] = "currentItem.itemDescription" class="form-control" id="itemDescription" placeholder="Enter item description" required>
+              <input type="text" name="itemDescription" [(ngModel)] = "currentItem.itemDescription" 
+                    class="form-control" id="itemDescription" placeholder="Enter item description" required #itemDescription="ngModel"
+                    [ngClass]="{'is-invalid': itemDescription.touched && itemDescription.invalid, 'is-valid': itemDescription.touched && itemDescription.valid}">
             </div>
             <div class="mb-4">
               <label for="unitPrice" class="form-label" >Unit Price ($)</label>
-              <input type="number" name="unitPrice"  [(ngModel)] = "currentItem.unitPrice" class="form-control" id="unitPrice" placeholder="Enter unit price" required>
+              <input type="number" #unitPrice = "ngModel" (keyup) ="updateItemTotal(this.currentIndex)" name="unitPrice"  [(ngModel)] = "currentItem.unitPrice" 
+              class="form-control" id="unitPrice" placeholder="Enter unit price" required
+              [ngClass]="{'is-invalid': unitPrice.touched && unitPrice.invalid, 'is-valid': unitPrice.touched && unitPrice.valid}"
+              >
             </div>
             <div class="mb-4">
               <label for="quantity" class="form-label">Quantity</label>
-              <input type="number" name="quantity"  class="form-control" id="quantity" placeholder="Enter quantity" required [(ngModel)] = "currentItem.quantity">
+              <input (keyup) ="updateItemTotal(this.currentIndex)" type="number" name="quantity"  
+              class="form-control" id="quantity" placeholder="Enter quantity" required [(ngModel)] = "currentItem.quantity"
+              #quantity = "ngModel" required
+              [ngClass]="{'is-invalid': quantity.touched && quantity.invalid, 'is-valid': quantity.touched && quantity.valid}"
+              >
             </div>
             <!-- <div class="mb-4">
               <label for="discount" class="form-label">Discount (%)</label>
-              <input type="number" class="form-control" id="discount" value="0" placeholder="Enter discount (optional)">
+              <input type="number" (ngModelChange)="updateItemTotal(this.currentIndex)" class="form-control" id="discount" value="0" placeholder="Enter discount (optional)">
             </div> -->
             <div class="mb-4">
               <label for="expense" class="form-label">Expense</label>
-              <select name="subCategoryId" class="form-select" aria-label="Default Select Category" [(ngModel)]="currentItem.subCategoryId">
-                <option selected>Select Sub Category</option>
+              <select name="subCategoryId" class="form-select" aria-label="Default Select Category"
+            [(ngModel)]="currentItem.subCategoryId" #subCategory="ngModel" required
+            [ngClass]="{'is-invalid': subCategory.touched && subCategory.invalid, 'is-valid': subCategory.touched && subCategory.valid}">
+              
                 @for (item of expenseCategoriesDTO; track $index) {
                   @for (itemSub of item.expenseSubCategoriesDTOs; track $index) {
                     <option value="{{itemSub.subCategoryId}}">{{itemSub.subCategoryName}}</option>
@@ -203,18 +219,21 @@
             </div>
             <div class="mb-4">
               <label for="total" class="form-label">Total ($)</label>
-              <input type="number"  name= "total" class="form-control" id="total" readonly placeholder="Calculated total" [(ngModel)] = "currentItem.total">
+              <input type="number"  name= "total" class="form-control" id="total" placeholder="Calculated total" 
+                      [(ngModel)] = "currentItem.total">
             </div>
             <div class="d-flex justify-content-between">
-              <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Remove</button>
+              <!-- <button type="button"  class="btn btn-outline-secondary" data-bs-dismiss="modal">Remove</button> -->
+              <button type="button"  class="btn btn-outline-secondary" (click)="removeItem()">Remove</button>
               <button type="button" class="btn btn-outline-info" (click)="previousItem()" [disabled]="currentIndex === 0">Previous</button>
-              <button type="submit" class="btn btn-primary" (click)="nextItem()" [disabled]="currentIndex === receiptVerificationMaster.receiptVerificationItems.length - 1">Next</button>
+              <button [disabled]="!itemForm.valid" type="submit" class="btn btn-primary" (click)="nextItem()">Next</button>
             </div>
           </div>
         </div>
       </div>
     </div>
-  }
+  </form>
+}
 
   
 
