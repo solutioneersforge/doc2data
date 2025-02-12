@@ -1,4 +1,12 @@
-<div class="container-fluid">
+@if(isLoading){
+  <div class="container d-flex justify-content-center align-items-center primary" style="height: 100vh;">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+}
+@else {
+  <div class="container-fluid">
     <div class="row p-5">
       
         @for (item of receiptDashboardDTO; track $index) {
@@ -24,4 +32,7 @@
 
     </div>
 </div>
+}
+
+
 

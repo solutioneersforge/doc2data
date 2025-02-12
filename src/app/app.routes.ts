@@ -10,7 +10,6 @@ import { ReceiptProcessDashboardComponent } from './receipts/receipt-process-das
 import { ReceiptVerificationComponent } from './receipts/receipt-verification.component';
 
 export const routes: Routes = [
-    {path: '', redirectTo: '/home', pathMatch: 'full'},
     {path: 'home', component: HomeComponent},
     {path: 'contact', component: ContactComponent},
     {path: 'about', component: AboutComponent},
@@ -19,5 +18,6 @@ export const routes: Routes = [
     {path: 'receiptverification/:id', component: ReceiptVerificationComponent},
     {path: 'login', component: LoginComponent},
     {path: 'register', component: RegistartionComponent},
+    {path: '', redirectTo: '/home', pathMatch: 'full'},
     {path: '**', component:PagenotfoundComponent}
 ];

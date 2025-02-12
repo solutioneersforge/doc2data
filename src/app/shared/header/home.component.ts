@@ -7,5 +7,12 @@ import { Component } from '@angular/core';
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
+  title = 'Receipt Scanner App';
 
+  onFileSelected(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      console.log('File selected:', file.name);
+    }
+  }
 }
