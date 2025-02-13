@@ -4,6 +4,7 @@ import { environment } from '../../environments/environments';
 import { ReceiptDetails } from '../interfaces/receipt-details.model';
 import { Observable } from 'rxjs';
 import { ReceiptMasterDTO } from '../interfaces/receipt-master-dto';
+import { ReceiptApprovalDTO } from '../interfaces/receipt-approval-dto';
 
 @Injectable({
   providedIn: 'root'
@@ -36,5 +37,9 @@ export class ReceiptDetailsService {
 
   getFunctionAppReceiptVerification(receiptId: string) : Observable<any>{
     return this.httpClient.get<any>(`${this.baseAddress}api/FunctionAppReceiptVerification?receiptId=`+ receiptId);
+  }
+
+  postFunctionAppReceiptApproval(receiptApprovalDTO: ReceiptApprovalDTO) : Observable<any>{
+    return this.httpClient.post<any>(`${this.baseAddress}api/FunctionAppReceiptApproval`, receiptApprovalDTO);
   }
 }

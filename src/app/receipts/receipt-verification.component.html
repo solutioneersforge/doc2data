@@ -114,7 +114,8 @@
               </div>
           }
           @else {
-            <button [disabled]="!isSaveButtonEnable" (click)="saveReceipt()" class="btn btn-primary" style="width: 100%;">Save</button>
+            <button  (click)="saveReceipt()" class="btn btn-primary" style="width: 100%;">Save</button>
+            <!-- [disabled]="!isSaveButtonEnable" -->
           }
          
         </div>

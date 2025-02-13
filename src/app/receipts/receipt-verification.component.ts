@@ -6,6 +6,8 @@ import { ExpenseCategoriesDTO } from '../interfaces/expense-categories-dto';
 import { ReceiptVerificationMasterDTO } from '../interfaces/receipt-verification-master-dto';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { ReceiptApprovalDTO } from '../interfaces/receipt-approval-dto';
+import { ReceiptItemsApprovalDTO } from '../interfaces/receipt-items-approval-dto';
 
 @Component({
   selector: 'app-receipt-verification',
@@ -18,11 +20,13 @@ export class ReceiptVerificationComponent implements OnInit {
   isImageLoad: boolean = true;
   isLoading = true;
   currentIndex: number = 0;
+  receiptId: string = '';
   constructor(private activatedRoute: ActivatedRoute, private router: Router){
   }
 
   ngOnInit() {
     this.activatedRoute.params.subscribe(data => {
+      this.receiptId = data["id"];
       this.getFunctionAppReceiptVerification(data["id"]);
     });
   }
@@ -34,6 +38,9 @@ export class ReceiptVerificationComponent implements OnInit {
   previewPdf: SafeResourceUrl | null = null;
   isSaveLoader: boolean = false;
   isSaveButtonEnable: boolean = false;
+  receiptApprovalDTO!: ReceiptApprovalDTO;
+  receiptItemsApprovalDTO: ReceiptItemsApprovalDTO[] = [];
+  
   receiptVerificationMaster: ReceiptVerificationMasterDTO = {
     receiptId: '',
     userId: '',
@@ -113,8 +120,67 @@ export class ReceiptVerificationComponent implements OnInit {
       }
       
   saveReceipt(){
-
+     this.receiptApprovalDTO = {
+        customerAddress: this.receiptVerificationMaster.customerAddress,
+        customerName: this.receiptVerificationMaster.customerName,
+        customerPhone: this.receiptVerificationMaster.customerPhone,
+        approvedBy: '87C1CD94-D103-4D2B-890F-047A59FCA68D',
+        approvedOn: new Date().toISOString(),
+        discount: 0,
+        merchantAddress: this.receiptVerificationMaster.customerAddress,
+        merchantEmail: this.receiptVerificationMaster.vendorEmail,
+        merchantId: 0,
+        merchantName: this.receiptVerificationMaster.vendorName,
+        merchantPhone: this.receiptVerificationMaster.vendorPhone,
+        otherCharge: 0,
+        receiptDate: this.receiptVerificationMaster.invoiceDate,
+        receiptId: this.receiptVerificationMaster.receiptId,
+        receiptNumber: this.receiptVerificationMaster.invoiceNumber,
+        serviceCharge: 0,
+        statusId: 1,
+        subTotal: this.receiptVerificationMaster.subTotal,
+        taxAmount: this.receiptVerificationMaster.taxAmount,
+        totalAmount: this.receiptVerificationMaster.total,
+        userId: '87C1CD94-D103-4D2B-890F-047A59FCA68D',
+        receiptItemsApproval :  this.getItems()
+     }
+      this.receiptDetailsService
+        .postFunctionAppReceiptApproval(this.receiptApprovalDTO)
+        .subscribe(
+          {
+            next: data => {this.router.navigate(['/dashboard']);},
+            error: (error) => console.log(error),
+            complete: () => console.log('Data Successfully Completed')
+         });
   }
+
+  getItems() : ReceiptItemsApprovalDTO[]{
+    this.receiptVerificationMaster.receiptVerificationItems.filter(
+      item => item.itemDescription && item.itemDescription.trim() !== ''
+    ).forEach(data => {
+      this.receiptItemsApprovalDTO?.push({
+        discount : data.discount,
+        itemDescription : data.itemDescription,
+        quantity : data.quantity,
+        total : data.total,
+        unitPrice : data.unitPrice,
+        subCategoryId: data.subCategoryId ?? 0 ,
+        receiptItemId: data.receiptItemID ?? this.generateGUID(),
+        receiptId: this.receiptId
+      })
+  });
+
+    return this.receiptItemsApprovalDTO;
+  }
+
+  generateGUID(): string {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+      const r = (Math.random() * 16) | 0,
+            v = c === 'x' ? r : (r & 0x3) | 0x8;
+      return v.toString(16);
+    });
+  }
+  
 
   backToDashBoard(){
     this.router.navigate(['/dashboard']);
