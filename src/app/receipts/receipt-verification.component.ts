@@ -121,29 +121,30 @@ export class ReceiptVerificationComponent implements OnInit {
       
   saveReceipt(){
      this.receiptApprovalDTO = {
-        customerAddress: this.receiptVerificationMaster.customerAddress,
-        customerName: this.receiptVerificationMaster.customerName,
-        customerPhone: this.receiptVerificationMaster.customerPhone,
+        customerAddress: this.receiptFormGroup.value.customerAddress ?? '',
+        customerName: this.receiptFormGroup.value.customerName ?? '',
+        customerPhone: this.receiptFormGroup.value.customerPhoneNumber ?? '',
         approvedBy: '87C1CD94-D103-4D2B-890F-047A59FCA68D',
         approvedOn: new Date().toISOString(),
         discount: 0,
-        merchantAddress: this.receiptVerificationMaster.customerAddress,
-        merchantEmail: this.receiptVerificationMaster.vendorEmail,
+        merchantAddress: this.receiptFormGroup.value.customerAddress ?? '',
+        merchantEmail: this.receiptFormGroup.value.vendorEmail ?? '',
         merchantId: 0,
-        merchantName: this.receiptVerificationMaster.vendorName,
-        merchantPhone: this.receiptVerificationMaster.vendorPhone,
+        merchantName: this.receiptFormGroup.value.vendorName ?? '',
+        merchantPhone: this.receiptFormGroup.value.vendorPhone ?? '',
         otherCharge: 0,
-        receiptDate: this.receiptVerificationMaster.invoiceDate,
-        receiptId: this.receiptVerificationMaster.receiptId,
-        receiptNumber: this.receiptVerificationMaster.invoiceNumber,
+        receiptDate: this.receiptFormGroup.value.invoiceDate ?? new Date().toISOString(),
+        receiptId: this.receiptId,
+        receiptNumber: this.receiptFormGroup.value.invoiceNumber ?? '',
         serviceCharge: 0,
         statusId: 1,
-        subTotal: this.receiptVerificationMaster.subTotal,
-        taxAmount: this.receiptVerificationMaster.taxAmount,
-        totalAmount: this.receiptVerificationMaster.total,
+        subTotal: this.receiptFormGroup.value.subTotal ?? 0,
+        taxAmount: this.receiptFormGroup.value.taxAmount ?? 0,
+        totalAmount: this.receiptFormGroup.value.total ?? 0,
         userId: '87C1CD94-D103-4D2B-890F-047A59FCA68D',
         receiptItemsApproval :  this.getItems()
      }
+
       this.receiptDetailsService
         .postFunctionAppReceiptApproval(this.receiptApprovalDTO)
         .subscribe(

@@ -42,16 +42,15 @@ public static class ReceiptApprovalMapper
 
     private static ICollection<DataContext.ReceiptItem> GetReceiptItems(List<ReceiptItemsApprovalDTO> receiptItems)
     {
-        if (receiptItems == null) return null;
-        return receiptItems.Select(m => new DataContext.ReceiptItem()
+        return receiptItems?.Select(m => new DataContext.ReceiptItem
         {
-            ItemDescription = m.ItemDescription,
+            ItemDescription = m.ItemDescription ?? string.Empty,  // Prevent potential null issues
             Discount = m.Discount,
             Quantity = m.Quantity,
             SubTotal = m.Total,
             UnitPrice = m.UnitPrice,
             SubCategoryId = m.SubCategoryId
-        }).ToList();
+        }).ToList() ?? new List<DataContext.ReceiptItem>();
     }
 
     public static Receipt MapToReceiptForUpdate(this Receipt receipt, ReceiptApprovalDTO receiptApprovalDTO)

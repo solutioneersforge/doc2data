@@ -71,13 +71,19 @@ public class ReceiptItemParseData
         List<ReceiptItem> listOfReceiptItems = new List<ReceiptItem>();
         foreach (var item in valueArray)
         {
+            decimal quantity = DocDataHelper.GetNumberFromString(item.valueObject.Quantity.valueNumber, item.valueObject.Quantity.content);
+            decimal unitPrice = DocDataHelper
+                .GetNumberFromString(item.valueObject.UnitPrice.valueNumber, item.valueObject.UnitPrice.content, item.valueObject.Price.content);
+            decimal totalPrice = DocDataHelper.GetNumberFromString(item.valueObject.TotalPrice.valueNumber, item.valueObject.TotalPrice.content);
+
+            var result = GetUnitPriceQuantityTotal(unitPrice, quantity, totalPrice);
+
             var receipt = new ReceiptItem()
             {
                 Description = item.valueObject.Description.valueString,
-                Quantity = DocDataHelper.GetNumberFromString(item.valueObject.Quantity.valueNumber, item.valueObject.Quantity.content),
-                TotalPrice = DocDataHelper.GetNumberFromString(item.valueObject.TotalPrice.valueNumber, item.valueObject.TotalPrice.content),
-                UnitPrice = DocDataHelper
-                .GetNumberFromString(item.valueObject.UnitPrice.valueNumber, item.valueObject.UnitPrice.content, item.valueObject.Price.content),
+                Quantity = result.quantity,
+                TotalPrice = result.totalPrice,
+                UnitPrice = result.unitPrice,
                 Discount = 0.00M,
                 //TotalPrice = ValidateTotal(DocDataHelper.GetNumberFromString(item.valueObject.Quantity.valueNumber, item.valueObject.Quantity.content),
                 //         DocDataHelper.GetNumberFromString(item.valueObject.UnitPrice.valueNumber, item.valueObject.UnitPrice.content, item.valueObject.Price.content), 0)
@@ -86,6 +92,38 @@ public class ReceiptItemParseData
         }
         return listOfReceiptItems;
     }
+
+    private static (decimal unitPrice, decimal quantity, decimal totalPrice) GetUnitPriceQuantityTotal(
+    decimal unitPriceP, decimal quantityP, decimal totalPriceP)
+    {
+        if (unitPriceP == 0 && quantityP == 0 && totalPriceP == 0)
+        {
+            return (0, 0, 0);
+        }
+
+        if (unitPriceP == 0 && quantityP == 0 && totalPriceP != 0)
+        {
+            return (totalPriceP, 1, totalPriceP); // Assuming totalPrice as unit price, quantity set to 1
+        }
+
+        if (totalPriceP == 0 && unitPriceP != 0 && quantityP != 0)
+        {
+            return (unitPriceP, quantityP, unitPriceP * quantityP); // Calculate total price
+        }
+
+        if (unitPriceP == 0 && quantityP != 0 && totalPriceP != 0)
+        {
+            return (totalPriceP / quantityP, quantityP, totalPriceP); // Calculate unit price
+        }
+
+        if (unitPriceP != 0 && quantityP == 0 && totalPriceP != 0)
+        {
+            return (unitPriceP, totalPriceP / unitPriceP, totalPriceP); // Calculate quantity
+        }
+
+        return (unitPriceP, quantityP, totalPriceP);
+    }
+
 
     private static decimal ValidateTotal(decimal quantity, decimal unitPrice, decimal discount)
     {
