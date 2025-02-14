@@ -42,4 +42,8 @@ export class ReceiptDetailsService {
   postFunctionAppReceiptApproval(receiptApprovalDTO: ReceiptApprovalDTO) : Observable<any>{
     return this.httpClient.post<any>(`${this.baseAddress}api/FunctionAppReceiptApproval`, receiptApprovalDTO);
   }
+  
+  postFunctionAppReceiptModification(receiptApprovalDTO: ReceiptApprovalDTO) : Observable<any>{
+    return this.httpClient.post<any>(`${this.baseAddress}api/FunctionAppReceiptModification`, receiptApprovalDTO);
+  }
 }

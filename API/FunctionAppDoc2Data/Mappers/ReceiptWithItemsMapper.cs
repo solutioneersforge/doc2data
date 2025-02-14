@@ -78,7 +78,8 @@ public static class ReceiptWithItemsMapper
             Quantity = m.Quantity,
             SubTotal = m.Total,
             UnitPrice = m.UnitPrice,
-            SubCategoryId = m.SubCategoryId
+            SubCategoryId = m.SubCategoryId,
+            ReceiptItemId = Guid.NewGuid(),
         }).ToList();
     }
 }

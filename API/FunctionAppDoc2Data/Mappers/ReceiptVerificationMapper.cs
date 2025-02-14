@@ -44,6 +44,8 @@ public static class ReceiptVerificationMapper
                 Quantity = item.Quantity,
                 ReceiptItemID = item.ReceiptItemId,
                 SubCategoryId = item.SubCategoryId.GetValueOrDefault(),
+                Total = item.SubTotal,
+                UnitPrice = item.UnitPrice,
             }).ToList() ?? new List<ReceiptVerificationItemsDTO>()
         };
     }

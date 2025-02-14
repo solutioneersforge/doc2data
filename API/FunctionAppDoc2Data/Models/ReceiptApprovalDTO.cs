@@ -25,7 +25,7 @@ public class ReceiptApprovalDTO
     public decimal TaxAmount { get; set; }
     public decimal ServiceCharge { get; set; } = 0;
     public decimal OtherCharge { get; set; } = 0;
-    public int StatusId { get; } = 2;
+    public int StatusId { get; set; }
     public decimal TotalAmount { get; set; }
     public decimal Discount { get; set; } = 0;
     public List<ReceiptItemsApprovalDTO> ReceiptItemsApproval { get; set; }

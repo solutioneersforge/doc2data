@@ -1,4 +1,5 @@
 ﻿using FunctionAppDoc2Data.DataContext;
+using FunctionAppDoc2Data.Enums;
 using FunctionAppDoc2Data.Models;
 using System;
 using System.Collections.Generic;
@@ -69,12 +70,21 @@ public static class ReceiptApprovalMapper
         receipt.ReceiptId = receiptApprovalDTO.ReceiptId;
         receipt.ServiceCharge = receiptApprovalDTO.ServiceCharge;
         receipt.ReceiptNumber = receiptApprovalDTO.ReceiptNumber;
-        receipt.StatusId = 2;
+        receipt.StatusId = receiptApprovalDTO.StatusId;
         receipt.SubTotal = receiptApprovalDTO.SubTotal;
         receipt.TaxAmount = receiptApprovalDTO.TaxAmount;
         receipt.TotalAmount = receiptApprovalDTO.TotalAmount;
-        receipt.ApprovedBy = receiptApprovalDTO.ApprovedBy;
-        receipt.ApprovedOn = receiptApprovalDTO.ApprovedOn;
+        if(receiptApprovalDTO.StatusId == (int)StatusEnum.APPROVED)
+        {
+            receipt.ApprovedBy = receiptApprovalDTO.ApprovedBy;
+            receipt.ApprovedOn = receiptApprovalDTO.ApprovedOn;
+        }
+        else
+        {
+            receipt.UpdatedOn = receiptApprovalDTO.ApprovedOn;
+            receipt.ModifiedBy = receiptApprovalDTO.ApprovedBy;
+        }
+        
         receipt.ReceiptItems = GetReceiptItems(receiptApprovalDTO.ReceiptItemsApproval.Where(m => !string.IsNullOrEmpty(m.ItemDescription)).ToList());
 
         return receipt;

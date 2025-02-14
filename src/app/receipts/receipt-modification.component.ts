@@ -10,12 +10,12 @@ import { ReceiptApprovalDTO } from '../interfaces/receipt-approval-dto';
 import { ReceiptItemsApprovalDTO } from '../interfaces/receipt-items-approval-dto';
 
 @Component({
-  selector: 'app-receipt-verification',
+  selector: 'app-modify-receipt-details',
   imports: [ReactiveFormsModule, FormsModule, CommonModule],
-  templateUrl: './receipt-verification.component.html',
-  styleUrl: './receipt-verification.component.css'
+  templateUrl: './receipt-modification.component.html',
+  styleUrl: './receipt-modification.component.css'
 })
-export class ReceiptVerificationComponent implements OnInit {
+export class ReceiptModificationComponent implements OnInit {
   imageBase64: string = '';
   isImageLoad: boolean = true;
   isLoading = true;
@@ -146,7 +146,7 @@ export class ReceiptVerificationComponent implements OnInit {
      }
 
       this.receiptDetailsService
-        .postFunctionAppReceiptApproval(this.receiptApprovalDTO)
+        .postFunctionAppReceiptModification(this.receiptApprovalDTO)
         .subscribe(
           {
             next: data => {this.router.navigate(['/dashboard']);},
@@ -229,5 +229,6 @@ export class ReceiptVerificationComponent implements OnInit {
   }
   
 }
+
 
 

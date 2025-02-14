@@ -8,22 +8,21 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using FunctionAppDoc2Data.Models;
-using FunctionAppDoc2Data.Services;
 using FunctionAppDoc2Data.Respositories;
 using FunctionAppDoc2Data.Enums;
 
 namespace FunctionAppDoc2Data.AzureFunctions
 {
-    public class FunctionAppReceiptApproval
+    public class FunctionAppReceiptModification
     {
         private readonly IReceiptApprovalRepository _receiptApprovalRepository;
 
-        public FunctionAppReceiptApproval(IReceiptApprovalRepository receiptApprovalRepository)
+        public FunctionAppReceiptModification(IReceiptApprovalRepository receiptApprovalRepository)
         {
             _receiptApprovalRepository = receiptApprovalRepository;
         }
 
-        [FunctionName("FunctionAppReceiptApproval")]
+        [FunctionName("FunctionAppReceiptModification")]
         public async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req,
             ILogger log)
@@ -32,10 +31,9 @@ namespace FunctionAppDoc2Data.AzureFunctions
             {
                 using StreamReader reader = new(req.Body);
                 string bodyStr = await reader.ReadToEndAsync();
-                //var receiptMasterStr = req.Form["receiptApprovalDTO"];
-
+                
                 var receiptMaster = JsonConvert.DeserializeObject<ReceiptApprovalDTO>(bodyStr);
-                receiptMaster.StatusId = (int)StatusEnum.APPROVED;
+                receiptMaster.StatusId = (int)StatusEnum.OPEN; 
                 await _receiptApprovalRepository.CreateUpdateReceiptAndItems(receiptMaster);
 
                 return new OkObjectResult(new

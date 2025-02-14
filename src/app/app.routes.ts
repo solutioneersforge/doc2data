@@ -8,6 +8,7 @@ import { LoginComponent } from './authentication/login.component';
 import { RegistartionComponent } from './authentication/registartion.component';
 import { ReceiptProcessDashboardComponent } from './receipts/receipt-process-dashboard.component';
 import { ReceiptVerificationComponent } from './receipts/receipt-verification.component';
+import { ReceiptModificationComponent } from './receipts/receipt-modification.component';
 
 export const routes: Routes = [
     {path: 'home', component: HomeComponent},
@@ -16,6 +17,7 @@ export const routes: Routes = [
     {path: 'scanner', component: ReceiptProcessComponent},
     {path: 'dashboard', component: ReceiptProcessDashboardComponent},
     {path: 'receiptverification/:id', component: ReceiptVerificationComponent},
+    {path: 'receiptModification/:id', component: ReceiptModificationComponent},
     {path: 'login', component: LoginComponent},
     {path: 'register', component: RegistartionComponent},
     {path: '', redirectTo: '/home', pathMatch: 'full'},
