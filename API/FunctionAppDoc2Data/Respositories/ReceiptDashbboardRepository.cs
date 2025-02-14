@@ -24,7 +24,7 @@ public class ReceiptDashbboardRepository : IReceiptDashbboardRepository
     {
         try
         {
-            var result = _docToDataDBContext.Receipts.Include(m => m.Merchant).OrderByDescending(m => m.CreatedOn).ToList();
+            var result = _docToDataDBContext.Receipts.Where(m => m.StatusId == 1).Include(m => m.Merchant).OrderByDescending(m => m.CreatedOn).ToList();
             return result.MapToReceiptDashboard();
         }
         catch (Exception ex)
