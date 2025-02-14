@@ -34,12 +34,11 @@
         </div>
   
         <!-- Captcha -->
-        <div class="mb-3 d-flex justify-content-between align-items-center">
+        <div class="mb-3">
           <label for="captcha" class="form-label mb-0">Captcha</label>
-          <div class="d-flex justify-content-between align-items-center w-100">
-            <input type="text" class="form-control me-2" id="captcha" placeholder="Enter Captcha" [(ngModel)]="captchaInput" name="captcha" required />
-            <span class="captcha-display">5 + 3</span> <!-- Simple Captcha Text -->
-          </div>
+          <div class="d-flex justify-content-between align-items-center">
+          <input type="text" class="form-control me-2 w-50" id="captcha" placeholder="Enter Captcha" [(ngModel)]="captchaInput" name="captcha" required />
+            <span class="captcha-display fw-bold border p-2 rounded bg-light w-50 text-center">5 + 3</span> <!-- Simple Captcha Text --></div>
         </div>
   
         <!-- Submit Button -->
