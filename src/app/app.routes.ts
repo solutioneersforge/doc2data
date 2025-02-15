@@ -23,7 +23,7 @@ export const routes: Routes = [
     {path: 'login', component: LoginComponent},
   { path: 'register', component: RegistartionComponent },
   { path: 'forgetpassword', component: ForgetPasswordComponent },
-  { path: 'receipthistory', component: ReceiptHistoryComponent },
+  { path: 'invoicehistory', component: ReceiptHistoryComponent },
     {path: '', redirectTo: '/home', pathMatch: 'full'},
     {path: '**', component:PagenotfoundComponent}
 ];
