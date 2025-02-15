@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
 import { SafeResourceUrl } from '@angular/platform-browser';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ReceiptDetailsService } from '../services/receipt-details.service';
@@ -8,6 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ReceiptApprovalDTO } from '../interfaces/receipt-approval-dto';
 import { ReceiptItemsApprovalDTO } from '../interfaces/receipt-items-approval-dto';
+import { Modal } from 'bootstrap';
 
 @Component({
   selector: 'app-modify-receipt-details',
@@ -21,6 +22,8 @@ export class ReceiptModificationComponent implements OnInit {
   isLoading = true;
   currentIndex: number = 0;
   receiptId: string = '';
+  @ViewChild('myModal') modalElement!: ElementRef;
+  modalInstance: Modal | null = null;
   constructor(private activatedRoute: ActivatedRoute, private router: Router){
   }
 
@@ -111,15 +114,23 @@ export class ReceiptModificationComponent implements OnInit {
           },
           error: (error) => console.error(error),
           complete: () => {
-            this.isLoading = false; this.getExpenseSubCategoriesDTO(); }
+            this.isLoading = false; this.getExpenseSubCategoriesDTO(); this.isSaveButtonEnable = true; }
           });
         }
 
   displayDataToFormControl(){
     
-      }
+  }
+
+  openApprovalConfirmation() {
+    if (!this.modalInstance) {
+      this.modalInstance = new Modal(this.modalElement.nativeElement);
+    }
+    this.modalInstance.show();
+  }
       
-  saveReceipt(){
+  saveReceipt() {
+    this.isSaveButtonEnable = false;
      this.receiptApprovalDTO = {
         customerAddress: this.receiptFormGroup.value.customerAddress ?? '',
         customerName: this.receiptFormGroup.value.customerName ?? '',
@@ -151,7 +162,7 @@ export class ReceiptModificationComponent implements OnInit {
           {
             next: data => {this.router.navigate(['/dashboard']);},
             error: (error) => console.log(error),
-            complete: () => console.log('Data Successfully Completed')
+            complete: () => this.isSaveButtonEnable = false
          });
   }
 

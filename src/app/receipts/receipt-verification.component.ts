@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
 import { SafeResourceUrl } from '@angular/platform-browser';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ReceiptDetailsService } from '../services/receipt-details.service';
@@ -8,6 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ReceiptApprovalDTO } from '../interfaces/receipt-approval-dto';
 import { ReceiptItemsApprovalDTO } from '../interfaces/receipt-items-approval-dto';
+import { Modal } from 'bootstrap';
 
 @Component({
   selector: 'app-receipt-verification',
@@ -21,6 +22,8 @@ export class ReceiptVerificationComponent implements OnInit {
   isLoading = true;
   currentIndex: number = 0;
   receiptId: string = '';
+  @ViewChild('myModal') modalElement!: ElementRef;
+  modalInstance: Modal | null = null;
   constructor(private activatedRoute: ActivatedRoute, private router: Router){
   }
 
@@ -30,7 +33,7 @@ export class ReceiptVerificationComponent implements OnInit {
       this.getFunctionAppReceiptVerification(data["id"]);
     });
   }
-
+  
   imageUrl: string | ArrayBuffer | null = null;
   expenseCategoriesDTO: ExpenseCategoriesDTO[] = [];
   receiptDetailsService = inject(ReceiptDetailsService);
@@ -117,9 +120,17 @@ export class ReceiptVerificationComponent implements OnInit {
 
   displayDataToFormControl(){
     
-      }
-      
-  saveReceipt(){
+  }
+
+  openApprovalConfirmation() {
+    if (!this.modalInstance) {
+      this.modalInstance = new Modal(this.modalElement.nativeElement);
+    }
+    this.modalInstance.show();
+  }
+
+  saveReceipt() {
+   
      this.receiptApprovalDTO = {
         customerAddress: this.receiptFormGroup.value.customerAddress ?? '',
         customerName: this.receiptFormGroup.value.customerName ?? '',
