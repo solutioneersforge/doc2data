@@ -25,9 +25,11 @@ public class Startup : FunctionsStartup
         builder.Services.AddScoped<IReceiptDashbboardRepository, ReceiptDashbboardRepository>();
         builder.Services.AddScoped<IReceiptVerificationRepository, ReceiptVerificationRepository>();
         builder.Services.AddScoped<IReceiptApprovalRepository, ReceiptApprovalRepository>();
-        builder.Services.AddSingleton<DocToDataDBContext>();
-    //    builder.Services.AddDbContext<DocToDataDBContext>(options =>
-    //options.UseSqlServer("Server=tcp:dbs-solutioneersforge.database.windows.net,1433;Initial Catalog=db-doc2data;Persist Security Info=False;User ID=serveradmin;Password=9U[X!mDG2_n89Ep:;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30"), ServiceLifetime.Scoped);
-        //builder.Services.AddDbContext<DocToDataDBContext>(options => options.UseSqlServer("Server=tcp:dbs-solutioneersforge.database.windows.net,1433;Initial Catalog=db-doc2data;Persist Security Info=False;User ID=serveradmin;Password=9U[X!mDG2_n89Ep:;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30"));
+        builder.Services.AddScoped<IReceiptHistoryRepository, ReceiptHistoryRepository>();
+
+        builder.Services.AddDbContext<DocToDataDBContext>(options =>
+    options.UseSqlServer("Server=tcp:dbs-solutioneersforge.database.windows.net,1433;Initial Catalog=db-doc2data;Persist Security Info=False;User ID=serveradmin;Password=9U[X!mDG2_n89Ep:;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30"), ServiceLifetime.Scoped);
+   //     builder.Services.AddDbContext<DocToDataDBContext>(options =>
+   //options.UseSqlServer(Environment.GetEnvironmentVariable("SqlConnectionStrings")), ServiceLifetime.Scoped);
     }
 }

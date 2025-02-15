@@ -10,6 +10,7 @@ import { ReceiptProcessDashboardComponent } from './receipts/receipt-process-das
 import { ReceiptVerificationComponent } from './receipts/receipt-verification.component';
 import { ReceiptModificationComponent } from './receipts/receipt-modification.component';
 import { ForgetPasswordComponent } from './authentication/forget-password.component';
+import { ReceiptHistoryComponent } from './receipts/receipt-history.component';
 
 export const routes: Routes = [
     {path: 'home', component: HomeComponent},
@@ -22,6 +23,7 @@ export const routes: Routes = [
     {path: 'login', component: LoginComponent},
   { path: 'register', component: RegistartionComponent },
   { path: 'forgetpassword', component: ForgetPasswordComponent },
+  { path: 'receipthistory', component: ReceiptHistoryComponent },
     {path: '', redirectTo: '/home', pathMatch: 'full'},
     {path: '**', component:PagenotfoundComponent}
 ];
