@@ -11,19 +11,21 @@ import { ReceiptVerificationComponent } from './receipts/receipt-verification.co
 import { ReceiptModificationComponent } from './receipts/receipt-modification.component';
 import { ForgetPasswordComponent } from './authentication/forget-password.component';
 import { ReceiptHistoryComponent } from './receipts/receipt-history.component';
+import { ExpenseTypeComponent } from './receipts/expense-type.component';
 
 export const routes: Routes = [
-    {path: 'home', component: HomeComponent},
-    {path: 'contact', component: ContactComponent},
-    {path: 'about', component: AboutComponent},
-    {path: 'scanner', component: ReceiptProcessComponent},
-    {path: 'dashboard', component: ReceiptProcessDashboardComponent},
-    {path: 'receiptverification/:id', component: ReceiptVerificationComponent},
-    {path: 'receiptModification/:id', component: ReceiptModificationComponent},
-    {path: 'login', component: LoginComponent},
+  { path: 'home', component: HomeComponent },
+  { path: 'contact', component: ContactComponent },
+  { path: 'about', component: AboutComponent },
+  { path: 'scanner', component: ReceiptProcessComponent },
+  { path: 'dashboard', component: ReceiptProcessDashboardComponent },
+  { path: 'receiptverification/:id', component: ReceiptVerificationComponent },
+  { path: 'receiptModification/:id', component: ReceiptModificationComponent },
+  { path: 'login', component: LoginComponent },
   { path: 'register', component: RegistartionComponent },
   { path: 'forgetpassword', component: ForgetPasswordComponent },
   { path: 'invoicehistory', component: ReceiptHistoryComponent },
-    {path: '', redirectTo: '/home', pathMatch: 'full'},
-    {path: '**', component:PagenotfoundComponent}
+  { path: 'expensetype', component: ExpenseTypeComponent },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: '**', component: PagenotfoundComponent },
 ];

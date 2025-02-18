@@ -1,0 +1,72 @@
+<div class="container-fluid">
+    <div class="row p-4">
+        <div class="text-center">
+            <h3 class="text-primary"><u>Expense Type</u></h3>
+          </div>
+        <div class="col-md-6">
+            <div class="mb-3 "><label for="categoryInput" class="form-label">Category</label>
+                <input type="text" class="form-control" id="categoryInput"
+                       [(ngModel)]="category" 
+                       (focus)="showCategoryList = true"
+                       (blur)="hideDropdown('category')">
+                       @if(showCategoryList){
+                          <ul class="list-group position-absolute w-100">
+                              @for (expenseType of expenseCategoriesDTO; track $index) {
+                              <li class="list-group-item list-group-item-action"
+                                  (click)="selectCategory(expenseType.categoryName, expenseType.categoryId)" [value]="expenseType.categoryId">{{ expenseType.categoryName }}
+                              </li>
+                            }
+                            </ul>
+                       }
+            </div>
+            <div class="mb-3 position-relative">
+                <label for="subcategoryInput" class="form-label">Subcategory</label>
+                <input type="text" class="form-control" id="subcategoryInput"
+                       [(ngModel)]="subcategory" 
+                       (focus)="showSubcategoryList = true"
+                       (blur)="hideDropdown('subcategory')">
+                       @if(showSubcategoryList){
+                <ul class="list-group position-absolute w-100">
+                  @for (subCategory of expenseSubCategoriesDTO; track $index) {
+                  <li class="list-group-item list-group-item-action" [value]="subCategory.subCategoryId"
+                      
+                      (click)="selectSubcategory(subCategory.subCategoryName)">{{ subCategory.subCategoryName }}</li>}
+                </ul>
+              }
+              </div>
+
+              <button class="btn btn-primary w-100 mt-2" > 
+                {{ editIndex !== null ? 'Update' : 'Add' }}
+              </button>
+        </div>
+
+        <div class="col-md-6">
+            <div class="table-responsive mt-3">
+                <table class="table table-bordered">
+                  <thead class="table-dark">
+                    <tr>
+                      <th>Category</th>
+                      <th>Subcategory</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                      <!-- @for (item of tableData; track $index) {
+                    <tr >
+                      <td>{{ item.category }}</td>
+                      <td>{{ item.subcategory }}</td>
+                      <td>
+                        <button class="btn btn-warning btn-sm me-2" (click)="editItem($index)">
+                          <i class="bi bi-pencil-fill"></i>
+                        </button>
+                        <button class="btn btn-danger btn-sm" (click)="deleteItem($index)">
+                          <i class="bi bi-trash-fill"></i>
+                        </button>
+                      </td>
+                    </tr>} -->
+                  </tbody>
+                </table>
+              </div>
+          </div>
+        </div>
+    </div>

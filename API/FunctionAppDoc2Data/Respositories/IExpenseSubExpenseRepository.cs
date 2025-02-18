@@ -8,5 +8,5 @@ using System.Threading.Tasks;
 namespace FunctionAppDoc2Data.Respositories;
 public interface IExpenseSubExpenseRepository
 {
-    IEnumerable<ExpenseCategoriesDTO> GetExpenseSubExpenseCategory();
+    Task<IEnumerable<ExpenseCategoriesDTO>> GetExpenseSubExpenseCategoryAsync();
 }

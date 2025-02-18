@@ -7,30 +7,36 @@ using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using FunctionAppDoc2Data.Models;
 using FunctionAppDoc2Data.Respositories;
 
 namespace FunctionAppDoc2Data.AzureFunctions
 {
-    public class FunctionAppCategoryExpenseType
+    
+    public class FunctionAppExpenseType
     {
-        private readonly IExpenseSubExpenseRepository _expenseSubExpenseRepository;
-
-        public FunctionAppCategoryExpenseType(IExpenseSubExpenseRepository expenseSubExpenseRepository)
+        private readonly IExpenseTypeRepository _expenseTypeRepository;
+        public FunctionAppExpenseType(IExpenseTypeRepository expenseTypeRepository)
         {
-            _expenseSubExpenseRepository = expenseSubExpenseRepository;
+            _expenseTypeRepository = expenseTypeRepository;
         }
 
-        [FunctionName("FunctionAppCategoryExpenseType")]
+        [FunctionName("FunctionAppExpenseType")]
         public async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req,
             ILogger log)
         {
             try
             {
-                var resultData = await _expenseSubExpenseRepository.GetExpenseSubExpenseCategoryAsync();
+                using StreamReader reader = new(req.Body);
+                string bodyStr = await reader.ReadToEndAsync();
+                var receiptMaster = JsonConvert.DeserializeObject<ExpenseTypeDTO>(bodyStr);
+
+                _expenseTypeRepository.UpsertExpenseCategoryAndSubcategory(receiptMaster);
+
                 return new OkObjectResult(new
                 {
-                    Data = resultData,
+                    Data = "Data Successfully Added",
                     Message = "Success",
                     IsSuccess = true
                 });
@@ -43,6 +49,7 @@ namespace FunctionAppDoc2Data.AzureFunctions
                     IsSuccess = false
                 });
             }
+
         }
     }
 }

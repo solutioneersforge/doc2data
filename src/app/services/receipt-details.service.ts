@@ -5,6 +5,7 @@ import { ReceiptDetails } from '../interfaces/receipt-details.model';
 import { Observable } from 'rxjs';
 import { ReceiptMasterDTO } from '../interfaces/receipt-master-dto';
 import { ReceiptApprovalDTO } from '../interfaces/receipt-approval-dto';
+import { ExpenseTypeDTO } from '../interfaces/expense-type-dto';
 
 @Injectable({
   providedIn: 'root'
@@ -49,5 +50,9 @@ export class ReceiptDetailsService {
 
   getFunctionAppReceiptHistory(): Observable<any> {
     return this.httpClient.get<any>(`${this.baseAddress}api/FunctionAppReceiptHistory`);
+  }
+
+  postFunctionAppExpenseType(expenseTypeDTO: ExpenseTypeDTO) : Observable<any>{
+    return this.httpClient.post<any>(`${this.baseAddress}api/FunctionAppExpenseType`, expenseTypeDTO);
   }
 }
