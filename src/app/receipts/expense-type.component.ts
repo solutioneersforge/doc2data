@@ -28,7 +28,6 @@ export class ExpenseTypeComponent implements OnInit {
       .getExpenseSubCategoriesDTO()
       .subscribe((data) => {
         this.expenseCategoriesDTO = data.data;
-        console.log(this.expenseCategoriesDTO);
       });
   }
 
@@ -40,6 +39,7 @@ export class ExpenseTypeComponent implements OnInit {
       .filter((m) => m.categoryId === categoryId)
       .map((d) => d.expenseSubCategoriesDTOs)
       .flat();
+      this.subcategory = '';
   }
 
   selectSubcategory(sub: string) {
