@@ -34,4 +34,20 @@
   .table-responsive {
     overflow-x: auto;
   }
+
+  /* Highlight Column */
+.highlight-column {
+  background-color: #4a8aca; /* Light gray */
+  font-weight: bold;
+  color: white;
+  font-size: large;
+}
+
+/* Hover effect for drill-down links */
+.highlight-column a:hover {
+  text-decoration: underline;
+  color: #0056b3;
+  cursor: pointer;
+}
+
   

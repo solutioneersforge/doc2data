@@ -30,6 +30,13 @@
             <tbody>
               @for (expense of expenseCategoriesDTO; track $index; let i =
               $index) { 
+                <tr >
+                     <td colspan="3" class="highlight-column">
+                        {{ expense.categoryName }}
+                     </td>
+                    
+                    
+                </tr>
                 @for (subExpense of expense.expenseSubCategoriesDTOs;
               track $index; let k = $index) {
                 
@@ -41,7 +48,7 @@
                     {{subExpense.subCategoryId}}
                  </td>
                 <td>
-                  {{ expense.categoryName }}
+                  <!-- {{ expense.categoryName }} -->
                 </td>
                 <td>
                   {{ subExpense.subCategoryName }}
