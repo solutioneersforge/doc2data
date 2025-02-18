@@ -12,8 +12,10 @@ import { ExpenseSubCategoriesDTO } from '../interfaces/expense-sub-categories-dt
 })
 export class ExpenseTypeComponent implements OnInit {
   ngOnInit(): void {
+    this.counterIndex = 1;
     this.getExpenseSubCategoriesDTO();
   }
+  counterIndex : number = 1;
   category: string = '';
   subcategory: string = '';
   editIndex: number | null = null;
@@ -22,12 +24,17 @@ export class ExpenseTypeComponent implements OnInit {
   showSubcategoryList = false;
   expenseCategoriesDTO: ExpenseCategoriesDTO[] = [];
   expenseSubCategoriesDTO: ExpenseSubCategoriesDTO[] = [];
+  getSequence(){
+    return this.counterIndex++;
+  }
+ 
 
   getExpenseSubCategoriesDTO() {
     this.receiptDetailsService
       .getExpenseSubCategoriesDTO()
       .subscribe((data) => {
         this.expenseCategoriesDTO = data.data;
+        this.counterIndex = 1;
       });
   }
 
