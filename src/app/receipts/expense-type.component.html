@@ -9,29 +9,21 @@
       <div class="container mt-4">
         <!-- Table Header -->
         <div
-          class="d-flex justify-content-between align-items-center mb-3 p-3 bg-primary text-white rounded shadow"
+          class="d-flex justify-content-end align-items-center mb-2"
         >
-          <h3 class="m-0">Expense List</h3>
-          <button class="btn btn-light btn-sm fw-bold">Add New Expense</button>
+          
+          <button class="btn btn-primary  fw-bold">Add New Expense</button>
         </div>
 
         <!-- Responsive Table -->
         <div class="table-responsive">
           <table class="table table-bordered table-striped table-hover shadow">
-            <thead class="bg-primary text-white">
-              <tr>
-                <th hidden="true">Expense #</th>
-                <th hidden="true">Sub Expense #</th>
-                <th>Expense</th>
-                <th>Sub Expense</th>
-                <th>Action</th>
-              </tr>
-            </thead>
+            
             <tbody>
               @for (expense of expenseCategoriesDTO; track $index; let i =
               $index) { 
                 <tr >
-                     <td colspan="3" class="highlight-column">
+                     <td colspan="3" class="highlight-column text-center">
                         {{ expense.categoryName }}
                      </td>
                     
@@ -47,15 +39,12 @@
                  <td hidden="true">
                     {{subExpense.subCategoryId}}
                  </td>
-                <td>
-                  <!-- {{ expense.categoryName }} -->
-                </td>
-                <td>
+                
+                <td colspan="2">
                   {{ subExpense.subCategoryName }}
                 </td>
                 <td>
-                  <button class="btn btn-primary btn-sm me-1">Edit</button>
-                  <button class="btn btn-danger btn-sm">Delete</button>
+                  <button class="btn btn-primary">Edit</button>
                 </td>
               </tr>
               } }
