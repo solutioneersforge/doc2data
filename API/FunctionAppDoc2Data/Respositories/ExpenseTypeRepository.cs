@@ -23,6 +23,13 @@ public class ExpenseTypeRepository : IExpenseTypeRepository
     public int UpsertExpenseCategoryAndSubcategory(ExpenseTypeDTO expenseType)
     {
         if (expenseType == null) throw new ArgumentNullException(nameof(expenseType));
+        if (!expenseType.CategoryId.HasValue || expenseType.CategoryId == 0)
+        {
+            if (_docToDataDBContext.ExpenseCategories.Any(m => m.CategoryName == expenseType.CategoryName))
+            {
+                return 0;
+            }
+        }
 
         using var transaction = _docToDataDBContext.Database.BeginTransaction();
         try

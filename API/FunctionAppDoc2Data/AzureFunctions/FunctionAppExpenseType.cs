@@ -32,7 +32,17 @@ namespace FunctionAppDoc2Data.AzureFunctions
                 string bodyStr = await reader.ReadToEndAsync();
                 var receiptMaster = JsonConvert.DeserializeObject<ExpenseTypeDTO>(bodyStr);
 
-                _expenseTypeRepository.UpsertExpenseCategoryAndSubcategory(receiptMaster);
+                int result = _expenseTypeRepository.UpsertExpenseCategoryAndSubcategory(receiptMaster);
+
+                if (result == 0)
+                {
+                    return new OkObjectResult(new
+                    {
+                        Data = "Data is not successfully added due to data already exists.",
+                        Message = "Failed",
+                        IsSuccess = false
+                    });
+                }
 
                 return new OkObjectResult(new
                 {

@@ -1,12 +1,14 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormGroup, FormsModule, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ReceiptDetailsService } from '../services/receipt-details.service';
 import { ExpenseCategoriesDTO } from '../interfaces/expense-categories-dto';
 import { ExpenseSubCategoriesDTO } from '../interfaces/expense-sub-categories-dto';
+import { ExpenseTypeDTO } from '../interfaces/expense-type-dto';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-expense-type',
-  imports: [FormsModule],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule],
   templateUrl: './expense-type.component.html',
   styleUrl: './expense-type.component.css',
 })
@@ -14,6 +16,7 @@ export class ExpenseTypeComponent implements OnInit {
   ngOnInit(): void {
     this.getExpenseSubCategoriesDTO();
   }
+  isNewExpense : boolean = true;
   isLoading : boolean = true;
   category: string = '';
   subcategory: string = '';
@@ -23,6 +26,31 @@ export class ExpenseTypeComponent implements OnInit {
   showSubcategoryList = false;
   expenseCategoriesDTO: ExpenseCategoriesDTO[] = [];
   expenseSubCategoriesDTO: ExpenseSubCategoriesDTO[] = [];
+
+  headerMessage : string = 'New Expense Type'
+
+  expenseTypeDTO: ExpenseTypeDTO = {
+    categoryName: '',
+    subCategoryName: ''
+  };
+
+  addNewExpense(){
+    this.isNewExpense = true;
+    this.headerMessage = "New Expense Type"
+  }
+
+  addNewSubexpense(){
+    this.isNewExpense = false;
+    this.headerMessage = "New Subexpense Type"
+  }
+
+  formExpenseGroup = new FormGroup(
+    {
+      expenseType: new FormControl('', [Validators.required]),
+      subExpenseType: new FormControl('',[Validators.required]),
+      expenseTypeId: new FormControl()
+    }
+  )
  
 
   getExpenseSubCategoriesDTO() {
@@ -45,6 +73,25 @@ export class ExpenseTypeComponent implements OnInit {
       .map((d) => d.expenseSubCategoriesDTOs)
       .flat();
       this.subcategory = '';
+  }
+
+  saveExpense(){
+    if(this.isNewExpense){
+      this.expenseTypeDTO.categoryName = this.formExpenseGroup.value.expenseType ?? '';
+    }
+    else{
+      this.expenseTypeDTO.categoryId = this.formExpenseGroup.value.expenseTypeId;
+    }
+    
+    this.expenseTypeDTO.subCategoryName = this.formExpenseGroup.value.subExpenseType ?? '';
+    this.receiptDetailsService
+              .postFunctionAppExpenseType(this.expenseTypeDTO)
+              .subscribe(data => {
+                if(data.isSuccess){
+                  this.getExpenseSubCategoriesDTO();
+                  this.formExpenseGroup.reset();
+                }
+              });
   }
 
 }
