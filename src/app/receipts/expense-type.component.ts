@@ -26,7 +26,7 @@ export class ExpenseTypeComponent implements OnInit {
   showSubcategoryList = false;
   expenseCategoriesDTO: ExpenseCategoriesDTO[] = [];
   expenseSubCategoriesDTO: ExpenseSubCategoriesDTO[] = [];
-
+  tooltip!: bootstrap.Tooltip;
   headerMessage : string = 'New Expense Type'
 
   expenseTypeDTO: ExpenseTypeDTO = {
@@ -51,7 +51,30 @@ export class ExpenseTypeComponent implements OnInit {
       expenseTypeId: new FormControl()
     }
   )
+
+  get f(){
+    return this.formExpenseGroup.controls;
+  }
+
+  showTooltip() {
+    if (this.tooltip) {
+      this.tooltip.show();
+    }
+  }
  
+  getErrorMessage(control: any): string {
+    if (control.errors?.['required']) {
+      return 'Expense Type is required';
+    }
+    return '';
+  }
+
+  getErrorMessageSub(control: any): string {
+    if (control.errors?.['required']) {
+      return 'Subexpense Type is required';
+    }
+    return '';
+  }
 
   getExpenseSubCategoriesDTO() {
     this.receiptDetailsService
@@ -76,6 +99,9 @@ export class ExpenseTypeComponent implements OnInit {
   }
 
   saveExpense(){
+    if(!this.formExpenseGroup.valid){
+      return;
+    }
     if(this.isNewExpense){
       this.expenseTypeDTO.categoryName = this.formExpenseGroup.value.expenseType ?? '';
     }

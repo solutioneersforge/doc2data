@@ -16,8 +16,13 @@
                     @if(isNewExpense){
                         <div class="mb-3">
                             <label for="expenseType" class="form-label">Expense Type</label>
-                            <input type="text" formControlName="expenseType" 
-                            class="form-control" id="expenseType" placeholder="Enter Expense">
+                            <input type="text" formControlName="expenseType" required
+                                        [ngClass]="{'is-invalid': f.expenseType.touched && f.expenseType.invalid, 
+                   'is-valid': f.expenseType.touched && f.expenseType.valid}"
+       class="form-control" id="expenseType" placeholder="Enter Expense"
+       data-bs-toggle="tooltip" data-bs-placement="top"
+        [attr.title]="f.expenseType.invalid ? getErrorMessage(f.expenseType) : ''"
+        (mouseover)="showTooltip()">
                         </div>
                     }
                     @else {
@@ -32,11 +37,17 @@
                     }
                     <div class="mb-3">
                         <label for="subExpenseType" class="form-label">Subexpense Type</label>
-                        <input type="text" formControlName="subExpenseType" class="form-control" id="subExpenseType" placeholder="Enter Subexpense">
+                        <input type="text" formControlName="subExpenseType" 
+                        [ngClass]="{'is-invalid': f.subExpenseType.touched && f.subExpenseType.invalid, 
+                   'is-valid': f.subExpenseType.touched && f.subExpenseType.valid}"
+                        class="form-control" id="subExpenseType" 
+                        placeholder="Enter Subexpense"  data-bs-toggle="tooltip" data-bs-placement="top"
+                        [attr.title]="f.subExpenseType.invalid ? getErrorMessageSub(f.subExpenseType) : ''"
+                        (mouseover)="showTooltip()">
                     </div>
                     <div class="d-flex gap-2 justify-content-end">
                         <button type="reset" class="btn btn-secondary">Reset</button>
-                        <button type="button" (click)="saveExpense()" class="btn btn-primary">Save</button>
+                        <button type="button" (click)="saveExpense()"  class="btn btn-primary">Save</button>
                     </div>
                 </form>
             </div>
@@ -46,7 +57,6 @@
             <div class="container mt-4">
               <!-- Table Header -->
               <div class="d-flex justify-content-between align-items-center mb-2">
-                <h4 class="fw-bold text-primary">Expense Management</h4>
                 <div>
                   <button class="btn btn-dark fw-bold me-2" (click)="addNewExpense()">Add Expense</button>
                   <button class="btn btn-primary fw-bold" (click)="addNewSubexpense()">Add Subexpense</button>
@@ -76,12 +86,12 @@
                           {{subExpense.subCategoryId}}
                        </td>
                       
-                      <td colspan="2">
+                      <td colspan="3">
                         {{ subExpense.subCategoryName }}
                       </td>
-                      <td>
+                      <!-- <td>
                         <button class="btn btn-danger">Edit</button>
-                      </td>
+                      </td> -->
                     </tr>
                     } }
                   </tbody>
