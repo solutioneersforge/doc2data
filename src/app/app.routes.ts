@@ -17,7 +17,7 @@ export const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'contact', component: ContactComponent },
   { path: 'about', component: AboutComponent },
-  { path: 'scanner', component: ReceiptProcessComponent },
+  { path: 'transaction', component: ReceiptProcessComponent },
   { path: 'dashboard', component: ReceiptProcessDashboardComponent },
   { path: 'receiptverification/:id', component: ReceiptVerificationComponent },
   { path: 'receiptModification/:id', component: ReceiptModificationComponent },
