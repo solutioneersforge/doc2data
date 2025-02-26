@@ -25,7 +25,7 @@ export const routes: Routes = [
   { path: 'register', component: RegistartionComponent },
   { path: 'forgetpassword', component: ForgetPasswordComponent },
   { path: 'invoicehistory', component: ReceiptHistoryComponent },
-  { path: 'expense', component: ExpenseTypeComponent },
+  { path: 'accounttype', component: ExpenseTypeComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', component: PagenotfoundComponent },
 ];

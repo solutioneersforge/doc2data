@@ -27,7 +27,7 @@ export class ExpenseTypeComponent implements OnInit {
   expenseCategoriesDTO: ExpenseCategoriesDTO[] = [];
   expenseSubCategoriesDTO: ExpenseSubCategoriesDTO[] = [];
   tooltip!: bootstrap.Tooltip;
-  headerMessage : string = 'New Expense Type'
+  headerMessage : string = 'New Account Type'
 
   expenseTypeDTO: ExpenseTypeDTO = {
     categoryName: '',
@@ -36,12 +36,12 @@ export class ExpenseTypeComponent implements OnInit {
 
   addNewExpense(){
     this.isNewExpense = true;
-    this.headerMessage = "New Expense Type"
+    this.headerMessage = "New Account Type"
   }
 
   addNewSubexpense(){
     this.isNewExpense = false;
-    this.headerMessage = "New Subexpense Type"
+    this.headerMessage = "New Subaccount Type"
   }
 
   formExpenseGroup = new FormGroup(
@@ -64,14 +64,14 @@ export class ExpenseTypeComponent implements OnInit {
  
   getErrorMessage(control: any): string {
     if (control.errors?.['required']) {
-      return 'Expense Type is required';
+      return 'Account Type is required';
     }
     return '';
   }
 
   getErrorMessageSub(control: any): string {
     if (control.errors?.['required']) {
-      return 'Subexpense Type is required';
+      return 'Subaccount Type is required';
     }
     return '';
   }
