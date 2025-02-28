@@ -7,7 +7,9 @@ namespace FunctionAppDoc2Data.DataContext
 {
     public partial class DocToDataDBContext : DbContext
     {
-        public DocToDataDBContext(DbContextOptions<DocToDataDBContext> dbContextOptions) : base(dbContextOptions)
+      
+        public DocToDataDBContext(DbContextOptions<DocToDataDBContext> options)
+            : base(options)
         {
         }
 
@@ -25,6 +27,7 @@ namespace FunctionAppDoc2Data.DataContext
         public virtual DbSet<Status> Statuses { get; set; }
         public virtual DbSet<StockTransaction> StockTransactions { get; set; }
         public virtual DbSet<TransactionType> TransactionTypes { get; set; }
+        public virtual DbSet<UnitOfMeasure> UnitOfMeasures { get; set; }
         public virtual DbSet<User> Users { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -32,7 +35,7 @@ namespace FunctionAppDoc2Data.DataContext
 //            if (!optionsBuilder.IsConfigured)
 //            {
 //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-//               optionsBuilder.UseSqlServer("Server=tcp:dbs-solutioneersforge.database.windows.net,1433;Initial Catalog=db-doc2data;Persist Security Info=False;User ID=serveradmin;Password=9U[X!mDG2_n89Ep:;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30");
+//                optionsBuilder.UseSqlServer("Server=tcp:dbs-solutioneersforge.database.windows.net,1433;Initial Catalog=db-doc2data;Persist Security Info=False;User ID=serveradmin;Password=9U[X!mDG2_n89Ep:;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30");
 //            }
         }
 
@@ -293,6 +296,11 @@ namespace FunctionAppDoc2Data.DataContext
                     .HasForeignKey(d => d.ReceiptId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_ReceiptItems_Receipts");
+
+                entity.HasOne(d => d.UnitOfMeasure)
+                    .WithMany(p => p.ReceiptItems)
+                    .HasForeignKey(d => d.UnitOfMeasureId)
+                    .HasConstraintName("FK_ReceiptItems_UnitOfMeasures");
             });
 
             modelBuilder.Entity<Status>(entity =>
@@ -336,6 +344,19 @@ namespace FunctionAppDoc2Data.DataContext
                     .IsRequired()
                     .HasMaxLength(50)
                     .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<UnitOfMeasure>(entity =>
+            {
+                entity.ToTable("UnitOfMeasures", "Common");
+
+                entity.Property(e => e.IsActive)
+                    .IsRequired()
+                    .HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(100);
             });
 
             modelBuilder.Entity<User>(entity =>

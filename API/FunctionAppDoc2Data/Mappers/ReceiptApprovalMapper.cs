@@ -50,7 +50,8 @@ public static class ReceiptApprovalMapper
             Quantity = m.Quantity,
             SubTotal = m.Total,
             UnitPrice = m.UnitPrice,
-            SubCategoryId = m.SubCategoryId
+            SubCategoryId = m.SubCategoryId,
+            UnitOfMeasureId = m.UnitOfMeasureId
         }).ToList() ?? new List<DataContext.ReceiptItem>();
     }
 

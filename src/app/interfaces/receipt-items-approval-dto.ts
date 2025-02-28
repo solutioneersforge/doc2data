@@ -7,4 +7,5 @@ export interface ReceiptItemsApprovalDTO {
     discount: number;
     total: number;
     subCategoryId?: number  ;
+    unitOfMeasureId?: number;
 }

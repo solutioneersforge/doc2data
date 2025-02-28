@@ -9,6 +9,7 @@ import { CommonModule } from '@angular/common';
 import { ReceiptApprovalDTO } from '../interfaces/receipt-approval-dto';
 import { ReceiptItemsApprovalDTO } from '../interfaces/receipt-items-approval-dto';
 import { Modal } from 'bootstrap';
+import { UnitOfMeasuresDTO } from '../interfaces/unit-of-measures-dto';
 
 @Component({
   selector: 'app-modify-receipt-details',
@@ -23,6 +24,7 @@ export class ReceiptModificationComponent implements OnInit {
   currentIndex: number = 0;
   receiptId: string = '';
   @ViewChild('myModal') modalElement!: ElementRef;
+  unitOfMeasuresDTO: UnitOfMeasuresDTO[] = [];
   modalInstance: Modal | null = null;
   constructor(private activatedRoute: ActivatedRoute, private router: Router){
   }
@@ -31,6 +33,19 @@ export class ReceiptModificationComponent implements OnInit {
     this.activatedRoute.params.subscribe(data => {
       this.receiptId = data["id"];
       this.getFunctionAppReceiptVerification(data["id"]);
+    });
+
+    
+  }
+
+  getFunctionAppUnitOfMeasureDTO() {
+    this.receiptDetailsService
+      .getFunctionAppUnitOfMeasure()
+      .subscribe({next: (data) => {
+        this.unitOfMeasuresDTO = data.data;
+      },
+      error: (error) => console.log(error),
+      complete : () => this.isLoading = false
     });
   }
 
@@ -91,8 +106,8 @@ export class ReceiptModificationComponent implements OnInit {
   getFunctionAppReceiptVerification(receiptId: string){
           this.isLoading = true;
           this.receiptDetailsService.getFunctionAppReceiptVerification(receiptId).subscribe({ next: data => {
-            console.log(data.data)
             this.receiptVerificationMaster = data.data;
+            console.warn(this.receiptVerificationMaster);
             this.isImageLoad = this.receiptVerificationMaster.isImage;
             this.imageBase64 = this.receiptVerificationMaster.image;
             this.receiptFormGroup.setValue({
@@ -114,7 +129,9 @@ export class ReceiptModificationComponent implements OnInit {
           },
           error: (error) => console.error(error),
           complete: () => {
-            this.isLoading = false; this.getExpenseSubCategoriesDTO(); this.isSaveButtonEnable = true; }
+            this.isLoading = false; this.getExpenseSubCategoriesDTO(); 
+            this.getFunctionAppUnitOfMeasureDTO();
+            this.isSaveButtonEnable = true; }
           });
         }
 
@@ -179,10 +196,11 @@ export class ReceiptModificationComponent implements OnInit {
         unitPrice : data.unitPrice,
         subCategoryId: data.subCategoryId ?? 0 ,
         receiptItemId: data.receiptItemID ?? this.generateGUID(),
-        receiptId: this.receiptId
+        receiptId: this.receiptId,
+        unitOfMeasureId: data.unitOfMeasureId
       })
   });
-
+    console.warn(this.receiptItemsApprovalDTO);
     return this.receiptItemsApprovalDTO;
   }
 
@@ -209,7 +227,8 @@ export class ReceiptModificationComponent implements OnInit {
         subCategoryId : null,
         subCategoryName: '',
         total: 0,
-        unitPrice: 0
+        unitPrice: 0,
+        unitOfMeasureId : 0
       });
     }
     this.currentIndex++;

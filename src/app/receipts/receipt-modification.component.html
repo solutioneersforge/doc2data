@@ -143,9 +143,10 @@
       <tr>
         <th class="text-center">Description</th>
         <th class="text-center">Expense</th>
+        <th class="text-center">UOM</th>
         <th class="text-center">Qty</th>
         <th class="text-center">Unit</th>
-        <!-- <th class="text-center">Discount</th> -->
+        
         <th class="text-center">Total</th>
       </tr>
     </thead>
@@ -155,12 +156,22 @@
         <td><input type="text" [(ngModel)]="item.itemDescription" class="form-control" /></td>
         <td>
           <select class="form-select" aria-label="Default Select Category" [(ngModel)]="item.subCategoryId">
-            <option selected>Select Sub Category</option>
+           
             @for (item of expenseCategoriesDTO; track $index) {
             @for (itemSub of item.expenseSubCategoriesDTOs; track $index) {
             <option value="{{itemSub.subCategoryId}}">{{itemSub.subCategoryName}}</option>
             }
             }
+          </select>
+        </td>
+        <td>
+          <select class="form-select" aria-label="Default Unit Of Measure" [(ngModel)]="item.unitOfMeasureId">
+           
+           
+            @for (itemSub of unitOfMeasuresDTO; track $index) {
+            <option value="{{itemSub.unitOfMeasureId}}">{{itemSub.name}}</option>
+            }
+            
           </select>
         </td>
         <td><input type="text" [(ngModel)]="item.quantity" class="form-control" /></td>
@@ -224,6 +235,34 @@
               }
             </select>
           </div>
+          
+          <div class="mb-4">
+            <label for="unitOfMeasureId" class="form-label">Unit Of Measure</label>
+            <!-- <select name="subCategoryId" class="form-select" aria-label="Default Select Category"
+                    [(ngModel)]="currentItem.subCategoryId" #subCategory="ngModel" required
+                    [ngClass]="{'is-invalid': subCategory.touched && subCategory.invalid, 'is-valid': subCategory.touched && subCategory.valid}">
+
+              @for (item of expenseCategoriesDTO; track $index) {
+              @for (itemSub of item.expenseSubCategoriesDTOs; track $index) {
+              <option value="{{itemSub.subCategoryId}}">{{itemSub.subCategoryName}}</option>
+              }
+              }
+            </select> -->
+
+            <select name="unitOfMeasureId" required class="form-select" aria-label="Default Unit Of Measure" 
+            [(ngModel)]="currentItem.unitOfMeasureId" #subCategory="ngModel" required>
+           
+           
+              @for (itemSub of unitOfMeasuresDTO; track $index) {
+              <option value="{{itemSub.unitOfMeasureId}}">{{itemSub.name}}</option>
+              }
+              
+            </select>
+
+
+          </div>
+
+
           <div class="mb-4">
             <label for="total" class="form-label">Total ($)</label>
             <input type="number" name="total" class="form-control" id="total" placeholder="Calculated total"

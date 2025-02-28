@@ -55,4 +55,8 @@ export class ReceiptDetailsService {
   postFunctionAppExpenseType(expenseTypeDTO: ExpenseTypeDTO) : Observable<any>{
     return this.httpClient.post<any>(`${this.baseAddress}api/FunctionAppExpenseType`, expenseTypeDTO);
   }
+  
+  getFunctionAppUnitOfMeasure(): Observable<any> {
+    return this.httpClient.get<any>(`${this.baseAddress}api/FunctionAppUnitOfMeasure`);
+  }
 }

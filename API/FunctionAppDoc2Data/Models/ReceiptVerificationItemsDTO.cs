@@ -15,4 +15,5 @@ public class ReceiptVerificationItemsDTO
     public decimal Total { get; set; }
     public int SubCategoryId { get; set; }
     public string SubCategoryName { get; set; }
+    public int? UnitOfMeasureId { get; set; }
 }

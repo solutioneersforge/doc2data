@@ -15,4 +15,5 @@ public class ReceiptItemsApprovalDTO
     public decimal Discount { get; set; }
     public decimal Total { get; set; }
     public int SubCategoryId { get; set; }
+    public int UnitOfMeasureId { get; set; }
 }
