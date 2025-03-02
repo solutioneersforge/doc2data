@@ -13,7 +13,8 @@
                 <div>
                   <image-cropper
                     [imageChangedEvent]="imageChangedEvent"
-                    
+                    [maintainAspectRatio]="true"
+                    [aspectRatio]="1 / 1"
                     (imageCropped)="imageCropped($event)"
                   ></image-cropper>
                 </div>
