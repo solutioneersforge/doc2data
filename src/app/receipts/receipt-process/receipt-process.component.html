@@ -9,11 +9,11 @@
               <input
               class="primary"#fileInput  type="file" class="form-control" (change)="onFileChange($event)" accept="image/*, application/pdf" />
               
-              @if(imageChangedEvent){
+              @if(imageChangedEvent && previewImage){
                 <div>
                   <image-cropper
                     [imageChangedEvent]="imageChangedEvent"
-                    [maintainAspectRatio]="true"
+                    
                     (imageCropped)="imageCropped($event)"
                   ></image-cropper>
                 </div>
