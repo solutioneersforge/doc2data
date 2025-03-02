@@ -14,12 +14,8 @@
                   <image-cropper
                     [imageChangedEvent]="imageChangedEvent"
                     [maintainAspectRatio]="true"
-                    [aspectRatio]="1 / 1"
-                    format="png"
                     (imageCropped)="imageCropped($event)"
                   ></image-cropper>
-                  
-                  <button (click)="clearImage()" class="btn btn-secondary mt-2">Clear</button>
                 </div>
               }
               
