@@ -8,6 +8,22 @@
               <label for="imageUpload" class="form-label">Choose an Image</label>
               <input
               class="primary"#fileInput  type="file" class="form-control" (change)="onFileChange($event)" accept="image/*, application/pdf" />
+              
+              @if(imageChangedEvent){
+                <div>
+                  <image-cropper
+                    [imageChangedEvent]="imageChangedEvent"
+                    [maintainAspectRatio]="true"
+                    [aspectRatio]="1 / 1"
+                    format="png"
+                    (imageCropped)="imageCropped($event)"
+                  ></image-cropper>
+                  
+                  <button (click)="clearImage()" class="btn btn-secondary mt-2">Clear</button>
+                </div>
+              }
+              
+              
               <button [disabled]="isLoading" (click)="processReceipt()" class="btn btn-primary m-2" style="float: right;">Process Image</button>
               @if(loaderStarted){
                 <div class="d-flex justify-content-center">

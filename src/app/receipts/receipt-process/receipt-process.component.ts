@@ -9,10 +9,11 @@ import { ReceiptMasterDTO } from '../../interfaces/receipt-master-dto';
 import { ReceiptItemDTO } from '../../interfaces/receipt-item-dto';
 import { NotificationService } from '../../services/notification.service';
 import { NotificationComponent } from '../../shared/header/notification.component';
+import { ImageCropperComponent, ImageCroppedEvent } from 'ngx-image-cropper';
 
 @Component({
   selector: 'app-receipt-process',
-  imports: [ReactiveFormsModule, NotificationComponent, FormsModule   ],
+  imports: [ReactiveFormsModule, NotificationComponent, FormsModule, ImageCropperComponent   ],
   templateUrl: './receipt-process.component.html',
   styleUrl: './receipt-process.component.css'
 })
@@ -21,10 +22,19 @@ export class ReceiptProcessComponent implements OnInit {
     
     this.getExpenseSubCategoriesDTO();
   }
+  imageChangedEvent: any = '';
   imageUrl: string | ArrayBuffer | null = null;
   previewImage: string | ArrayBuffer | null = null;
   receiptItemDTOs: ReceiptItemDTO[] = [];
   isSaveButtonEnable : boolean = false;
+
+  imageCropped(event: ImageCroppedEvent) {
+    this.previewImage = event.base64 ?? null;
+  }
+  clearImage() {
+    this.imageChangedEvent = '';
+    this.previewImage = '';
+  }
 
   receiptMasterDTO: ReceiptMasterDTO = {
     userId: null,
