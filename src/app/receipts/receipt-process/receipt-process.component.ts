@@ -117,6 +117,7 @@ export class ReceiptProcessComponent implements OnInit {
   };
   
   onFileChange(event: any): void {
+    event.preventDefault();
     const file = event.target.files[0];
     this.imageChangedEvent = event;
     this.selectedFile = event.target.files[0];
